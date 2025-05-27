@@ -1,3 +1,33 @@
+## V3.4.2.4_Patch_0004
+
+### Features
+* N/A.
+
+### Bug Fixes
+    - Fixed(B87): Fix compile error when using API cpu_long_sleep_wakeup().
+
+### Refactoring
+* N/A.
+
+### BREAKING CHANGES
+* N/A.
+
+
+### Features
+* N/A.
+
+### Bug Fixes
+    - 修复（B87）：修复调用API cpu_long_sleep_wakeup()时的编译错误。
+
+### Refactoring
+* N/A.
+
+### BREAKING CHANGES
+* N/A.
+
+
+
+
 ## V3.4.2.4_Patch_0003
 
 ### Features

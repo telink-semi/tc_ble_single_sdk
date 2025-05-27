@@ -1,0 +1,63 @@
+**************************************************************************
+                                                                        
+                       Telink SDK Patch Guide                              
+                                                                            
+                                                                        
+**************************************************************************
+4. 0004_20250530
+	replace file "b85_ble_sdk/common/sdk_version.h" with "patch_0003_20250107/common/sdk_version.h",
+	replace file "b85_ble_sdk/drivers/8258/driver_ext/software_uart.c" with "patch_0003_20250107/drivers/8258/driver_ext/software_uart.c",
+	replace file "b85_ble_sdk/drivers/8278/driver_ext/software_uart.c" with "patch_0003_20250107/drivers/8278/driver_ext/software_uart.c",
+	replace file "b85_ble_sdk/proj_lib/liblt_825x.a" with "patch_0003_20250107/proj_lib/liblt_825x.a",
+	replace file "b85_ble_sdk/proj_lib/liblt_827x.a" with "patch_0003_20250107/proj_lib/liblt_827x.a",
+	replace file "b85_ble_sdk/stack/ble/host/attr/att.h" with "patch_0003_20250107/stack/ble/host/attr/att.h",
+	replace file "b85_ble_sdk/vendor/b85m_ble_remote/app_config.h" with "patch_0003_20250107/vendor/b85m_ble_remote/app_config.h",
+	replace file "b85_ble_sdk/vendor/b85m_ble_sample/app_config.h" with "patch_0003_20250107/vendor/b85m_ble_sample/app_config.h",
+	replace file "b85_ble_sdk/vendor/b85m_feature_test/feature_ota_hid/app.c" with "patch_0003_20250107/vendor/b85m_feature_test/feature_ota_hid/app.c",
+	replace file "b85_ble_sdk/vendor/b85m_feature_test/feature_privacy_slave/app.c" with "patch_0003_20250107/vendor/b85m_feature_test/feature_privacy_slave/app.c",
+	replace file "b85_ble_sdk/vendor/b85m_feature_test/app_config.h" with "patch_0003_20250107/vendor/b85m_feature_test/app_config.h",
+	replace file "b85_ble_sdk/vendor/common/ble_flash.c" with "patch_0003_20250107/vendor/common/ble_flash.c",
+	replace file "b85_ble_sdk/vendor/common/custom_pair.c" with "patch_0003_20250107/vendor/common/custom_pair.c",
+	replace file "b85_ble_sdk/boot.link" with "patch_0003_20250107/boot.link",
+	replace file "b85_ble_sdk/sdk_version.txt" with "patch_0003_20250107/sdk_version.txt"
+
+
+3. 0003_20250107
+	replace file "b85_ble_sdk/common/sdk_version.h" with "patch_0003_20250107/common/sdk_version.h",
+	replace file "b85_ble_sdk/drivers/8258/driver_ext/software_uart.c" with "patch_0003_20250107/drivers/8258/driver_ext/software_uart.c",
+	replace file "b85_ble_sdk/drivers/8278/driver_ext/software_uart.c" with "patch_0003_20250107/drivers/8278/driver_ext/software_uart.c",
+	replace file "b85_ble_sdk/proj_lib/liblt_825x.a" with "patch_0003_20250107/proj_lib/liblt_825x.a",
+	replace file "b85_ble_sdk/proj_lib/liblt_827x.a" with "patch_0003_20250107/proj_lib/liblt_827x.a",
+	replace file "b85_ble_sdk/stack/ble/host/attr/att.h" with "patch_0003_20250107/stack/ble/host/attr/att.h",
+	replace file "b85_ble_sdk/vendor/b85m_ble_remote/app_config.h" with "patch_0003_20250107/vendor/b85m_ble_remote/app_config.h",
+	replace file "b85_ble_sdk/vendor/b85m_ble_sample/app_config.h" with "patch_0003_20250107/vendor/b85m_ble_sample/app_config.h",
+	replace file "b85_ble_sdk/vendor/b85m_feature_test/feature_ota_hid/app.c" with "patch_0003_20250107/vendor/b85m_feature_test/feature_ota_hid/app.c",
+	replace file "b85_ble_sdk/vendor/b85m_feature_test/feature_privacy_slave/app.c" with "patch_0003_20250107/vendor/b85m_feature_test/feature_privacy_slave/app.c",
+	replace file "b85_ble_sdk/vendor/b85m_feature_test/app_config.h" with "patch_0003_20250107/vendor/b85m_feature_test/app_config.h",
+	replace file "b85_ble_sdk/vendor/common/ble_flash.c" with "patch_0003_20250107/vendor/common/ble_flash.c",
+	replace file "b85_ble_sdk/vendor/common/custom_pair.c" with "patch_0003_20250107/vendor/common/custom_pair.c",
+	replace file "b85_ble_sdk/boot.link" with "patch_0003_20250107/boot.link",
+	replace file "b85_ble_sdk/sdk_version.txt" with "patch_0003_20250107/sdk_version.txt"
+
+
+2. 0002_20241108
+	replace file "b85_ble_sdk/common/sdk_version.h" with "patch_0002_20241108/common/sdk_version.h",
+	replace file "b85_ble_sdk/drivers/8258/driver_ext/software_uart.c" with "patch_0002_20241108/drivers/8258/driver_ext/software_uart.c",
+	replace file "b85_ble_sdk/drivers/8278/driver_ext/software_uart.c" with "patch_0002_20241108/drivers/8278/driver_ext/software_uart.c",
+	replace file "b85_ble_sdk/proj_lib/liblt_825x.a" with "patch_0002_20241108/proj_lib/liblt_825x.a",
+	replace file "b85_ble_sdk/proj_lib/liblt_827x.a" with "patch_0002_20241108/proj_lib/liblt_827x.a",
+	replace file "b85_ble_sdk/vendor/b85m_ble_remote/app_config.h" with "patch_0002_20241108/vendor/b85m_ble_remote/app_config.h",
+	replace file "b85_ble_sdk/vendor/b85m_ble_sample/app_config.h" with "patch_0002_20241108/vendor/b85m_ble_sample/app_config.h",
+	replace file "b85_ble_sdk/vendor/b85m_feature_test/feature_ota_hid/app.c" with "patch_0002_20241108/vendor/b85m_feature_test/feature_ota_hid/app.c",
+	replace file "b85_ble_sdk/vendor/b85m_feature_test/feature_privacy_slave/app.c" with "patch_0002_20241108/vendor/b85m_feature_test/feature_privacy_slave/app.c",
+	replace file "b85_ble_sdk/vendor/b85m_feature_test/app_config.h" with "patch_0002_20241108/vendor/b85m_feature_test/app_config.h",
+	replace file "b85_ble_sdk/vendor/common/ble_flash.c" with "patch_0002_20241108/vendor/common/ble_flash.c",
+	replace file "b85_ble_sdk/vendor/common/custom_pair.c" with "patch_0002_20241108/vendor/common/custom_pair.c",
+	replace file "b85_ble_sdk/boot.link" with "patch_0002_20241108/boot.link",
+	replace file "b85_ble_sdk/sdk_version.txt" with "patch_0002_20241108/sdk_version.txt"
+
+
+1. 0001_20240425
+	replace file "B85_ble_sdk/sdk_version.txt" with "patch_0001_20240425/sdk_version.txt",
+	replace file "B85_ble_sdk/proj_lib/liblt_825x.a" with "patch_0001_20240425/proj_lib/liblt_825x.a",
+	replace file "B85_ble_sdk/proj_lib/liblt_827x.a" with "patch_0001_20240425/proj_lib/liblt_827x.a"
