@@ -4,6 +4,7 @@
 * N/A.
 
 ### Bug Fixes
+* **PM**
     - Fixed(B87): Fix compile error when using API cpu_long_sleep_wakeup().
 
 ### Refactoring
@@ -17,6 +18,7 @@
 * N/A.
 
 ### Bug Fixes
+* **PM**
     - 修复（B87）：修复调用API cpu_long_sleep_wakeup()时的编译错误。
 
 ### Refactoring
