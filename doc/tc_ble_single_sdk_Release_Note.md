@@ -1,6 +1,7 @@
 # V3.4.2.7 (PR)
 
 ### Version
+
 * SDK version: tc_ble_single_sdk V3.4.2.7
 * Chip Version
   - B85: TLSR825X
@@ -16,172 +17,171 @@
   - TC32 ELF GCC4.3 ( IDE: [Telink IoT Studio](https://www.telink-semi.com/development-tools) )
 
 ### Features
+
 * **Application**
-	- 2.4G
-	    - Add 2.4G demo in B85/B87.
-		    - 2p4g_feature
-			- 2p4g_genfsk_ll
-			- 2p4g_tpll
-			- 2p4g_tpsll
-
-	- 2.4G & BLE concurrent
-	    - Add 2.4G & BLE concurrent demo in B85/B87/TC321X.
-			- ble_slave_2_4g
-	
-	- 2.4G & BLE switch
-		- Add 2.4G & BLE switch demo in B85/B87/TC321X.
-			- ble_slave_2_4g_switch
-
-	- Modify the audio setting code structure and fix TC321X audio setting error.
-	- Delete Audio DMIC setting.
-	- TC321X ble_remote demo supports IR Learning.
-	- Add ADC calibration in TC321X.
+  - 2.4G
+    - Add 2.4G reference designs in B85/B87.
+      - 2p4g_feature
+      - 2p4g_genfsk_ll
+      - 2p4g_tpll
+      - 2p4g_tpsll
+  - 2.4G & BLE concurrent
+    - Add 2.4G & BLE concurrent reference design in B85/B87/TC321X.
+      - ble_slave_2_4g
+  - 2.4G & BLE switch
+    - Add 2.4G & BLE switch reference design in B85/B87/TC321X.
+      - ble_slave_2_4g_switch
+  - TC321X ble_remote reference design supports IR Learning.
+  - Add ADC calibration in TC321X.
 
 ### Bug Fixes
+
 * **Application**
-    - Fixed: When the local Central device supports SMP while the peer Peripheral device does not support SMP, the local Central device cannot send the Connection Update Indication packet.
-	- Fixed: GPIO setting error in C1T362A5 boards.
+  - Fixed: When the local Central device supports SMP while the peer Peripheral device does not support SMP, the local Central device cannot send the Connection Update Indication packet.
+  - Fixed: GPIO setting error in C1T362A5 boards.
 * **Controller**
-	- Fixed: Connection failures caused by some special connection parameters.
+  - Fixed: Connection failure caused by some extreme parameters of connection indication packet (transmitWindowOffset = 0 and TX packet is sent at the beginning of Transmit Window).
 * **CoC**
-	- Fixed: Incorrect parameter validation logic when establishing new CoC(Connection-oriented channels) channels.
+  - Fixed: Incorrect parameter validation logic when establishing new CoC(Connection-oriented channels) channels.
 * **Driver**
-	- Fixed (TC321X A0) : MCU reboot failure in start_reboot.
+  - Fixed (TC321X A0) : MCU reboot failure after OTA when calling start_reboot.
 
 ### Refactoring
-* **Application**
-    - Support using soft timer in IDLE state.
-	- Modify the 512K Flash address allocation in TC321X.
-	- Rename some demo.
-		- Rename b85m_2p4g_feature to 2p4g_feature.
-		- Rename b85m_2p4g_genfsk_ll to 2p4g_genfsk_ll.
-		- Rename b85m_2p4g_tpll to 2p4g_tpll.
-		- Rename b85m_2p4g_tpsll to 2p4g_tpsll.
-		- Rename b85m_feature_test to ble_feature_test.
-		- Rename b85m_hci to ble_hci.
-		- Rename b85m_master_kma_dongle to ble_master_kma_dongle.
-		- Rename b85m_module to ble_module.
-		- Rename b85m_ble_remote to ble_remote.
-		- Rename b85m_ble_sample to ble_sample.
 
+* **Application**
+  - Support using soft timer in IDLE state.
+  - Rename some reference designs.
+    - Rename b85m_2p4g_feature to 2p4g_feature.
+    - Rename b85m_2p4g_genfsk_ll to 2p4g_genfsk_ll.
+    - Rename b85m_2p4g_tpll to 2p4g_tpll.
+    - Rename b85m_2p4g_tpsll to 2p4g_tpsll.
+    - Rename b85m_feature_test to ble_feature_test.
+    - Rename b85m_hci to ble_hci.
+    - Rename b85m_master_kma_dongle to ble_master_kma_dongle.
+    - Rename b85m_module to ble_module.
+    - Rename b85m_ble_remote to ble_remote.
+    - Rename b85m_ble_sample to ble_sample.
 * **Controller**
-	- (TC321X) Optimize power consumption in connection state.
+  - (TC321X) Optimize power consumption in connection state.
 
 ### BREAKING CHANGES
+
 * **Driver**
-	- Add rf_private_pa.c and rf_private_pa.h to B85/B87 driver_ext folder.
-	- Add ext_rf_private.h to B85/B87/TC321X driver_ext folder.
+  - Add rf_private_pa.c and rf_private_pa.h to B85/B87 driver_ext folder.
+  - Add ext_rf_private.h to B85/B87/TC321X driver_ext folder.
 
 ### CodeSize
+
 * **B85**
-	* ble_sample
-	  - Firmware size: 53.1 kBytes
-	  - SRAM size: 18.2 kBytes
-	  - deepsleep retention SRAM size: 14.5 kBytes
-	* ble_remote
-	  - Firmware size: 64.9 kBytes
-	  - SRAM size: 21.1 kBytes
-	  - deepsleep retention SRAM size: 15.7 kBytes
-	* ble_module
-	  - Firmware size: 61.8 kBytes
-	  - SRAM size: 20.4 kBytes
-	  - deepsleep retention SRAM size: 16.7 kBytes
-	* master_kma_dongle
-	  - Firmware size: 43.2 kBytes
-	  - SRAM size: 20.2 kBytes
-	* genfsk_ll(stx2rx)
-	  - Firmware size: 16.6 kBytes
-	  - SRAM size: 9.7 kBytes
-	  - deepsleep retention SRAM size: 6.5 kBytes
-	* tpll(ptx)
-	  - Firmware size: 17.9 kBytes
-	  - SRAM size: 12.5 kBytes
-	  - deepsleep retention SRAM size: 7.3 kBytes
+  * ble_sample
+    - Firmware size: 53.1 kBytes
+    - SRAM size: 18.2 kBytes
+    - deepsleep retention SRAM size: 14.5 kBytes
+  * ble_remote
+    - Firmware size: 64.9 kBytes
+    - SRAM size: 21.1 kBytes
+    - deepsleep retention SRAM size: 15.7 kBytes
+  * ble_module
+    - Firmware size: 61.8 kBytes
+    - SRAM size: 20.4 kBytes
+    - deepsleep retention SRAM size: 16.7 kBytes
+  * master_kma_dongle
+    - Firmware size: 43.2 kBytes
+    - SRAM size: 20.2 kBytes
+  * genfsk_ll(stx2rx)
+    - Firmware size: 16.6 kBytes
+    - SRAM size: 9.7 kBytes
+    - deepsleep retention SRAM size: 6.5 kBytes
+  * tpll(ptx)
+    - Firmware size: 17.9 kBytes
+    - SRAM size: 12.5 kBytes
+    - deepsleep retention SRAM size: 7.3 kBytes
   * tpsll(stx2rx)
-	  * Firmware size: 14.6 kBytes
-	  * SRAM size: 9.8 kBytes
-	  * deepsleep retention SRAM size: 6.3 kBytes
-	* ble_slave_2_4g(tpsll_stx2rx)
-	  * Firmware size: 54.0 kBytes
-	  * SRAM size: 19.9 kBytes
-	  * deepsleep retention SRAM size: 15.3 kBytes
-	* ble_slave_2_4g_switch(tpsll_stx2rx)
-	  - Firmware size: 57.7 kBytes
-	  - SRAM size: 20.0 kBytes
-	  - deepsleep retention SRAM size: 15.5 kBytes
-  
+    * Firmware size: 14.6 kBytes
+    * SRAM size: 9.8 kBytes
+    * deepsleep retention SRAM size: 6.3 kBytes
+  * ble_slave_2_4g(tpsll_stx2rx)
+    * Firmware size: 54.0 kBytes
+    * SRAM size: 19.9 kBytes
+    * deepsleep retention SRAM size: 15.3 kBytes
+  * ble_slave_2_4g_switch(tpsll_stx2rx)
+    - Firmware size: 57.7 kBytes
+    - SRAM size: 20.0 kBytes
+    - deepsleep retention SRAM size: 15.5 kBytes
+
 * **B87**
-	* ble_sample
-	  - Firmware size: 55.1 kBytes
-	  - SRAM size: 19.9 kBytes
-	  - deepsleep retention SRAM size: 16.1 kBytes
-	* ble_remote
-	  - Firmware size: 66.1 kBytes
-	  - SRAM size: 22.9 kBytes
-	  - deepsleep retention SRAM size: 17.4 kBytes
-	* ble_module
-	  - Firmware size: 63.9 kBytes
-	  - SRAM size: 22.2 kBytes
-	  - deepsleep retention SRAM size: 18.3 kBytes
-	* master_kma_dongle
-	  - Firmware size: 44.8 kBytes
-	  - SRAM size: 21.9 kBytes
-	* genfsk_ll(stx2rx)
-	  - Firmware size: 18.9 kBytes
-	  - SRAM size: 11.2 kBytes
-	  - deepsleep retention SRAM size: 8.0 kBytes
-	* tpll(ptx)
-	  - Firmware size: 20.3 kBytes
-	  - SRAM size: 14.0 kBytes
-	  - deepsleep retention SRAM size: 8.9 kBytes
+  * ble_sample
+    - Firmware size: 55.1 kBytes
+    - SRAM size: 19.9 kBytes
+    - deepsleep retention SRAM size: 16.1 kBytes
+  * ble_remote
+    - Firmware size: 66.1 kBytes
+    - SRAM size: 22.9 kBytes
+    - deepsleep retention SRAM size: 17.4 kBytes
+  * ble_module
+    - Firmware size: 63.9 kBytes
+    - SRAM size: 22.2 kBytes
+    - deepsleep retention SRAM size: 18.3 kBytes
+  * master_kma_dongle
+    - Firmware size: 44.8 kBytes
+    - SRAM size: 21.9 kBytes
+  * genfsk_ll(stx2rx)
+    - Firmware size: 18.9 kBytes
+    - SRAM size: 11.2 kBytes
+    - deepsleep retention SRAM size: 8.0 kBytes
+  * tpll(ptx)
+    - Firmware size: 20.3 kBytes
+    - SRAM size: 14.0 kBytes
+    - deepsleep retention SRAM size: 8.9 kBytes
   * tpsll(stx2rx)
-	  - Firmware size: 16.9 kBytes
-	  - SRAM size: 11.4 kBytes
-	  - deepsleep retention SRAM size: 7.8 kBytes
-	* ble_slave_2_4g(tpsll_stx2rx)
-	  - Firmware size: 56.0 kBytes
-	  - SRAM size: 21.4 kBytes
-	  - deepsleep retention SRAM size: 16.9 kBytes
-	* ble_slave_2_4g_switch(tpsll_stx2rx)
-	  - Firmware size: 60.2 kBytes
-	  - SRAM size: 21.8 kBytes
-	  - deepsleep retention SRAM size: 17.1 kBytes
+    - Firmware size: 16.9 kBytes
+    - SRAM size: 11.4 kBytes
+    - deepsleep retention SRAM size: 7.8 kBytes
+  * ble_slave_2_4g(tpsll_stx2rx)
+    - Firmware size: 56.0 kBytes
+    - SRAM size: 21.4 kBytes
+    - deepsleep retention SRAM size: 16.9 kBytes
+  * ble_slave_2_4g_switch(tpsll_stx2rx)
+    - Firmware size: 60.2 kBytes
+    - SRAM size: 21.8 kBytes
+    - deepsleep retention SRAM size: 17.1 kBytes
 
 * **TC321X**
-	* ble_sample
-	  - Firmware size: 59.2 kBytes
-	  - SRAM size: 19.1 kBytes
-	  - deepsleep retention SRAM size: 15.3 kBytes
-	* ble_remote
-	  - Firmware size: 70.5 kBytes
-	  - SRAM size: 22.0 kBytes
-	  - deepsleep retention SRAM size: 16.4 kBytes
-	* ble_module
-	  - Firmware size: 68.7 kBytes
-	  - SRAM size: 21.3 kBytes
-	  - deepsleep retention SRAM size: 17.3 kBytes
-	* genfsk_ll(stx2rx)
-	  - Firmware size: 23.3 kBytes
-	  - SRAM size: 10.9 kBytes
-	  - deepsleep retention SRAM size: 7.8 kBytes
-	* tpll(ptx)
-	  - Firmware size: 25.8 kBytes
-	  - SRAM size: 13.4 kBytes
-	  - deepsleep retention SRAM size: 8.2 kBytes
+  * ble_sample
+    - Firmware size: 59.2 kBytes
+    - SRAM size: 19.1 kBytes
+    - deepsleep retention SRAM size: 15.3 kBytes
+  * ble_remote
+    - Firmware size: 70.5 kBytes
+    - SRAM size: 22.0 kBytes
+    - deepsleep retention SRAM size: 16.4 kBytes
+  * ble_module
+    - Firmware size: 68.7 kBytes
+    - SRAM size: 21.3 kBytes
+    - deepsleep retention SRAM size: 17.3 kBytes
+  * genfsk_ll(stx2rx)
+    - Firmware size: 23.3 kBytes
+    - SRAM size: 10.9 kBytes
+    - deepsleep retention SRAM size: 7.8 kBytes
+  * tpll(ptx)
+    - Firmware size: 25.8 kBytes
+    - SRAM size: 13.4 kBytes
+    - deepsleep retention SRAM size: 8.2 kBytes
   * tpsll(stx2rx)
-	  - Firmware size: 21.4 kBytes
-	  - SRAM size: 11.1 kBytes
-	  - deepsleep retention SRAM size: 7.5 kBytes
-	* ble_slave_2_4g(tpsll_stx2rx)
-	  - Firmware size: 60.1 kBytes
-	  - SRAM size: 20.8 kBytes
-	  - deepsleep retention SRAM size: 16.4 kBytes
-	* ble_slave_2_4g_switch(tpsll_stx2rx)
-	  - Firmware size: 63.6 kBytes
-	  - SRAM size: 21.0 kBytes
-	  - deepsleep retention SRAM size: 16.5 kBytes
+    - Firmware size: 21.4 kBytes
+    - SRAM size: 11.1 kBytes
+    - deepsleep retention SRAM size: 7.5 kBytes
+  * ble_slave_2_4g(tpsll_stx2rx)
+    - Firmware size: 60.1 kBytes
+    - SRAM size: 20.8 kBytes
+    - deepsleep retention SRAM size: 16.4 kBytes
+  * ble_slave_2_4g_switch(tpsll_stx2rx)
+    - Firmware size: 63.6 kBytes
+    - SRAM size: 21.0 kBytes
+    - deepsleep retention SRAM size: 16.5 kBytes
 
 ### Version
+
 * SDK 版本: tc_ble_single_sdk V3.4.2.7
 * Chip 版本
   - B85: TLSR825X
@@ -197,100 +197,101 @@
   - TC32 ELF GCC4.3 ( IDE: [Telink IoT Studio](https://www.telink-semi.com/development-tools) )
 
 ### Features
+
 * **Application**
-	- 2.4G
-	    - 在 B85/B87 中添加2.4G demo。
-		    - 2p4g_feature
-			- 2p4g_genfsk_ll
-			- 2p4g_tpll
-			- 2p4g_tpsll
-
-	- 2.4G & BLE 双模
-	    - 在 B85/B87/TC321X 中添加2.4G & BLE 双模demo。
-			- ble_slave_2_4g
-	
-	- 2.4G & BLE 切换
-		- 在 B85/B87/TC321X中添加2.4G & BLE 切换demo。
-			- ble_slave_2_4g_switch
-
-	- 修改 Audio 设置代码结构，并修复 TC321X 的Audio设置错误。
-	- 删除 Audio DMIC 设置。
-	- TC321X  ble_remote demo 支持红外学习功能。
-	- TC321X 新增 ADC 校准功能。
+  - 2.4G
+    - 在 B85/B87 中添加2.4G参考设计。
+      - 2p4g_feature
+      - 2p4g_genfsk_ll
+      - 2p4g_tpll
+      - 2p4g_tpsll
+  - 2.4G & BLE 双模
+    - 在 B85/B87/TC321X 中添加2.4G & BLE 双模参考设计。
+      - ble_slave_2_4g
+  - 2.4G & BLE 切换
+    - 在 B85/B87/TC321X中添加2.4G & BLE 切换参考设计。
+      - ble_slave_2_4g_switch
+  - TC321X  ble_remote 参考设计支持红外学习功能。
+  - TC321X 新增 ADC 校准功能。
 
 ### Bug Fixes
+
 * **Application**
-    - 修复：当本地Central设备支持SMP而配对的Peripheral设备不支持SMP时，本地Central设备无法发送连接更新指示包。
-	- 修复：C1T362A5开发板的GPIO设置错误。
+  - 修复：当本地Central设备支持SMP而配对的Peripheral设备不支持SMP时，本地Central设备无法发送连接更新指示包。
+  - 修复：C1T362A5开发板的GPIO设置错误。
 * **Controller**
-	- 修复：部分特殊连接参数导致的连接失败问题。
+  - 修复：部分极端的连接请求参数导致的连接失败问题（transmitWindowOffset = 0 ，且在 Transmit Window 的开始的位置发送 TX packet）。
 * **CoC**
-	- 修复：建立新CoC(Connection-oriented channels)通道时的参数校验逻辑错误。
+  - 修复：建立新CoC(Connection-oriented channels)通道时的参数校验逻辑错误。
 * **Driver**
-	- 修复 (TC321X A0)：start_reboot函数无法正常重启MCU的问题。
+  - 修复 (TC321X A0)：OTA结束后调用start_reboot函数无法正常重启MCU的问题。
 
 ### Refactoring
+
 * **Application**
-    - 支持在IDLE态下使用软件定时器。
-	- 修改 TC321X 芯片中 512K Flash的地址分配。
-	- 重命名部分 demo
-		- 将 b85m_2p4g_feature 重命名为 2p4g_feature。
-		- 将 b85m_2p4g_genfsk_ll 重命名为 2p4g_genfsk_ll。
-		- 将 b85m_2p4g_tpll 重命名为 2p4g_tpll。
-		- 将 b85m_2p4g_tpsll 重命名为 2p4g_tpsll。
-		- 将 b85m_feature_test 重命名为 ble_feature_test。
-		- 将 b85m_hci 重命名为 ble_hci。
-		- 将 b85m_master_kma_dongle 重命名为 ble_master_kma_dongle。
-		- 将 b85m_module 重命名为 ble_module。
-		- 将 b85m_ble_remote 重命名为 ble_remote。
-		- 将 b85m_ble_sample 重命名为 ble_sample。
+  - 支持在IDLE态下使用软件定时器。
+  - 修改 Audio 设置代码结构，并修复 TC321X 的Audio设置错误。
+  - 删除 Audio DMIC 设置。
+  - 重命名部分参考设计
+    - 将 b85m_2p4g_feature 重命名为 2p4g_feature。
+    - 将 b85m_2p4g_genfsk_ll 重命名为 2p4g_genfsk_ll。
+    - 将 b85m_2p4g_tpll 重命名为 2p4g_tpll。
+    - 将 b85m_2p4g_tpsll 重命名为 2p4g_tpsll。
+    - 将 b85m_feature_test 重命名为 ble_feature_test。
+    - 将 b85m_hci 重命名为 ble_hci。
+    - 将 b85m_master_kma_dongle 重命名为 ble_master_kma_dongle。
+    - 将 b85m_module 重命名为 ble_module。
+    - 将 b85m_ble_remote 重命名为 ble_remote。
+    - 将 b85m_ble_sample 重命名为 ble_sample。
 
 * **Controller**
-	- (TC321X) 优化连接状态下的功耗。
+  - (TC321X) 优化连接状态下的功耗。
 
 ### BREAKING CHANGES
+
 * **Driver**
-	- 添加 rf_private_pa.c 和 rf_private_pa.h 到 B85/B87 的 driver_ext 文件夹。
-	- 添加 ext_rf_private.h 到 B85/B87/TC321X 的 driver_ext 文件夹。
+  - 添加 rf_private_pa.c 和 rf_private_pa.h 到 B85/B87 的 driver_ext 文件夹。
+  - 添加 ext_rf_private.h 到 B85/B87/TC321X 的 driver_ext 文件夹。
 
 ### CodeSize
+
 * **B85**
-	* ble_sample
-	  - Firmware size: 53.1 kBytes
-	  - SRAM size: 18.2 kBytes
-	  - deepsleep retention SRAM size: 14.5 kBytes
-	* ble_remote
-	  - Firmware size: 64.9 kBytes
-	  - SRAM size: 21.1 kBytes
-	  - deepsleep retention SRAM size: 15.7 kBytes
-	* ble_module
-	  - Firmware size: 61.8 kBytes
-	  - SRAM size: 20.4 kBytes
-	  - deepsleep retention SRAM size: 16.7 kBytes
-	* master_kma_dongle
-	  - Firmware size: 43.2 kBytes
-	  - SRAM size: 20.2 kBytes
-	* genfsk_ll(stx2rx)
-	  - Firmware size: 16.6 kBytes
-	  - SRAM size: 9.7 kBytes
-	  - deepsleep retention SRAM size: 6.5 kBytes
-	* tpll(ptx)
-	  - Firmware size: 17.9 kBytes
-	  - SRAM size: 12.5 kBytes
-	  - deepsleep retention SRAM size: 7.3 kBytes
+  * ble_sample
+    - Firmware size: 53.1 kBytes
+    - SRAM size: 18.2 kBytes
+    - deepsleep retention SRAM size: 14.5 kBytes
+  * ble_remote
+    - Firmware size: 64.9 kBytes
+    - SRAM size: 21.1 kBytes
+    - deepsleep retention SRAM size: 15.7 kBytes
+  * ble_module
+    - Firmware size: 61.8 kBytes
+    - SRAM size: 20.4 kBytes
+    - deepsleep retention SRAM size: 16.7 kBytes
+  * master_kma_dongle
+    - Firmware size: 43.2 kBytes
+    - SRAM size: 20.2 kBytes
+  * genfsk_ll(stx2rx)
+    - Firmware size: 16.6 kBytes
+    - SRAM size: 9.7 kBytes
+    - deepsleep retention SRAM size: 6.5 kBytes
+  * tpll(ptx)
+    - Firmware size: 17.9 kBytes
+    - SRAM size: 12.5 kBytes
+    - deepsleep retention SRAM size: 7.3 kBytes
   * tpsll(stx2rx)
-	  * Firmware size: 14.6 kBytes
-	  * SRAM size: 9.8 kBytes
-	  * deepsleep retention SRAM size: 6.3 kBytes
-	* ble_slave_2_4g(tpsll_stx2rx)
-	  * Firmware size: 54.0 kBytes
-	  * SRAM size: 19.9 kBytes
-	  * deepsleep retention SRAM size: 15.3 kBytes
-	* ble_slave_2_4g_switch(tpsll_stx2rx)
-	  - Firmware size: 57.7 kBytes
-	  - SRAM size: 20.0 kBytes
-	  - deepsleep retention SRAM size: 15.5 kBytes
-  
+    * Firmware size: 14.6 kBytes
+    * SRAM size: 9.8 kBytes
+    * deepsleep retention SRAM size: 6.3 kBytes
+  * ble_slave_2_4g(tpsll_stx2rx)
+    * Firmware size: 54.0 kBytes
+    * SRAM size: 19.9 kBytes
+    * deepsleep retention SRAM size: 15.3 kBytes
+  * ble_slave_2_4g_switch(tpsll_stx2rx)
+    - Firmware size: 57.7 kBytes
+    - SRAM size: 20.0 kBytes
+    - deepsleep retention SRAM size: 15.5 kBytes
+
 * **B87**
   * ble_sample
     - Firmware size: 55.1 kBytes
