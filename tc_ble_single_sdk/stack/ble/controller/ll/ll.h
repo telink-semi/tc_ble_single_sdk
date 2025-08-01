@@ -186,4 +186,11 @@ void        blc_ll_initPrivacyLocalRpa(void);
 void        blc_ll_write_flash_status(flash_status_typedef_e type , unsigned short data);
 
 
+/**
+ * @brief      this function is used to reset BLE rf setting after exiting 2.4G mode in ble_slave_2_4g demo.
+ * @param	   none
+ * @return     none
+ */
+void		rf_ble_state_reset(void);
+
 #endif /* LL__H_ */

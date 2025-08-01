@@ -33,6 +33,8 @@
  */
 void rf_drv_ble_init();
 
+void rf_2_4g_state_reset(void);
+
 #define		RF_POWER_P3dBm					RF_POWER_P3p00dBm
 #define		RF_POWER_P0dBm					RF_POWER_P0p00dBm
 /******************************* rf end  **********************************************************************/
@@ -65,6 +67,7 @@ enum{
 
 
 #define reg_system_tick_irq reg_system_tick_irq_level
+#define reg_system_tick_irq_level reg_system_irq_level
 
 /******************************* stimer_end ********************************************************************/
 

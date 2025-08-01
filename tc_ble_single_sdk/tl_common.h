@@ -49,3 +49,4 @@
 #include "vendor/common/app_buffer.h"
 #include "vendor/common/simple_sdp.h"
 #include "vendor/common/custom_pair.h"
+#include "vendor/common/sync_word_check.h"

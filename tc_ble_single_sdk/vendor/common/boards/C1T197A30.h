@@ -99,7 +99,7 @@
  */
 #if (UI_BUTTON_ENABLE)
 	/* 825X Dongle and 827X Dongle use Button */
-	#error "add button definition by yourself !"
+//	#error "add button definition by yourself !"
 #endif
 
 /**

@@ -24,9 +24,8 @@
 #include "flash.h"
 #include "spi_i.h"
 #include "irq.h"
-#include "timer.h"
+#include "lib/include/stimer.h"
 #include "string.h"
-#include "watchdog.h"
 
 flash_handler_t flash_read_page = flash_read_data;
 flash_handler_t flash_write_page = flash_page_program;
@@ -176,8 +175,6 @@ _attribute_ram_code_sec_noinline_ void flash_mspi_write_ram(unsigned char cmd, u
  */
 void flash_erase_sector(unsigned long addr)
 {
-	wd_clear(); // add by BLE Team
-
 	flash_mspi_write_ram(FLASH_SECT_ERASE_CMD, addr, 1, NULL, 0);
 }
 

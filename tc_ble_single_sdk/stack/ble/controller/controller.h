@@ -58,7 +58,8 @@ typedef void (*blt_event_callback_t)(u8 e, u8 *p, int n);
 #define			BLT_EV_FLAG_SCAN_REQ							17
 #define			BLT_EV_FLAG_ADV_TX_EACH_CHANNEL					18  //event triggers before transmitting ADV packet for all ADV channel (37/38/39)
 
-
+#define         BLT_EV_FLAG_STANDBY_ENTER                           BLT_EV_FLAG_SUSPEND_ENTER
+#define         BLT_EV_FLAG_STANDBY_EXIT                            BLT_EV_FLAG_SUSPEND_EXIT
 
 
 /**

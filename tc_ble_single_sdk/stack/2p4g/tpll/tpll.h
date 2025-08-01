@@ -28,8 +28,8 @@
 #define PTX_RETRY_DELAY_TIME_US                 10
 
 
-#define TPLL_RF_PACKET_LENGTH_OK(p)           (p[0] == (p[12]&0x3f)+15)
-#define TPLL_RF_PACKET_CRC_OK(p)              ((p[p[0]+3] & 0x51) == 0x40)
+#define TPLL_RF_PACKET_LENGTH_OK(p)           (p[0] == (p[4] & 0x3f) + 11)
+#define TPLL_RF_PACKET_CRC_OK(p)              ((p[p[0]+3] & 0x01) == 0x00)
 
 #define TLSR_SUCCESS                            (0)
 #define TLSR_ERROR_INVALID_PARAM                (-1)
@@ -71,14 +71,6 @@ typedef enum {
     TPLL_MODE_PRX,          /**< PRX Mode */
 } TPLL_ModeTypeDef;
 
-/**@brief Telink primary link layer bitrate mode. */
-typedef enum {
-    TPLL_BITRATE_1MBPS = 0,      /**< 1Mbit radio mode. */
-    TPLL_BITRATE_2MBPS,          /**< 2Mbit radio mode. */
-    TPLL_BITRATE_500kBPS,        /**< 500kbit radio mode. */
-    TPLL_BITRATE_250KBPS,        /**< 250Kbit radio mode. */
-} TPLL_BitrateTypeDef;
-
 /**@brief Telink primary link layer modulation index. */
 typedef enum {
 	TPLL_RF_MI_0000 = 0,             /**< MI = 0 */
@@ -93,65 +85,6 @@ typedef enum {
 	TPLL_RF_MI_1300 = 1300,		    /**< MI = 1.3 */
 	TPLL_RF_MI_1400 = 1400,		    /**< MI = 1.4 */
 }TPLL_MIVauleTypeDef;
-
-/**@brief Telink primary link layer radio transmission power modes. */
-typedef enum {
-    /*VBAT*/
-  TPLL_RF_POWER_P11p25dBm = 63,  /**< 11.25 dbm */
-  TPLL_RF_POWER_P11p00dBm = 60,  /**< 11.0 dbm */
-  TPLL_RF_POWER_P10p50dBm = 49,  /**< 10.5 dbm */
-  TPLL_RF_POWER_P10p25dBm = 43,  /**< 10.25 dbm */
-  TPLL_RF_POWER_P10p00dBm = 40,  /**< 10.0 dbm */
-  TPLL_RF_POWER_P9p50dBm  = 34,  /**<  9.5 dbm */
-  TPLL_RF_POWER_P9p00dBm  = 29,  /**<  9.0 dbm */
-  TPLL_RF_POWER_P8p50dBm  = 26,  /**<  8.5 dbm */
-  TPLL_RF_POWER_P8p00dBm  = 23,  /**<  8.0 dbm */
-  TPLL_RF_POWER_P7p75dBm  = 22,  /**<  7.75 dbm */
-  TPLL_RF_POWER_P7p50dBm  = 21,  /**<  7.5 dbm */
-  TPLL_RF_POWER_P7p25dBm  = 20,  /**<  7.25 dbm */
-  TPLL_RF_POWER_P7p00dBm  = 19,  /**<  7.0 dbm */
-  TPLL_RF_POWER_P6p50dBm  = 18,  /**<  6.5 dbm */
-  TPLL_RF_POWER_P6p00dBm  = 16,  /**<  6.0 dbm */
-  TPLL_RF_POWER_P5p50dBm  = 15,  /**<  5.5 dbm */
-  TPLL_RF_POWER_P5p00dBm  = 14,  /**<  5.0 dbm */
-  TPLL_RF_POWER_P4p50dBm  = 13,  /**<  4.5 dbm */
-  TPLL_RF_POWER_P4p00dBm  = 12,  /**<  4.0 dbm */
-  TPLL_RF_POWER_P3p50dBm  = 11,    /**<  3.5 dbm */
-    /*VANT*/
-  TPLL_RF_POWER_P3p25dBm  = BIT(7) | 61,    /**<  3.25 dbm */
-  TPLL_RF_POWER_P3p00dBm  = BIT(7) | 56,    /**<  3.0 dbm */
-  TPLL_RF_POWER_P2p50dBm  = BIT(7) | 48,    /**<  2.5 dbm */
-  TPLL_RF_POWER_P2p00dBm  = BIT(7) | 42,    /**<  2.0 dbm */
-  TPLL_RF_POWER_P1p50dBm  = BIT(7) | 37,    /**<  1.5 dbm */
-  TPLL_RF_POWER_P1p00dBm  = BIT(7) | 34,    /**<  1.0 dbm */
-  TPLL_RF_POWER_P0p50dBm  = BIT(7) | 30,    /**<  0.5 dbm */
-  TPLL_RF_POWER_P0p25dBm  = BIT(7) | 29,    /**<  0.25 dbm */
-  TPLL_RF_POWER_P0p00dBm  = BIT(7) | 28,    /**<  0.0 dbm */
-  TPLL_RF_POWER_N0p25dBm  = BIT(7) | 27,    /**< -0.25 dbm */
-  TPLL_RF_POWER_N0p50dBm  = BIT(7) | 26,    /**< -0.5 dbm */
-  TPLL_RF_POWER_N1p00dBm  = BIT(7) | 24,    /**< -1.0 dbm */
-  TPLL_RF_POWER_N1p50dBm  = BIT(7) | 22,    /**< -1.5 dbm */
-  TPLL_RF_POWER_N2p00dBm  = BIT(7) | 20,    /**< -2.0 dbm */
-  TPLL_RF_POWER_N2p50dBm  = BIT(7) | 19,    /**< -2.5 dbm */
-  TPLL_RF_POWER_N3p00dBm  = BIT(7) | 18,    /**< -3.0 dbm */
-  TPLL_RF_POWER_N3p50dBm  = BIT(7) | 17,    /**< -3.5 dbm */
-  TPLL_RF_POWER_N4p00dBm  = BIT(7) | 16,    /**< -4.0 dbm */
-  TPLL_RF_POWER_N4p50dBm  = BIT(7) | 15,    /**< -4.5 dbm */
-  TPLL_RF_POWER_N5p00dBm  = BIT(7) | 14,    /**< -5.0 dbm */
-  TPLL_RF_POWER_N5p50dBm  = BIT(7) | 13,    /**< -5.5 dbm */
-  TPLL_RF_POWER_N6p00dBm  = BIT(7) | 12,    /**< -6.0 dbm */
-  TPLL_RF_POWER_N6p50dBm  = BIT(7) | 11,    /**< -6.5 dbm */
-  TPLL_RF_POWER_N7p50dBm  = BIT(7) | 10,    /**< -7.5 dbm */
-  TPLL_RF_POWER_N8p00dBm  = BIT(7) | 9,    /**< -8.0 dbm */
-  TPLL_RF_POWER_N9p00dBm  = BIT(7) | 8,    /**< -9.0 dbm */
-  TPLL_RF_POWER_N10p50dBm = BIT(7) | 7,    /**<-10.5 dbm */
-  TPLL_RF_POWER_N12p50dBm = BIT(7) | 5,     /**<-12.5 dbm */
-  TPLL_RF_POWER_N15p00dBm = BIT(7) | 4,     /**<-15.0 dbm */
-  TPLL_RF_POWER_N18p50dBm = BIT(7) | 3,     /**<-18.5 dbm */
-  TPLL_RF_POWER_N24p50dBm = BIT(7) | 1,     /**<-25.5 dbm */
-  TPLL_RF_POWER_N40dBm    = BIT(7) | 0,     /**<-40.0 dbm */
-
-} TPLL_OutputPowerTypeDef;
 
 typedef enum{
     TPLL_RX_SETTLE_TIME_77US         = 0, /**<  disable rx_ldo_trim calibration,reduce 8.5us of rx settle time. Do a normal calibration at the beginning.*/
@@ -191,7 +124,7 @@ extern void TPLL_SetNewRFChannel(signed short channel);
  * @param       power   Output power.
  * @return      none.
   */
-extern void TPLL_SetOutputPower(TPLL_OutputPowerTypeDef power);
+extern void TPLL_SetOutputPower(RF_PowerTypeDef power);
 
 /**
  * @brief       Set one pipe as a TX pipe.
@@ -219,6 +152,13 @@ extern void TPLL_UpdateTXFifoRptr(TPLL_PipeIDTypeDef pipe_id);
  * @return      none.
  */
 extern void TPLL_EnableNoAck(unsigned char enable);
+
+/**
+ * @brief   Enables the ACK payload feature
+ *
+ * @param   enable                  Whether to enable or disable ACK payload
+ */
+extern void TPLL_Set_Local_Ack_Bit(unsigned char enable);
 
 /**
  * @brief       Write the payload that will be transmitted with ACK in the specified pipe.
@@ -409,6 +349,20 @@ extern int TPLL_RxWaitSet(unsigned short wait_us);
 extern int TPLL_TxWaitSet(unsigned short wait_us);
 
 /**
+ * @brief       Set the fast TX wait time.
+ * @param       wait_us   Period in microseconds.
+ * @return      none.
+ */
+int TPLL_Fast_TxWaitSet(unsigned short wait_us);
+
+/**
+ * @brief       Set the fast RX wait time.
+ * @param       wait_us   Period in microseconds.
+ * @return      none.
+ */
+int TPLL_Fast_RxWaitSet(unsigned short wait_us);
+
+/**
  * @brief       Set the RX timerout time.
  * @param       period_us   Period in microseconds.
  * @retval      TLSR_SUCCESS                If the operation completed successfully.
@@ -479,6 +433,50 @@ unsigned char *TPLL_GetRxPacket(void);
  */
 unsigned char TPLL_GetRxPacketId(unsigned char *rx_packet);
 
+/**
+ * @brief       Disable / enable sending an ACK packet when a crc error occurs.
+ * @param       1:enable,0:disable.
+ * @return      none.
+ */
+__attribute__((section(".ram_code"))) __attribute__((optimize("-Os")))
+void TPLL_EnableCrcfilter(unsigned char enable);
+
+/**
+ * @brief       Get the crc of the received packet.
+ * @param       rx_packet.
+ * @return      packet crc.
+ */
+__attribute__((section(".ram_code"))) __attribute__((optimize("-Os")))
+unsigned short TPLL_GetRxPacketCrc(unsigned char *rx_packet);
+/**
+ * @brief       Check if the crc of the received packet is valid.
+ * @param       rx_packet.
+ * @return      1:crc valid,0:crc invalid.
+ */
+__attribute__((section(".ram_code"))) __attribute__((optimize("-Os")))
+unsigned char TPLL_IsCrcVaild(unsigned char *rx_packet);
+/**
+ * @brief       Check if the crc len of the received packet is valid.
+ * @param       rx_packet.
+ * @return      1:crc len valid,0:crc len invalid.
+ */
+__attribute__((section(".ram_code"))) __attribute__((optimize("-Os")))
+unsigned char TPLL_IsPacketLenVaild(unsigned char *rx_packet);
+/* Check if the payload length is zero */
+/**
+ * @brief       Check if the payload length is zero.
+ * @param       rx_packet.
+ * @return      1:payload length is zero,0:payload length is not zero.
+ */
+__attribute__((section(".ram_code"))) __attribute__((optimize("-Os")))
+unsigned char TPLL_IsPacketEmpty(unsigned char *rx_packet);
+
+/* Get the local pid */
+__attribute__((section(".ram_code"))) __attribute__((optimize("-Os")))
+unsigned char TPLL_GetLocalPid(TPLL_PipeIDTypeDef pipe_id);
+
+/* Set the pid reset bit to 0 */
+void TPLL_Pid_Reset_Disable(void);
 
 /**
  * @brief       Set the frequency deviation of the transmitter, which follows the equation below.

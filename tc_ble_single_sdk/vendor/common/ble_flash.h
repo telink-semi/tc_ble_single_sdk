@@ -38,17 +38,31 @@
 //////////////////////////// Flash  Address Configuration ///////////////////////////////
 
 /**************************** 512 K Flash *****************************/
-#ifndef		CFG_ADR_MAC_512K_FLASH
-#define		CFG_ADR_MAC_512K_FLASH								0x76000
-#endif
 
-#ifndef		CFG_ADR_CALIBRATION_512K_FLASH
-#define		CFG_ADR_CALIBRATION_512K_FLASH						0x77000
-#endif
+#if(MCU_CORE_TYPE == MCU_CORE_825x || MCU_CORE_TYPE == MCU_CORE_827x)
+	#ifndef		CFG_ADR_MAC_512K_FLASH
+	#define		CFG_ADR_MAC_512K_FLASH								0x76000
+	#endif
 
+	#ifndef		CFG_ADR_CALIBRATION_512K_FLASH
+	#define		CFG_ADR_CALIBRATION_512K_FLASH						0x77000
+	#endif
 
-#ifndef 	FLASH_ADR_SMP_PAIRING_512K_FLASH
-#define 	FLASH_ADR_SMP_PAIRING_512K_FLASH         			0x74000
+	#ifndef 	FLASH_ADR_SMP_PAIRING_512K_FLASH
+	#define 	FLASH_ADR_SMP_PAIRING_512K_FLASH         			0x74000
+	#endif
+#elif (MCU_CORE_TYPE == MCU_CORE_TC321X)
+	#ifndef		CFG_ADR_MAC_512K_FLASH
+	#define		CFG_ADR_MAC_512K_FLASH								0x7F000
+	#endif
+
+	#ifndef		CFG_ADR_CALIBRATION_512K_FLASH
+	#define		CFG_ADR_CALIBRATION_512K_FLASH						0x7E000
+	#endif
+
+	#ifndef 	FLASH_ADR_SMP_PAIRING_512K_FLASH
+	#define 	FLASH_ADR_SMP_PAIRING_512K_FLASH         			0x7C000
+	#endif
 #endif
 
 /**************************** 1 M Flash *******************************/

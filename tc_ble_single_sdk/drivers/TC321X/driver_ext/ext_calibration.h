@@ -27,10 +27,34 @@
 #include "../flash.h"
 #include "../analog.h"
 
+typedef struct
+{
+    unsigned short single_gpio_gain_10000x;
+    signed short single_gpio_offset_10x;
+
+    unsigned short vbat_gain_10000x;
+    signed short vbat_offset_10x;
+
+    unsigned short diff_gpio_gain_10000x;
+    signed short diff_gpio_offset_10x;
+
+}sd_adc_calib_t;
+
+
+/**
+ * @brief       This function is used to tighten the judgment of illegal values for gpio calibration and vbat calibration in the flash.
+ * @param[in]   gain - the value of single_gpio_gain_10000x ,diff_gpio_gain_10000x and vbat_gain_10000x
+ *              offset - the value of single_gpio_offset_10x ,diff_gpio_offset_10x and vbat_offset_10x
+ *              calib_func - Function pointer to gpio_calibration or vbat_calibration.
+ * @return      1:the calibration function is invalid; 0:the calibration function is valid.
+ */
+unsigned char flash_set_adc_calib_value(unsigned short gain, signed short offset, void (*calib_func)(unsigned short, signed short));
+
+
 /**
  * @brief      This function is used to calib ADC 1.2V vref.
  */
-int user_calib_adc_vref(unsigned char * adc_vref_calib_value_rd);
+int user_calib_adc_vref(sd_adc_calib_t  calib_value);
 
 /**
  * @brief		This function serves to calibration the flash voltage(VDD_F),if the flash has the calib_value,we will use it,either will

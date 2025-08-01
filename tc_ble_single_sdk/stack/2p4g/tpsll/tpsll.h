@@ -24,6 +24,10 @@
 #ifndef ASYNC_INIT_H_
 #define ASYNC_INIT_H_
 
+#define TLSR_SUCCESS                            (0)
+#define TLSR_ERROR_INVALID_PARAM                (-1)
+#define TLSR_ERROR_BUSY                         (-2)
+
 #define TPSLL_MAX_PAYLOAD_LEN     255
 
 enum
@@ -49,15 +53,6 @@ enum
 	TPSLL_FLOW_SENT = 0x04,
 	TPSLL_FLOW_RCVD = 0x08,
 };
-
-
-/** An enum describing the radio's data rate.
- *
- */
-typedef enum {
-    TPSLL_DATARATE_1MBPS = 0,
-    TPSLL_DATARATE_2MBPS = 1,
-} tpsll_datarate_t;
 
 /** An enum describing the radio's sync word length.
  *
@@ -87,66 +82,6 @@ typedef enum {
 typedef enum {
 	TPSLL_CRC_3BYTE = 3             /**< 3byte crc */
 } tpsll_crc_len_t;
-
-/** An enum describing the radio's power level.
- *
- */
-typedef enum {
-      /*VBAT*/
-    TPSLL_RADIO__P11p25dBm = 63,  /**< 11.25 dbm */
-    TPSLL_RADIO_POWER_P11p00dBm = 60,  /**< 11.0 dbm */
-    TPSLL_RADIO_POWER_P10p50dBm = 49,  /**< 10.5 dbm */
-    TPSLL_RADIO_POWER_P10p25dBm = 43,  /**< 10.25 dbm */
-    TPSLL_RADIO_POWER_P10p00dBm = 40,  /**< 10.0 dbm */
-    TPSLL_RADIO_POWER_P9p50dBm  = 34,  /**<  9.5 dbm */
-    TPSLL_RADIO_POWER_P9p00dBm  = 29,  /**<  9.0 dbm */
-    TPSLL_RADIO_POWER_P8p50dBm  = 26,  /**<  8.5 dbm */
-    TPSLL_RADIO_POWER_P8p00dBm  = 23,  /**<  8.0 dbm */
-    TPSLL_RADIO_POWER_P7p75dBm  = 22,  /**<  7.75 dbm */
-    TPSLL_RADIO_POWER_P7p50dBm  = 21,  /**<  7.5 dbm */
-    TPSLL_RADIO_POWER_P7p25dBm  = 20,  /**<  7.25 dbm */
-    TPSLL_RADIO_POWER_P7p00dBm  = 19,  /**<  7.0 dbm */
-    TPSLL_RADIO_POWER_P6p50dBm  = 18,  /**<  6.5 dbm */
-    TPSLL_RADIO_POWER_P6p00dBm  = 16,  /**<  6.0 dbm */
-    TPSLL_RADIO_POWER_P5p50dBm  = 15,  /**<  5.5 dbm */
-    TPSLL_RADIO_POWER_P5p00dBm  = 14,  /**<  5.0 dbm */
-    TPSLL_RADIO_POWER_P4p50dBm  = 13,  /**<  4.5 dbm */
-    TPSLL_RADIO_POWER_P4p00dBm  = 12,  /**<  4.0 dbm */
-    TPSLL_RADIO_POWER_P3p50dBm  = 11,    /**<  3.5 dbm */
-      /*VANT*/
-    TPSLL_RADIO_POWER_P3p25dBm  = BIT(7) | 61,    /**<  3.25 dbm */
-    TPSLL_RADIO_POWER_P3p00dBm  = BIT(7) | 56,    /**<  3.0 dbm */
-    TPSLL_RADIO_POWER_P2p50dBm  = BIT(7) | 48,    /**<  2.5 dbm */
-    TPSLL_RADIO_POWER_P2p00dBm  = BIT(7) | 42,    /**<  2.0 dbm */
-    TPSLL_RADIO_POWER_P1p50dBm  = BIT(7) | 37,    /**<  1.5 dbm */
-    TPSLL_RADIO_POWER_P1p00dBm  = BIT(7) | 34,    /**<  1.0 dbm */
-    TPSLL_RADIO_POWER_P0p50dBm  = BIT(7) | 30,    /**<  0.5 dbm */
-    TPSLL_RADIO_POWER_P0p25dBm  = BIT(7) | 29,    /**<  0.25 dbm */
-    TPSLL_RADIO_POWER_P0p00dBm  = BIT(7) | 28,    /**<  0.0 dbm */
-    TPSLL_RADIO_POWER_N0p25dBm  = BIT(7) | 27,    /**< -0.25 dbm */
-    TPSLL_RADIO_POWER_N0p50dBm  = BIT(7) | 26,    /**< -0.5 dbm */
-    TPSLL_RADIO_POWER_N1p00dBm  = BIT(7) | 24,    /**< -1.0 dbm */
-    TPSLL_RADIO_POWER_N1p50dBm  = BIT(7) | 22,    /**< -1.5 dbm */
-    TPSLL_RADIO_POWER_N2p00dBm  = BIT(7) | 20,    /**< -2.0 dbm */
-    TPSLL_RADIO_POWER_N2p50dBm  = BIT(7) | 19,    /**< -2.5 dbm */
-    TPSLL_RADIO_POWER_N3p00dBm  = BIT(7) | 18,    /**< -3.0 dbm */
-    TPSLL_RADIO_POWER_N3p50dBm  = BIT(7) | 17,    /**< -3.5 dbm */
-    TPSLL_RADIO_POWER_N4p00dBm  = BIT(7) | 16,    /**< -4.0 dbm */
-    TPSLL_RADIO_POWER_N4p50dBm  = BIT(7) | 15,    /**< -4.5 dbm */
-    TPSLL_RADIO_POWER_N5p00dBm  = BIT(7) | 14,    /**< -5.0 dbm */
-    TPSLL_RADIO_POWER_N5p50dBm  = BIT(7) | 13,    /**< -5.5 dbm */
-    TPSLL_RADIO_POWER_N6p00dBm  = BIT(7) | 12,    /**< -6.0 dbm */
-    TPSLL_RADIO_POWER_N6p50dBm  = BIT(7) | 11,    /**< -6.5 dbm */
-    TPSLL_RADIO_POWER_N7p50dBm  = BIT(7) | 10,    /**< -7.5 dbm */
-    TPSLL_RADIO_POWER_N8p00dBm  = BIT(7) | 9,    /**< -8.0 dbm */
-    TPSLL_RADIO_POWER_N9p00dBm  = BIT(7) | 8,    /**< -9.0 dbm */
-    TPSLL_RADIO_POWER_N10p50dBm = BIT(7) | 7,    /**<-10.5 dbm */
-    TPSLL_RADIO_POWER_N12p50dBm = BIT(7) | 5,     /**<-12.5 dbm */
-    TPSLL_RADIO_POWER_N15p00dBm = BIT(7) | 4,     /**<-15.0 dbm */
-    TPSLL_RADIO_POWER_N18p50dBm = BIT(7) | 3,     /**<-18.5 dbm */
-    TPSLL_RADIO_POWER_N24p50dBm = BIT(7) | 1,     /**<-25.5 dbm */
-    TPSLL_RADIO_POWER_N40dBm    = BIT(7) | 0,     /**<-40.0 dbm */
-} tpsll_radio_power_t;
 
 /**@brief Telink proprietary stack link layer modulation index. */
 typedef enum {
@@ -256,7 +191,7 @@ _attribute_ram_code_sec_noinline_ void tpsll_rx_buffer_set(unsigned char *rx_buf
  * @param[out] none
  * @return     none.
  */
-_attribute_ram_code_sec_noinline_ void tpsll_radio_power_set(tpsll_radio_power_t level);
+_attribute_ram_code_sec_noinline_ void tpsll_radio_power_set(RF_PowerTypeDef level);
 
 /**
  * @brief      This function servers to set the length of crc.
@@ -440,6 +375,16 @@ _attribute_ram_code_sec_noinline_ void tpsll_pipe_open(tpsll_pipe_id_t pipe);
  * @return     none.
  */
 _attribute_ram_code_sec_noinline_ void tpsll_pipe_close(tpsll_pipe_id_t pipe);
+
+/**
+ * @brief      This function servers to set the length in octet of the sync word
+ *             field of the on-air data packet.
+ * @param[in]  pipe  specify which pipe the sync word is to set for
+ * @param[in]  sync_word  pointer to the sync word needs to be set
+ * @param[out] none
+ * @return     none.
+ */
+_attribute_ram_code_sec_noinline_ void tpsll_tx_pipe_set(tpsll_pipe_id_t pipe);
 
 
 #endif /* ASYNC_INIT_H_ */

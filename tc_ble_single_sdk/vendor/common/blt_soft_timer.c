@@ -164,6 +164,21 @@ int 	blt_soft_timer_delete(blt_timer_callback_t func)
 	return 0;
 }
 
+/**
+ * @brief       return the first time tick in the soft timer list
+ * @param[in]   void
+ * @return      0 - no timer
+ *              other - time tick
+ */
+u32   blt_soft_timer_get_first_tick(void)
+{
+    if(!blt_timer.currentNum){
+        return 0;
+    }
+    else {
+        return blt_timer.timer[0].t;
+    }
+}
 
 /**
  * @brief		This function is used to manage software timer tasks

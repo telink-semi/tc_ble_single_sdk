@@ -105,15 +105,9 @@
  *  @brief  AUDIO Configuration
  */
 #if (BLE_AUDIO_ENABLE)
-	#if BLE_DMIC_ENABLE
-		#define GPIO_DMIC_BIAS					GPIO_PC4
-		#define GPIO_DMIC_DI					GPIO_PA0
-		#define GPIO_DMIC_CK					GPIO_PA1
-	#else
-		#define GPIO_AMIC_BIAS					GPIO_PC4
-		#define GPIO_AMIC_SP					GPIO_PC0
-		#define GPIO_AMIC_SN					GPIO_PC1
-	#endif
+	#define GPIO_AMIC_BIAS					GPIO_PC4
+	#define GPIO_AMIC_SP					GPIO_PC0
+	#define GPIO_AMIC_SN					GPIO_PC1
 #endif
 
 /**

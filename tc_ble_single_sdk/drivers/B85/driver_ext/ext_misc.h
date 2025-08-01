@@ -36,6 +36,8 @@
  */
 void rf_drv_ble_init();
 
+void rf_2_4g_state_reset(void);
+
 #define		RF_POWER_P3dBm					RF_POWER_P3p01dBm
 #define		RF_POWER_P0dBm					RF_POWER_P0p04dBm
 /******************************* rf end  **********************************************************************/

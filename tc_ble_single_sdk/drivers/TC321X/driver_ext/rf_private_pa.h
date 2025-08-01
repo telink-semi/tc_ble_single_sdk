@@ -25,7 +25,7 @@
 #define RF_PRIVATE_PA_H_
 
 #include "gpio.h"
-
+#include "config.h"
 
 #ifndef PRIVATE_PA_ENABLE
 #define PRIVATE_PA_ENABLE                           1

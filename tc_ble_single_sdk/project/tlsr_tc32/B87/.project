@@ -124,7 +124,7 @@
 		<link>
 			<name>stack</name>
 			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
+			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/stack</locationURI>
 		</link>
 		<link>
 			<name>tl_common.h</name>
@@ -134,47 +134,7 @@
 		<link>
 			<name>vendor</name>
 			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>stack/ble</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/stack/ble</locationURI>
-		</link>
-		<link>
-			<name>vendor/b85m_ble_remote</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/b85m_ble_remote</locationURI>
-		</link>
-		<link>
-			<name>vendor/b85m_ble_sample</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/b85m_ble_sample</locationURI>
-		</link>
-		<link>
-			<name>vendor/b85m_feature_test</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/b85m_feature_test</locationURI>
-		</link>
-		<link>
-			<name>vendor/b85m_hci</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/b85m_hci</locationURI>
-		</link>
-		<link>
-			<name>vendor/b85m_module</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/b85m_module</locationURI>
-		</link>
-		<link>
-			<name>vendor/common</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/common</locationURI>
-		</link>
-		<link>
-			<name>vendor/b85m_master_kma_dongle</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/b85m_master_kma_dongle</locationURI>
+			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

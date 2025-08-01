@@ -41,25 +41,6 @@ unsigned char analog_read(unsigned char addr);
  */
 void analog_write(unsigned char addr, unsigned char v);
 
-/**
- * @brief      This function serves to analog register read.
- * @param[in]  addr - address need to be read.
- * @param[in]  *buff - the value need to be read.
- * @param[in]  len - the length of read value.
- * @return     none.
- */
-void analog_read_buff(unsigned char addr, unsigned char *buff, int len);
-
-/**
- * @brief      This function serves to analog register write.
- * @param[in]  addr - address need to be write.
- * @param[in]  *buff - the value need to be write.
- * @param[in]  len - the length of write value.
- * @return     none.
- */
-void analog_write_buff(unsigned char addr, unsigned char *buff, int len);
-
-
 #define  WriteAnalogReg  analog_write
 #define  ReadAnalogReg   analog_read
 

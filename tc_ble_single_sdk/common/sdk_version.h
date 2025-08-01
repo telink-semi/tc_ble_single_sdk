@@ -28,7 +28,7 @@
 #define	CERTIFICATION_MARK			3
 #define	SOFT_STRUCTURE				4
 #define	MAJOR_VERSION				2
-#define	MINOR_VERSION				6
+#define	MINOR_VERSION				7
 #define	PATCH_NUM					0
 
 #define CUSTOM_MAJOR_VERSION		0
@@ -43,7 +43,7 @@
 
 #define SDK_VERSION_NUM					B85m_SDK_VERSION_NUM
 
-#define	SDK_VERSION1(sdk_version_num)	"$$$tc_ble_sdk_V"#sdk_version_num"$$$"
+#define	SDK_VERSION1(sdk_version_num)	"$$$tc_ble_single_sdk_V"#sdk_version_num"$$$"
 #define	SDK_VERSION(sdk_version_num)	SDK_VERSION1(sdk_version_num)
 
 #define	PATCH_VERSION1(patch_num)	"$$$patch_"#patch_num"$$$"

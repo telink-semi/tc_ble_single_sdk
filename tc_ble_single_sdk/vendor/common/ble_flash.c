@@ -237,9 +237,15 @@ void blc_app_loadCustomizedParameters_normal(void)
 	}
 
 	/* read and set ADC V_reference calibration value from Flash */
-	unsigned char adc_vref_calib_value_rd[7] = {0};
-	flash_read_page(flash_sector_calibration + CALIB_OFFSET_ADC_VREF, 7, adc_vref_calib_value_rd);
-	user_calib_adc_vref(adc_vref_calib_value_rd);
+	#if (MCU_CORE_TYPE == MCU_CORE_825x || MCU_CORE_TYPE == MCU_CORE_827x)
+		unsigned char adc_vref_calib_value_rd[7] = {0};
+		flash_read_page(flash_sector_calibration + CALIB_OFFSET_ADC_VREF, 7, adc_vref_calib_value_rd);
+		user_calib_adc_vref(adc_vref_calib_value_rd);
+	#elif (MCU_CORE_TYPE == MCU_CORE_TC321X)
+		sd_adc_calib_t sd_adc_calib_value;
+		flash_read_page(flash_sector_calibration + CALIB_OFFSET_ADC_VREF, 12, (unsigned char*)&sd_adc_calib_value);
+		user_calib_adc_vref(sd_adc_calib_value);
+	#endif
 }
 
 /**

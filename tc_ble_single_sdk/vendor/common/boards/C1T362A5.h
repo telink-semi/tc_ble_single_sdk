@@ -39,7 +39,7 @@
 	#define  KB_SCAN_PINS   {GPIO_PA0, GPIO_PB0, GPIO_PD0, GPIO_PD5, GPIO_PD6, GPIO_PA6}// second pin 'GPIO_PA0' abnormal
 
 	//drive pin as gpio
-	#define	PB5_FUNC				AS_GPIO
+	#define	PB3_FUNC				AS_GPIO
 	#define	PA5_FUNC				AS_GPIO
 	#define	PA7_FUNC				AS_GPIO
 	#define	PB2_FUNC				AS_GPIO
@@ -106,15 +106,9 @@
  *  @brief  AUDIO Configuration
  */
 #if (BLE_AUDIO_ENABLE)
-	#if BLE_DMIC_ENABLE
-		#define GPIO_DMIC_BIAS					GPIO_PC4
-		#define GPIO_DMIC_DI					GPIO_PA0
-		#define GPIO_DMIC_CK					GPIO_PA1
-	#else
-		#define GPIO_AMIC_BIAS					GPIO_PC2
-		#define GPIO_AMIC_SP					GPIO_PC1
-		#define GPIO_AMIC_SN					GPIO_PC0
-	#endif
+	#define GPIO_AMIC_BIAS					GPIO_PC2
+	#define GPIO_AMIC_SP					GPIO_PC1
+	#define GPIO_AMIC_SN					GPIO_PC0
 #endif
 
 /**
@@ -161,7 +155,7 @@
 	#else
 		//Telink device: you must choose one gpio with adc function to output high level(voltage will equal to vbat), then use adc to measure high level voltage
 		//use PB7 output high level, then adc measure this high level voltage
-		#define GPIO_VBAT_DETECT				SD_ADC_GPIO_PB4P
+		#define GPIO_VBAT_DETECT				SD_ADC_GPIO_PB5P
 	#endif
 #endif
 

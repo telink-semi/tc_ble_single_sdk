@@ -34,7 +34,11 @@
 
 _attribute_data_retention_	u8				adc_first_flg = 1;
 _attribute_data_retention_	static u8		lowBattDet_enable = 1;
+#if (MCU_CORE_TYPE == MCU_CORE_TC321X)
+_attribute_data_retention_  static signed int 		batt_vol_mv;
+#else
 _attribute_data_retention_  static s16 		batt_vol_mv;
+#endif
 u8      adc_hw_initialized = 0;
 
 extern unsigned short 	adc_gpio_calib_vref;
@@ -74,7 +78,7 @@ extern unsigned char   	adc_pre_scale;
 	    //get average value from raw data(abandon 1/4 small and 1/4 big data)
 	    for (i = SD_ADC_SAMPLE_CNT>>2; i < (SD_ADC_SAMPLE_CNT - (SD_ADC_SAMPLE_CNT>>2)); i++)
 	    {
-	        sd_adc_code_average += sample_buffer[i]/(SD_ADC_SAMPLE_CNT>>1);
+	        sd_adc_code_average += (float)sample_buffer[i]/(float)(SD_ADC_SAMPLE_CNT>>1);
 	    }
 	    return sd_adc_code_average;
 	}
@@ -414,7 +418,7 @@ _attribute_ram_code_ int app_battery_power_check(u16 alram_vol_mv)
 		}
 		while(!sd_adc_get_irq_status());
 		sd_adc_sample_stop();
-		batt_vol_mv=sd_adc_get_result(DC_VOLTAGE);
+		batt_vol_mv=sd_adc_get_result(SD_ADC_VOLTAGE_MV);
 		sd_adc_power_off(SD_ADC_SAMPLE_MODE);
 
 	#endif

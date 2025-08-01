@@ -148,24 +148,23 @@
  *  @brief  AUDIO Configuration
  */
 #if (BLE_AUDIO_ENABLE)
-	#if BLE_DMIC_ENABLE
-		#define GPIO_DMIC_DI					GPIO_PA5
-		#define GPIO_DMIC_CK					GPIO_PA6
-		#define GPIO_DMIC_CK2					GPIO_PB5
-	#else
-		#define GPIO_AMIC_BIAS					GPIO_PC5
-		#define GPIO_AMIC_SP					GPIO_PC1
-		#define GPIO_AMIC_SN					GPIO_PC0
-	#endif
+	#define GPIO_AMIC_BIAS					GPIO_PC5
+	#define GPIO_AMIC_SP					GPIO_PC1
+	#define GPIO_AMIC_SN					GPIO_PC0
 #endif
 
 /**
  *  @brief  Battery_check Configuration
  */
 #if (APP_BATT_CHECK_ENABLE)
+	#if 0
+		//use VBAT , then adc measure this VBAT voltage
+		#define ADC_INPUT_PCHN					VBAT    //corresponding  ADC_InputPchTypeDef in adc.h
+	#else
 	//Telink device: you must choose one gpio with adc function to output high level(voltage will equal to vbat), then use adc to measure high level voltage
 	//use PB2 output high level, then adc measure this high level voltage
-	#define GPIO_VBAT_DETECT				SD_ADC_GPIO_PB1P
+	#define GPIO_VBAT_DETECT				SD_ADC_GPIO_PB5P
+#endif
 #endif
 
 

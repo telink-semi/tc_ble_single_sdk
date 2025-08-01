@@ -123,6 +123,14 @@ int 	blt_soft_timer_delete(blt_timer_callback_t func);
 void 	blt_soft_timer_init(void);
 
 /**
+ * @brief       return the first time tick in the soft timer list
+ * @param[in]   void
+ * @return      0 - no timer
+ *              other - time tick
+ */
+u32   blt_soft_timer_get_first_tick(void);
+
+/**
  * @brief		This function is used to manage software timer tasks
  * @param[in]	type - the type for trigger
  * @return      none

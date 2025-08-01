@@ -25,10 +25,9 @@
 #define __FLASH_TYPE_H__
 
 #include "flash.h"
-#include "flash_mid1360c8.h"	// GD25LD40EGEG(untest)
-#include "flash_mid136085.h"	// P25D40SU
+#include "flash_mid136085.h"	// P25D40SU/P25Q40TU
 #include "flash_mid146085.h"	// P25Q80SU
-#include "flash_mid156085.h"	// P25Q16SU(untest)
+#include "flash_mid156085.h"	// P25Q16SU
 
 /**
  * @brief		This function reads the status of flash.
