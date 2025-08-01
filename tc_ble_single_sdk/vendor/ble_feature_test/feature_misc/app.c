@@ -295,15 +295,17 @@ void blt_pm_proc(void)
 		}
 	#endif
 
-	if(blc_ll_getCurrentState() == BLS_LINK_STATE_IDLE && (clock_time_exceed(blt_soft_timer_get_first_tick(),(clock_time()+ 3 *SYSTEM_TIMER_TICK_1MS))) )
-	{
-		//SUSPEND_MODE is for reference only. Customers can choose the appropriate mode based on their specific applications.
-		cpu_sleep_wakeup(SUSPEND_MODE, PM_WAKEUP_PAD|PM_WAKEUP_TIMER, blt_soft_timer_get_first_tick());
+	#if (FEATURE_TEST_MODE == TEST_USER_BLT_SOFT_TIMER)
+		if(blc_ll_getCurrentState() == BLS_LINK_STATE_IDLE && (clock_time_exceed(blt_soft_timer_get_first_tick(),(clock_time()+ 3 *SYSTEM_TIMER_TICK_1MS))) )
+		{
+			//SUSPEND_MODE is for reference only. Customers can choose the appropriate mode based on their specific applications.
+			cpu_sleep_wakeup(SUSPEND_MODE, PM_WAKEUP_PAD|PM_WAKEUP_TIMER, blt_soft_timer_get_first_tick());
 
-		//It is important to note that if Bluetooth Low Energy (BLE) functionality is required after wakeup,
-		//rf_drv_ble_init must be added.
-		rf_drv_ble_init();
-	}
+			//It is important to note that if Bluetooth Low Energy (BLE) functionality is required after wakeup,
+			//rf_drv_ble_init must be added.
+			rf_drv_ble_init();
+		}
+	#endif
 #endif  //end of BLE_APP_PM_ENABLE
 }
 
