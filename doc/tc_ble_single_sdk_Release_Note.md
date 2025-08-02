@@ -227,7 +227,7 @@
   - 修复：C1T362A5开发板的GPIO设置错误。
   - 修复：TC321X 的Audio设置错误。
 * **Controller**
-  - 修复：部分极端的连接请求参数导致的连接失败问题（transmitWindowOffset = 0 ，且在 Transmit Window 的开始的位置发送 TX packet）。
+  - 修复：部分极端的连接请求参数导致的连接失败问题（transmitWindowOffset = 0 ，且在 Transmit Window 开始的位置发送 TX packet）。
 * **CoC**(Connection-oriented channels)
   - 修复：建立新CoC通道时的参数校验逻辑错误。
 * **Driver**
