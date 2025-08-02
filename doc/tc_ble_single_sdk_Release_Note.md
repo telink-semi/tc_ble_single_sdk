@@ -39,10 +39,11 @@
 * **Application**
   - Fixed: When the local Central device supports SMP while the peer Peripheral device does not support SMP, the local Central device cannot send the Connection Update Indication packet.
   - Fixed: GPIO setting error in C1T362A5 boards.
+  - Fixed: TC321X audio setting error.
 * **Controller**
   - Fixed: Connection failure caused by some extreme parameters of connection indication packet (transmitWindowOffset = 0 and TX packet is sent at the beginning of Transmit Window).
-* **CoC**
-  - Fixed: Incorrect parameter validation logic when establishing new CoC(Connection-oriented channels) channels.
+* **CoC**(Connection-oriented channels) 
+  - Fixed: Incorrect parameter validation logic when establishing new CoC channels.
 * **Driver**
   - Fixed (TC321X A0) : MCU reboot failure after OTA when calling start_reboot.
 
@@ -50,6 +51,8 @@
 
 * **Application**
   - Support using soft timer in IDLE state.
+  - Modify the audio setting code structure.
+  - Delete Audio DMIC setting.
   - Rename some reference designs.
     - Rename b85m_2p4g_feature to 2p4g_feature.
     - Rename b85m_2p4g_genfsk_ll to 2p4g_genfsk_ll.
@@ -61,7 +64,10 @@
     - Rename b85m_module to ble_module.
     - Rename b85m_ble_remote to ble_remote.
     - Rename b85m_ble_sample to ble_sample.
-* **Controller**
+
+### Optimize
+
+- **Controller**
   - (TC321X) Optimize power consumption in connection state.
 
 ### BREAKING CHANGES
@@ -219,10 +225,11 @@
 * **Application**
   - 修复：当本地Central设备支持SMP而配对的Peripheral设备不支持SMP时，本地Central设备无法发送连接更新指示包。
   - 修复：C1T362A5开发板的GPIO设置错误。
+  - 修复：TC321X 的Audio设置错误。
 * **Controller**
   - 修复：部分极端的连接请求参数导致的连接失败问题（transmitWindowOffset = 0 ，且在 Transmit Window 的开始的位置发送 TX packet）。
-* **CoC**
-  - 修复：建立新CoC(Connection-oriented channels)通道时的参数校验逻辑错误。
+* **CoC**(Connection-oriented channels)
+  - 修复：建立新CoC通道时的参数校验逻辑错误。
 * **Driver**
   - 修复 (TC321X A0)：OTA结束后调用start_reboot函数无法正常重启MCU的问题。
 
@@ -230,7 +237,7 @@
 
 * **Application**
   - 支持在IDLE态下使用软件定时器。
-  - 修改 Audio 设置代码结构，并修复 TC321X 的Audio设置错误。
+  - 修改 Audio 设置代码结构。
   - 删除 Audio DMIC 设置。
   - 重命名部分参考设计
     - 将 b85m_2p4g_feature 重命名为 2p4g_feature。
@@ -244,8 +251,10 @@
     - 将 b85m_ble_remote 重命名为 ble_remote。
     - 将 b85m_ble_sample 重命名为 ble_sample。
 
-* **Controller**
-  - (TC321X) 优化连接状态下的功耗。
+### Optimize
+
+- **Controller**
+  - (TC321X)优化连接状态下的功耗。
 
 ### BREAKING CHANGES
 
