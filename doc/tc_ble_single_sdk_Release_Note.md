@@ -65,7 +65,7 @@
     - Rename b85m_ble_remote to ble_remote.
     - Rename b85m_ble_sample to ble_sample.
 
-### Optimize
+### Optimization
 
 - **Controller**
   - (TC321X) Optimize power consumption in connection state.
@@ -251,7 +251,7 @@
     - 将 b85m_ble_remote 重命名为 ble_remote。
     - 将 b85m_ble_sample 重命名为 ble_sample。
 
-### Optimize
+### Optimization
 
 - **Controller**
   - (TC321X)优化连接状态下的功耗。
