@@ -154,11 +154,6 @@
 #define CLOCK_SYS_CLOCK_HZ                                  16000000
 
 
-/////////////////// watchdog  //////////////////////////////
-#define MODULE_WATCHDOG_ENABLE      0
-#define WATCHDOG_INIT_TIMEOUT       500  //ms
-
-
 /////////////////////////////////////// PRINT DEBUG INFO ///////////////////////////////////////
 #if (UART_PRINT_DEBUG_ENABLE)
     #define DEBUG_INFO_TX_PIN               GPIO_PB1

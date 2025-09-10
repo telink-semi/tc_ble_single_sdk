@@ -98,6 +98,11 @@ SECTIONS
 	     } 
 	PROVIDE(_sstored_ = _dstored_ + _end_data_ - _start_data_);
 
+	. = (((. + 3) / 4)*4);
+    .my_code(NOLOAD) :
+    {
+	*(.rf_sw_config)
+    }
 
 	/* irk_stk is 4 word align */
 	. = (((. + 3) / 4)*4);

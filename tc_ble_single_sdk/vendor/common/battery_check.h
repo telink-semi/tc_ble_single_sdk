@@ -36,6 +36,7 @@
 
 #if (APP_BATT_CHECK_ENABLE)
 
+extern u32	lowBattDet_tick;
 
 
 /**

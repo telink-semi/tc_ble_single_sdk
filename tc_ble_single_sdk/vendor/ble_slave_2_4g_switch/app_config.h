@@ -153,7 +153,7 @@
 #endif
 #define	LOW_BATT_FLG					    BIT(0) //if 1: low battery
 #define CONN_DEEP_FLG	                    BIT(4) //if 1: conn deep, 0: ADV deep
-#define RF_WORKING_MODE                     BIT(0)
+#define RF_WORKING_MODE                     BIT(5)
 
 
 ///////////////////////// System Clock  Configuration /////////////////////////////////////////

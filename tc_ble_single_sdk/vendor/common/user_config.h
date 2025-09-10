@@ -46,6 +46,8 @@
     #include "vendor/2p4g_tpsll/app_config.h"
 #elif (__PROJECT_TC321X_2P4G_FEATURE__ || __PROJECT_8258_2P4G_FEATURE__ || __PROJECT_8278_2P4G_FEATURE__)
     #include "vendor/2p4g_feature/app_config.h"
+#elif (__PROJECT_TC321X_2P4G_FEATURE_TEST__ || __PROJECT_8258_2P4G_FEATURE_TEST__ || __PROJECT_8278_2P4G_FEATURE_TEST__)
+	#include "vendor/2p4g_feature_test/app_config.h"
 #elif (__PROJECT_TC321X_BLE_SLAVE_2P4G__ || __PROJECT_8258_BLE_SLAVE_2P4G__ || __PROJECT_8278_BLE_SLAVE_2P4G__)
     #include "vendor/ble_slave_2_4g/app_config.h"
 #elif (__PROJECT_TC321X_BLE_SLAVE_2P4G_SWITCH__ || __PROJECT_8258_BLE_SLAVE_2P4G_SWITCH__ || __PROJECT_8278_BLE_SLAVE_2P4G_SWITCH__)

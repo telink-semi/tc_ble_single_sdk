@@ -31,7 +31,7 @@
 	.code	16
 	.text
 
-	.section	.ram_code,"ax" //in ram code
+	.section	.cstartup_ram_funcs,"ax" //in ram code
 	.align	2
 	.global	__modsi3
 	.code 16
@@ -42,7 +42,7 @@ __modsi3:
 	tj	div
 	.size	__modsi3, .-__modsi3
 
-	.section	.ram_code,"ax" //in ram code
+	.section	.cstartup_ram_funcs,"ax" //in ram code
 	.align	2
 	.global	__divsi3
 	.code 16
@@ -53,7 +53,7 @@ __divsi3:
 	tj	div
 	.size	__divsi3, .-__divsi3
 
-	.section	.ram_code,"ax" //in ram code
+	.section	.cstartup_ram_funcs,"ax" //in ram code
 	.align	2
 	.global	__umodsi3
 	.code 16
@@ -64,7 +64,7 @@ __umodsi3:
 	tj	div
 	.size	__umodsi3, .-__umodsi3
 
-	.section	.ram_code,"ax" //in ram code
+	.section	.cstartup_ram_funcs,"ax" //in ram code
 	.align	2
 	.global	__udivsi3
 	.code 16
@@ -75,7 +75,7 @@ __udivsi3:
 	tj	div
 	.size	__udivsi3, .-__udivsi3
 
-	.section	.ram_code,"ax" //in ram code
+	.section	.cstartup_ram_funcs,"ax" //in ram code
 	.align	2
 	.global	div
 	.code 16

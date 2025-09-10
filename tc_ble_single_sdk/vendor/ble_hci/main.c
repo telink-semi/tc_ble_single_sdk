@@ -104,6 +104,11 @@ _attribute_ram_code_ int main (void)    //must run in ramcode
 
 	clock_init(SYS_CLK_TYPE);
 
+#if (MODULE_WATCHDOG_ENABLE)
+	wd_set_interval_ms(WATCHDOG_INIT_TIMEOUT,CLOCK_SYS_CLOCK_1MS);
+	wd_start();
+#endif
+
 #if	(PM_DEEPSLEEP_RETENTION_ENABLE)
 	if( pm_is_MCU_deepRetentionWakeup() ){
 		user_init_deepRetn();
@@ -117,9 +122,14 @@ _attribute_ram_code_ int main (void)    //must run in ramcode
     irq_enable();
 
 	while (1) {
-#if (MODULE_WATCHDOG_ENABLE && (MCU_CORE_TYPE != MCU_CORE_TC321X))
-		wd_clear(); //clear watch dog
-#endif
+	#if (MODULE_WATCHDOG_ENABLE)
+		#if (MCU_CORE_TYPE == MCU_CORE_TC321X)
+			if (g_chip_version != CHIP_VERSION_A0)
+		#endif
+			{
+				wd_clear(); //clear watch dog
+			}
+	#endif
 		main_loop();
 	}
 }

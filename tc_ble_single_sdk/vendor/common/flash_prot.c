@@ -149,6 +149,7 @@ void flash_protection_init(void)
 		#endif
 
 		default:
+			blc_flashProt.init_err = 1;
 			break;
 	}
 }

@@ -99,6 +99,12 @@
 	#define LED_ON_LEVEL 						1 			//gpio output high voltage to turn on led
 	#define	GPIO_LED							GPIO_PC6
 	#define PC6_FUNC							AS_GPIO
+
+	//compatibility process
+	#define	GPIO_LED_WHITE						GPIO_LED
+	#define	GPIO_LED_RED						GPIO_LED
+	#define	GPIO_LED_GREEN						GPIO_LED
+	#define	GPIO_LED_BLUE						GPIO_LED
 #endif
 
 /**

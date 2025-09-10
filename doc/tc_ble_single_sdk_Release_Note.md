@@ -1,3 +1,191 @@
+# V3.4.2.8 (PR)
+
+### Version
+* SDK version: tc_ble_single_sdk V3.4.2.8
+* Chip Version
+  - B85: TLSR825X
+  - B87: TLSR827X
+  - TC321X (A0/A1)
+* Hardware Version
+  - B85: C1T139A30_V1_2, C1T139A5_V1_4, C1T139A3_V2_0
+  - B87: C1T197A30_V1_1, C1T197A5_V1_1, C1T201A3_V1_0
+  - TC321X: C1T357A20_V1_1, C1T362A5_V1_0
+* Platform Version
+  - tc_platform_sdk V3.3.0
+* Toolchain Version
+  - TC32 ELF GCC4.3 ( IDE: [Telink IoT Studio](https://www.telink-semi.com/development-tools) )
+
+### Note
+* (B85/B87/TC321X) Since the analog registers of TC321X are cleared after a software reboot or watchdog reboot, the judgment logic for low battery check has been modified. The flag bit "LOW_BATT_FLG" is set when the voltage is normal and cleared when it is abnormal. As a result, during the first power-up, the voltage must be above 2.2V for the program to run; otherwise, it will enter deep sleep mode.
+
+
+### Features
+* **Chip**
+  - Support TC321X chip A1.
+
+* **Application**
+  - Add 2.4G reference design 2p4g_feature_test in B85/B87/TC321X.
+
+### Bug Fixes
+* **Application**
+  - Fixed(TC321X): Enabling APP_BATT_CHECK_ENABLE leads to increased current consumption in deep sleep mode.
+  - Fixed(TC321X): The IR learning fails when the system clock is not 16 MHz.
+  - Fixed(B85/B87/TC321X): GENFSK/TPSLL does not support receiving 255-byte-long payload packets, because the RX buffer length parameter is of type unsigned char, and there is a TPSLL DMA length write-back exception.
+  - Fixed(B85/B87/TC321X): When REMOTE_IR_LEARN_ENABLE is enabled, the MCU cannot enter sleep mode.
+  - Fixed(B85/B87/TC321X): In the reference designs "feature_DLE_master", "feature_DLE_slave", and "feature_usb_cdc", an initialization error of app_l2cap_tx_fifo occurs when MTU_SIZE_SETTING exceeds ATT_MTU_MAX_SDK_DFT_BUF.
+
+### Refactoring
+* **Application**
+  - (B85/B87/TC321X) When the flash_mid acquisition fails or no matching MID value is found, set "blc_flashProt.init_err = 1" to indicate a flash protection initialization failure.
+  - (B85/B87/TC321X) Optimize the enabling method of the timer watchdog. After enabling MODULE_WATCHDOG_ENABLE, enable the timer watchdog by calling wd_set_interval_ms() and wd_start().
+
+* **Link & Startup**
+  - (B85/B87/TC321X) Add a new sector "platform_func" to store the platform data.
+  - (B85/B87/TC321X) Move the functions in div_mod.S from the ram_code sector to cstartup_ram_funcs.
+  - (TC321X) Add RF software configuration invocation interface "rf_sw_config" in the cstartup_TC321X.S.
+
+### Optimization
+* N/A
+
+### BREAKING CHANGES
+* N/A
+
+### CodeSize
+* **B85**
+
+| reference design                    | Firmware size (kBytes)    | SRAM size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 53.3                      | 17.9                         | 14.2                                   |
+| ble_remote                          | 65.1                      | 20.9                         | 15.5                                   |
+| ble_module                          | 61.9                      | 20.2                         | 16.4                                   |
+| master_kma_dongle                   | 43.4                      | 19.9                         | N/A                                    |
+| genfsk_ll(stx2rx)                   | 16.8                      | 9.4                          | 6.3                                    |
+| tpll(ptx)                           | 17.6                      | 11.8                         | 6.8                                    |
+| tpsll(stx2rx)                       | 14.9                      | 9.6                          | 6.0                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 53.9                      | 19.4                         | 15.0                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 57.9                      | 19.7                         | 15.2                                   |
+
+* **B87**
+
+| reference design                    | Firmware size (kBytes)    | SRAM size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 55.2                      | 19.7                         | 15.8                                   |
+| ble_remote                          | 66.3                      | 22.7                         | 17.1                                   |
+| ble_module                          | 63.7                      | 21.7                         | 18.0                                   |
+| master_kma_dongle                   | 44.7                      | 21.4                         | N/A                                    |
+| genfsk_ll(stx2rx)                   | 19.1                      | 10.9                         | 7.7                                    |
+| tpll(ptx)                           | 20.3                      | 13.5                         | 8.5                                    |
+| tpsll(stx2rx)                       | 17.1                      | 11.1                         | 7.4                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 56.2                      | 21.1                         | 16.6                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 60.2                      | 21.3                         | 16.8                                   |
+
+* **TC321X**
+
+| reference design                    | Firmware size (kBytes)    | SRAM size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 59.9                      | 19.1                         | 15.4                                   |
+| ble_remote                          | 71.2                      | 22.0                         | 16.4                                   |
+| ble_module                          | 69.4                      | 21.3                         | 17.4                                   |
+| genfsk_ll(stx2rx)                   | 24.4                      | 10.9                         | 7.8                                    |
+| tpll(ptx)                           | 26.8                      | 13.4                         | 8.2                                    |
+| tpsll(stx2rx)                       | 22.4                      | 11.1                         | 7.5                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 61.1                      | 20.8                         | 16.4                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 64.9                      | 21.2                         | 16.6                                   |
+
+### Version
+
+* SDK 版本: tc_ble_single_sdk V3.4.2.8
+* Chip 版本
+  - B85: TLSR825X
+  - B87: TLSR827X
+  - TC321X (A0/A1)
+* Hardware 版本
+  - B85: C1T139A30_V1_2, C1T139A5_V1_4, C1T139A3_V2_0
+  - B87: C1T197A30_V1_1, C1T197A5_V1_1, C1T201A3_V1_0
+  - TC321X: C1T357A20_V1_1, C1T362A5_V1_0
+* Platform 版本
+  - tc_platform_sdk V3.3.0
+* Toolchain 版本
+  - TC32 ELF GCC4.3 ( IDE: [Telink IoT Studio](https://www.telink-semi.com/development-tools) )
+
+### Note
+* (B85/B87/TC321X) 由于TC321X的模拟寄存器在软件reboot后会清掉，因此修改了低压检测的判断逻辑，电压正常时写入标志位“LOW_BATT_FLG”，异常时清除标志位“LOW_BATT_FLG”。所造成的影响是，第一次上电电压需要高于2.2V才能使程序运行，否则会直接进入deep sleep状态。
+
+### Features
+* **Chip**
+  - 支持 TC321X 芯片 A1。
+
+* **Application**
+  - 在 B85/B87/TC321X 上添加 2.4G 参考设计 2p4g_feature_test。
+
+### Bug Fixes
+* **Application**
+  - 修复(TC321X)：开启低压检测功能（APP_BATT_CHECK_ENABLE）会导致设备在睡眠模式下耗电过高。
+  - 修复(TC321X)：IR 学习功能在系统时钟不是 16 MHz 时，无法正常工作。
+  - 修复(B85/B87/TC321X)：GENFSK/TPSLL不支持255字节的长payload收包，因为RX buffer length传参为unsigned char类型，并且存在TPSLL DMA length 回写异常。
+  - 修复(B85/B87/TC321X)：开启 REMOTE_IR_LEARN_ENABLE 时，MCU 无法进入睡眠模式。
+  - 修复(B85/B87/TC321X)：在参考设计 ​​"feature_DLE_master"​、​"feature_DLE_slave"​​ 和 ​​"feature_usb_cdc"​​ 中，当 ​MTU_SIZE_SETTING​ 的值大于 ​ATT_MTU_MAX_SDK_DFT_BUF​ 时，会出现 ​app_l2cap_tx_fifo​ 的初始化错误。
+
+### Refactoring
+* **Application**
+  - (B85/B87/TC321X) 当 flash_mid 获取失败或未找到匹配的 MID 值时，设置 “blc_flashProt.init_err = 1”， 表示 flash 保护初始化失败。
+  - (B85/B87/TC321X) 优化timer watchdog的使能方法。在使能 MODULE_WATCHDOG_ENABLE 后，通过调用 wd_set_interval_ms() 和 wd_start() 来开启timer watchdog。
+
+* **Link & Startup**
+  - (B85/B87/TC321X) 添加一个名为“platform_func”的sector，用于存储平台数据。
+  - (B85/B87/TC321X) 将 div_mod.S 中的函数从 ram_code sector 移动到 cstartup_ram_funcs。
+  - (TC321X) 在cstartup_TC321X.S中添加 RF 软件配置调用接口“rf_sw_config”。
+
+### Optimization
+* N/A
+
+### BREAKING CHANGES
+* N/A
+
+### CodeSize
+* **B85**
+
+| reference design                    | Firmware size (kBytes)    | SRAM size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 53.3                      | 17.9                         | 14.2                                   |
+| ble_remote                          | 65.1                      | 20.9                         | 15.5                                   |
+| ble_module                          | 61.9                      | 20.2                         | 16.4                                   |
+| master_kma_dongle                   | 43.4                      | 19.9                         | N/A                                    |
+| genfsk_ll(stx2rx)                   | 16.8                      | 9.4                          | 6.3                                    |
+| tpll(ptx)                           | 17.6                      | 11.8                         | 6.8                                    |
+| tpsll(stx2rx)                       | 14.9                      | 9.6                          | 6.0                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 53.9                      | 19.4                         | 15.0                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 57.9                      | 19.7                         | 15.2                                   |
+
+* **B87**
+
+| reference design                    | Firmware size (kBytes)    | SRAM size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 55.2                      | 19.7                         | 15.8                                   |
+| ble_remote                          | 66.3                      | 22.7                         | 17.1                                   |
+| ble_module                          | 63.7                      | 21.7                         | 18.0                                   |
+| master_kma_dongle                   | 44.7                      | 21.4                         | N/A                                    |
+| genfsk_ll(stx2rx)                   | 19.1                      | 10.9                         | 7.7                                    |
+| tpll(ptx)                           | 20.3                      | 13.5                         | 8.5                                    |
+| tpsll(stx2rx)                       | 17.1                      | 11.1                         | 7.4                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 56.2                      | 21.1                         | 16.6                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 60.2                      | 21.3                         | 16.8                                   |
+
+* **TC321X**
+
+| reference design                    | Firmware size (kBytes)    | SRAM size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 59.9                      | 19.1                         | 15.4                                   |
+| ble_remote                          | 71.2                      | 22.0                         | 16.4                                   |
+| ble_module                          | 69.4                      | 21.3                         | 17.4                                   |
+| genfsk_ll(stx2rx)                   | 24.4                      | 10.9                         | 7.8                                    |
+| tpll(ptx)                           | 26.8                      | 13.4                         | 8.2                                    |
+| tpsll(stx2rx)                       | 22.4                      | 11.1                         | 7.5                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 61.1                      | 20.8                         | 16.4                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 64.9                      | 21.2                         | 16.6                                   |
+
+
+
 # V3.4.2.7 (PR)
 
 ### Version

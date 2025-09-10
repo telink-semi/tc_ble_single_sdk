@@ -1,0 +1,39 @@
+[release_sdk_P10_TC321X]
+CI_FUNC             V1.0
+TAG_NAME            V3.4.2.8
+PACKAGE_NAME        tc_ble_single_sdk_tc321x_V3.4.2.8_P10
+SRC_GIT_URL         http://192.168.48.36/src/ble/telink_b85m_ble_single_connection_src
+
+#                   .cproject                                	project_name               			module
+CPROJECT            ./ble_lt_multimode/project/tlsr_tc32/tc321x/.cproject        	tc_ble_single_tc321x_src    			tc321x_ble_sample            
+MAKE_WITHOUT_DRIVER_LIB                                      	1
+
+#                   path                                     	macro                             	macro_val
+MACRO               ./ble_lt_multimode/drivers/TC321X/lib/src/sys.c         SDK_VERSION_SELECT        	          SDK_VERSION_P10
+
+LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sample/drivers/TC321X/lib/src
+LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sample/drivers/TC321X/driver_ext/driver_lib
+LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sample/stack/ble
+LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sample/algorithm
+REPLACED_LIB_PATH   ./tc_ble_single_sdk/proj_lib/liblt_tc321x.a
+[release_sdk_P10_TC321X_end]
+
+[release_sdk_P11_TC321X]
+CI_FUNC             V1.0
+TAG_NAME            V3.4.2.8
+PACKAGE_NAME        tc_ble_single_sdk_tc321x_V3.4.2.8_P11
+SRC_GIT_URL         http://192.168.48.36/src/ble/telink_b85m_ble_single_connection_src
+
+#                   .cproject                                	project_name               			module
+CPROJECT            ./ble_lt_multimode/project/tlsr_tc32/tc321x/.cproject        	tc_ble_single_tc321x_src    			tc321x_ble_sample            
+MAKE_WITHOUT_DRIVER_LIB                                      	1
+
+#                   path                                     	macro                             	macro_val
+MACRO               ./ble_lt_multimode/drivers/TC321X/lib/src/sys.c         SDK_VERSION_SELECT        	          SDK_VERSION_P11
+
+LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sample/drivers/TC321X/lib/src
+LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sample/drivers/TC321X/driver_ext/driver_lib
+LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sample/stack/ble
+LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sample/algorithm
+REPLACED_LIB_PATH   ./tc_ble_single_sdk/proj_lib/liblt_tc321x.a
+[release_sdk_P10_TC321X_end]

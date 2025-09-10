@@ -76,6 +76,7 @@ void ir_learn_init(void)
 			ir_learn_rx.cnt_mode = FALLING_EDGE_START_CNT;
 		}
 		ir_learn_rx_init(&ir_learn_rx);
+		ir_learn_ana_rx_dis();
 		memset(g_ir_learn_ctrl, 0, sizeof(g_ir_learn_ctrl));
 	#endif
 }
@@ -268,6 +269,7 @@ void ir_learn_start(void)
 	#else
         irq_set_mask(FLD_IRQ_IR_LEARN_EN);
         ir_learn_set_irq_mask(IR_LEARN_CYCLE_IRQ|IR_LEARN_TIMEOUT_IRQ);
+        ir_learn_ana_rx_en();
         ir_learn_en();
 	#endif
 	g_ir_learn_ctrl -> ir_learn_state = IR_LEARN_WAIT_KEY;
@@ -286,6 +288,7 @@ void ir_learn_stop(void)
 	#else
     irq_disable_type(FLD_IRQ_IR_LEARN_EN);
     ir_learn_clr_irq_mask(IR_LEARN_CYCLE_IRQ|IR_LEARN_TIMEOUT_IRQ);
+    ir_learn_ana_rx_dis();
     ir_learn_dis();
 	#endif
 }
@@ -300,12 +303,14 @@ void ir_learn_stop(void)
 ***********************************************************************/
 unsigned char get_ir_learn_state(void)
 {
-	if(g_ir_learn_ctrl -> ir_learn_state == IR_LEARN_SUCCESS)
-		return 0;
-	else if(g_ir_learn_ctrl -> ir_learn_state < IR_LEARN_SUCCESS)
-		return 1;
-	else
-		return (g_ir_learn_ctrl -> ir_learn_state);
+    if(g_ir_learn_ctrl -> ir_learn_state == IR_LEARN_SUCCESS)
+        return 0;
+    else if(g_ir_learn_ctrl -> ir_learn_state == IR_LEARN_DISABLE)
+        return 2;
+    else if(g_ir_learn_ctrl -> ir_learn_state < IR_LEARN_SUCCESS)
+        return 1;
+    else
+        return (g_ir_learn_ctrl -> ir_learn_state);
 }
 
 /***********************************************************************

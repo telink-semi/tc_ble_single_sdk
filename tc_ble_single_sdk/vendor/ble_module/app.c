@@ -133,8 +133,6 @@ const u8	tbl_scanRsp [] = {
 
 _attribute_data_retention_	u8 	ui_ota_is_working = 0;
 
-_attribute_data_retention_	u32	lowBattDet_tick   = 0;
-
 
 
 _attribute_data_retention_ u8 conn_update_cnt;
@@ -361,66 +359,12 @@ int app_suspend_enter_low_battery (void)
 {
 	if (!gpio_read(GPIO_WAKEUP_MODULE)) //gpio low level
 	{
-		analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG)|LOW_BATT_FLG);  //mark
+		analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG) | LOW_BATT_FLG);  //mark
 		return 1;//allow enter cpu_sleep_wakeup
 	}
 
-	analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG)&(~LOW_BATT_FLG));  //clr
+	analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG) & (~LOW_BATT_FLG));  //clr
 	return 0; //forbidden enter cpu_sleep_wakeup
-}
-/**
- * @brief		this function is used to process battery power.
- * 				The low voltage protection threshold 2.0V is an example and reference value. Customers should
- * 				evaluate and modify these thresholds according to the actual situation. If users have unreasonable designs
- * 				in the hardware circuit, which leads to a decrease in the stability of the power supply network, the
- * 				safety thresholds must be increased as appropriate.
- * @param[in]	none
- * @return      none
- */
-_attribute_ram_code_ void user_battery_power_check(u16 alarm_vol_mv)
-{
-	/*For battery-powered products, as the battery power will gradually drop, when the voltage is low to a certain
-	  value, it will cause many problems.
-		a) When the voltage is lower than operating voltage range of chip, chip can no longer guarantee stable operation.
-		b) When the battery voltage is low, due to the unstable power supply, the write and erase operations
-			of Flash may have the risk of error, causing the program firmware and user data to be modified abnormally,
-			and eventually causing the product to fail. */
-	u8 battery_check_returnValue = 0;
-	if(analog_read(USED_DEEP_ANA_REG) & LOW_BATT_FLG){
-		battery_check_returnValue = app_battery_power_check(alarm_vol_mv + 200);  //2.2 V
-	}
-	else{
-		battery_check_returnValue = app_battery_power_check(alarm_vol_mv);  //2.0 V
-	}
-	if(battery_check_returnValue)
-	{
-		analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG) & (~LOW_BATT_FLG));  //clr
-	}
-	else
-	{
-		#if (UI_LED_ENABLE)  //led indicate
-			for(int k = 0; k < 3; k++){
-				gpio_write(GPIO_LED_BLUE, LED_ON_LEVEL);
-				sleep_us(200000);
-				gpio_write(GPIO_LED_BLUE, !LED_ON_LEVEL);
-				sleep_us(200000);
-			}
-		#endif
-
-		if(analog_read(USED_DEEP_ANA_REG) & LOW_BATT_FLG){
-			tlkapi_printf(APP_BATT_CHECK_LOG_EN, "[APP][BAT] The battery voltage is lower than %dmV, shut down!!!\n", (alarm_vol_mv + 200));
-		} else {
-			tlkapi_printf(APP_BATT_CHECK_LOG_EN, "[APP][BAT] The battery voltage is lower than %dmV, shut down!!!\n", alarm_vol_mv);
-		}
-
-		GPIO_WAKEUP_MODULE_LOW;
-
-		bls_pm_registerFuncBeforeSuspend( &app_suspend_enter_low_battery );
-
-		cpu_set_gpio_wakeup (GPIO_WAKEUP_MODULE, Level_High, 1);  //drive pin pad high wakeup deepsleep
-
-		cpu_sleep_wakeup(DEEPSLEEP_MODE, PM_WAKEUP_PAD, 0);  //deepsleep
-	}
 }
 #endif
 

@@ -183,7 +183,7 @@ _attribute_ram_code_sec_noinline_ void tpsll_sync_word_len_set(tpsll_sync_word_l
  * @param[out] none
  * @return     none.
  */
-_attribute_ram_code_sec_noinline_ void tpsll_rx_buffer_set(unsigned char *rx_buffer, unsigned char rx_buffer_len);
+_attribute_ram_code_sec_noinline_ void tpsll_rx_buffer_set(unsigned char *rx_buffer, unsigned int rx_buffer_len);
 
 /**
  * @brief      This function servers to set the radio's TX output power.
@@ -208,9 +208,9 @@ _attribute_ram_code_sec_noinline_ void tpsll_crc_len_set(tpsll_crc_len_t crc_len
  *             reception. The RX settle period must be larger than 85uS. The default value is 90uS.
  * @param[in]  period_us  specifying the RX settle period in microsecond.
  * @param[out] none
- * @return     none
+ * @return     0:set success,-1：invalid param.
  */
-void tpsll_rx_settle_set(unsigned short period_us);
+int tpsll_rx_settle_set(unsigned short period_us);
 
 /**
  * @brief      This function sets the tx settle period of transceiver for automatic Single-TX , Single-TX-to-RX and Single-RX-to-TX.
@@ -219,9 +219,9 @@ void tpsll_rx_settle_set(unsigned short period_us);
  *             transmission. The TX settle period must be larger than 130uS. The default value is 150uS.
  * @param[in]  period_us  specifying the TX settle period in microsecond.
  * @param[out] none
- * @return     none
+ * @return     0:set success,-1：invalid param.
  */
-void tpsll_tx_settle_set(unsigned short period_us);
+int tpsll_tx_settle_set(unsigned short period_us);
 
 /**
  * @brief      This function returns the rx payload and rx payload length.
@@ -264,6 +264,14 @@ _attribute_ram_code_sec_noinline_ unsigned int tpsll_rx_timestamp_get(unsigned c
  * @return     1: the RX CRC check passes. 0: the RX CRC check fails.
  */
 _attribute_ram_code_sec_noinline_ unsigned char tpsll_is_rx_crc_ok(unsigned char *rx_buffer);
+
+/**
+ * @brief      This function determines whether the result of RX CRC check is ok.
+ * @param[in]  none.
+ * @param[out] none
+ * @return     1: the RX CRC check passes. 0: the RX CRC check fails.
+ */
+_attribute_ram_code_sec_noinline_ unsigned char tpsll_is_rx_crc_ok_register(void);
 
 /**
  * @brief      This function servers to judge whether tx is done .
@@ -354,7 +362,7 @@ _attribute_ram_code_sec_ void tpsll_srx2tx_start(unsigned int start_point, unsig
  * @brief      This function servers to write tx payload.Note that the valid range is 1-252.
  * @param[in]  tx payload and tx payload len.
  * @param[out] none
- * @return     none.
+ * @return     0:set success,-1：invalid param.
  */
 _attribute_ram_code_sec_ int tpsll_tx_write_payload(unsigned char *payload,unsigned char payload_len);
 

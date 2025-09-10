@@ -152,6 +152,11 @@
 			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/2p4g_feature</locationURI>
 		</link>
 		<link>
+			<name>vendor/2p4g_feature_test</name>
+			<type>2</type>
+			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/2p4g_feature_test</locationURI>
+		</link>
+		<link>
 			<name>vendor/2p4g_genfsk_ll</name>
 			<type>2</type>
 			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/2p4g_genfsk_ll</locationURI>

@@ -86,6 +86,11 @@ _attribute_ram_code_ int main (void)    //must run in ramcode
 
 	clock_init(SYS_CLK_TYPE);
 
+	#if (MODULE_WATCHDOG_ENABLE)
+		wd_set_interval_ms(WATCHDOG_INIT_TIMEOUT,CLOCK_SYS_CLOCK_1MS);
+		wd_start();
+	#endif
+
 	if(!deepRetWakeUp){//read flash size
 		#if FIRMWARE_CHECK_ENABLE
 			//Execution time is in ms.such as:48k fw,16M crystal clock,need about 290ms.
@@ -114,9 +119,14 @@ _attribute_ram_code_ int main (void)    //must run in ramcode
 
 
 	while (1) {
-#if (MODULE_WATCHDOG_ENABLE && (MCU_CORE_TYPE != MCU_CORE_TC321X))
-		wd_clear(); //clear watch dog
-#endif
+	#if (MODULE_WATCHDOG_ENABLE)
+		#if (MCU_CORE_TYPE == MCU_CORE_TC321X)
+			if (g_chip_version != CHIP_VERSION_A0)
+		#endif
+			{
+				wd_clear(); //clear watch dog
+			}
+	#endif
 		main_loop();
 	}
 

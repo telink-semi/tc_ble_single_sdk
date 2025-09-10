@@ -124,7 +124,6 @@ _attribute_ram_code_  void irq_2p4g_sdk_handler(void)
     }
     #endif
     irq_clr_src();
-    rf_irq_clr_src(FLD_RF_IRQ_ALL);
 }
 
 /**

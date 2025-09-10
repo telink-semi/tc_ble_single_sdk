@@ -29,10 +29,6 @@ extern unsigned int	scan_pin_need;
 extern int button_not_released;
 extern u8 ota_is_working;
 
-#if (APP_BATT_CHECK_ENABLE)
-extern u32 lowBattDet_tick;
-_attribute_ram_code_ void user_battery_power_check(u16 alarm_vol_mv);
-#endif
 #if (APP_FLASH_PROTECTION_ENABLE)
 void app_flash_protection_operation(u8 flash_op_evt, u32 op_addr_begin, u32 op_addr_end);
 #endif

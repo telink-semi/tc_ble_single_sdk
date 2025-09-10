@@ -1,3 +1,108 @@
+## V3.3.0
+
+### Version
+* SDK Version: tc_platform_sdk V3.3.0
+* Chip Version
+  - B80:  TLSR8208/TLSR8373
+  - B80B: TLSR8208 Version B
+  - B85:  TLSR825x/TLSR8359
+  - B87:  TLSR827x/TLSR8355
+  - TC321X(A1/A0)
+* Hardware EVK Version
+  - B80:    C1T261A30_V1_1
+  - B80B:   C1T321A30_V1_0
+  - B85:    C1T139A30_V1_2
+  - B87:    C1T197A30_V1_1
+  - TC321X: C1T357A20_V1_1
+
+* Toolchain Version
+  - B80, B80B, B85, B87, TC321X(A1/A0): TC32 ELF GCC4.3 ( IDE:[Telink IoT Studio](https://www.telink-semi.com/development-tools) )
+
+<hr style="border-bottom:2.5px solid rgb(146, 240, 161)">
+
+### Bug Fixes
+* **sd adc**
+  * (tc321x):Update the gain range for chip version A0.(merge_requests/@820)
+* **pm**
+  * (b80/b85/b87/b89/tc321X):Fixed the issue where pmParam.wakeup_src was not updated after the suspend was wakeuped.(merge_requests/@791)
+* **flash**
+  * (b80/b85/b87/b89/tc1211/tc122x/tc321X) fix data access error in flash write API when passed in a const buffer pointer.(merge_requests/@817)
+
+### BREAKING CHANGES
+* N/A
+
+### Features
+* **watchdog**
+  * (tc321x): The A1S1 version adds a new timer watchdog feature. (merge_requests/@814)
+* **sd adc**
+  * (tc321x):  Add the default calibration values for chip version A1.(merge_requests/@820)
+
+### Refactoring
+* **.S**
+  * (tc321x):Added RF software configuration invocation, related interface: rf_sw_config. Adjusted the clearing of the BSS section location.(merge_requests/@811)
+* **.link**
+  * (tc321x):Modified the retention_data section location.(merge_requests/@811)
+* **rf**
+  * (B85/B87)Adjusted the interface definitions of rf_ldot_ldo_rxtxlf_bypass_en/rf_ldot_ldo_rxtxlf_bypass_dis to the C file (merge_requests/@818).
+  * (tc321x)Update RF TX power table definitions based on the current hardware version.(merge_requests/@818)
+  * (B85/B87)Adjusted the interface definitions of rf_tx_acc_code_select/rf_set_tx_rx_off to align with those of other chips.(merge_requests/@825)
+
+### Performance Improvements
+* **pm**
+  * (tc321x): Previously, to address the issue of current pulses generated when the suspend LDO was turned on in LDO mode during suspend, the suspend LDO was not turned off after suspend wakeup. Since the suspend LDO is turned on again before each suspend, it is unnecessary to keep the suspend LDO on during active mode. The setting has now been changed to turn off the suspend LDO after suspend wakeup. (merge_requests/@814)
+
+### 版本
+* SDK 版本: tc_platform_sdk V3.3.0
+* 芯片版本
+  - B80:  TLSR8208/TLSR8373
+  - B80B: TLSR8208 Version B
+  - B85:  TLSR825x/TLSR8359
+  - B87:  TLSR827x/TLSR8355
+  - TC321X(A1/A0)
+* 硬件评估板版本
+  - B80:    C1T261A30_V1_1
+  - B80B:   C1T321A30_V1_0
+  - B85:    C1T139A30_V1_2
+  - B87:    C1T197A30_V1_1
+  - TC321X: C1T357A20_V1_1
+
+* 工具链版本
+  - B80, B80B, B85, B87, TC321X(A1/A0): TC32 ELF GCC4.3 ( IDE:[Telink IoT Studio](https://www.telink-semi.com/development-tools) )
+
+<hr style="border-bottom:2.5px solid rgb(146, 240, 161)">
+
+### Bug Fixes
+* **sd adc**
+  * (tc321x):更新A0芯片的gain卡控范围。(merge_requests/@820)
+* **pm**
+  * (b80/b85/b87/b89/tc321X):解决了suspend唤醒后，pmParam.wakeup_src没有更新唤醒源的问题。(merge_requests/@791)
+* **flash** 
+  * (b80/b85/b87/b89/tc1211/tc122x/tc321X) 解决了写flash API在传入常量buffer指针时的数据访问出错问题。(merge_requests/@817)
+
+### BREAKING CHANGES
+* N/A
+
+### Features
+* **watchdog**
+  * (tc321x):A1S1版本新增timer watchdog功能。(merge_requests/@814)
+* **sd adc**
+  * (tc321x):添加A1芯片的默认校准值。(merge_requests/@820)
+  
+### Refactoring
+* **.S**
+  * (tc321x):增加RF软件配置调用，相关接口：rf_sw_config。调整清BSS段位置。(merge_requests/@811)
+* **.link**
+  * (tc321x):修改retention_data段位置。(merge_requests/@811)
+* **rf**
+  * (B85/B87)调整rf_ldot_ldo_rxtxlf_bypass_en/rf_ldot_ldo_rxtxlf_bypass_dis接口定义到C文件中。(merge_requests/@818)
+  * (tc321x)根据当前硬件版本更新RF TX power表定义。(merge_requests/@818)
+  * (B85/B87)为了与其他芯片的接口定义一致，调整了rf_tx_acc_code_select/rf_set_tx_rx_off的接口定义。(merge_requests/@825)
+
+### Performance Improvements
+* **pm**
+  * (tc321x):之前为了解决在ldo模式下进suspend时打开suspend ldo会产生电流脉冲的问题，在suspend唤醒后不关闭ldo。因为每次进suspend前都会再次打开suspend ldo，所以active时没必要开着suspend ldo，现在改为suspend唤醒后关闭suspend ldo。(merge_requests/@814)
+
+---
 ## V3.2.0
 
 ### Version
@@ -35,6 +140,8 @@
   * (TC321x)Fixed PC hanging problem caused by accessing sys bus after switching analog 0x7d audio power.(merge_requests/@775)
 * **SPI** 
   * (TC321x) Fix the problem that PB0/PB1/PE0/PE1 parameters do not take effect in spi_set_pin interface.(merge_requests/@781)
+* **watchdog** 
+  * (TC321x) Since the software reset of the A0 chip cannot be used, the Timer watchdog cannot be used. Therefore, the watchdog-related interfaces are removed.(merge_requests/@792)
   
 ### BREAKING CHANGES
 * **pll**
@@ -109,7 +216,10 @@
 * **audio**
   * (TC321x)修复开关模拟0x7d audio电后访问sys bus会导致的PC挂住问题.(merge_requests/@775)
 * **SPI** 
-  * (TC321x)修复在spi_set_pin接口里，PB0/PB1/PE0/PE1 参数不生效问题。(merge_requests/@781)    
+  * (TC321x)修复在spi_set_pin接口里，PB0/PB1/PE0/PE1 参数不生效问题。(merge_requests/@781)
+* **watchdog** 
+  * (TC321x)由于A0芯片的软件复位功能不能使用，导致Timer watchdog 不能使用，所以将watchdog相关接口删除.(merge_requests/@792)
+
 ### BREAKING CHANGES
 * **pll**
   * (B80/B80B)占用PM_ANA_REG_POWER_ON_CLR_BUF0[bit2]（0x3a[2]）标志是否发生过PLL异常导致的重启，客户不能使用这个bit。(merge_requests/@711)
@@ -1314,7 +1424,7 @@
   * (B80)删除pm_set_32k_watchdog_interval接口，添加新32k watchdog接口进行替代;
   * (B80)删除soft_start_dly_time接口，添加pm_set_wakeup_time_param接口进行替代。
   * (B80)占用DEEP_ANA_REG0[bit1]（0x3a[1]）标志是否发生过起振异常导致的重启，客户不能使用这个bit。
-  
+   
 ### Bug Fixes
 
 * **BQB_Demo**
@@ -1504,7 +1614,7 @@
   * (B80)删除了接口cpu_stall_wakeup_by_timer0、cpu_stall_wakeup_by_timer1、cpu_stall_wakeup_by_timer2、cpu_stall。使用新接口cpu_stall_wakeup替代，使用方法可以参考pm demo。
 * **cstartup_sram.S** 
   * (B80)删除cstartup_sram.S文件，功能合并至cstartup_flash.S和cstartup_otp.S文件内。 
-  
+   
 ### Bug Fixes
 
 * **Cstartup_xx.S**
@@ -2136,4 +2246,5 @@
 ### Known issues
 
 * N/A
+
 

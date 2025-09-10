@@ -235,7 +235,7 @@ extern void gen_fsk_crc_len_set(gen_fsk_crc_len_t crc_len);
  * @param[out] none
  * @return     none.
  */
-extern void gen_fsk_rx_buffer_set(unsigned char *rx_buffer, unsigned char rx_buffer_len);
+extern void gen_fsk_rx_buffer_set(unsigned char *rx_buffer, unsigned int rx_buffer_len);
 
 /**
  * @brief      This function determines whether the result of RX CRC check is ok.
@@ -244,6 +244,14 @@ extern void gen_fsk_rx_buffer_set(unsigned char *rx_buffer, unsigned char rx_buf
  * @return     1: the RX CRC check passes. 0: the RX CRC check fails.
  */
 extern unsigned char gen_fsk_is_rx_crc_ok(unsigned char *rx_buffer);
+
+/**
+ * @brief      This function determines whether the result of RX CRC check is ok.
+ * @param[in]  none.
+ * @param[out] none
+ * @return     1: the RX CRC check passes. 0: the RX CRC check fails.
+ */
+extern unsigned char gen_fsk_is_rx_crc_ok_register(void);
 
 /**
  * @brief      This function returns the pointer to the payload field of received packet.

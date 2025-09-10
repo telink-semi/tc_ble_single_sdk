@@ -77,9 +77,6 @@ _attribute_ram_code_ int main (void)    //must run in ramcode
     irq_enable();
 
 	while (1) {
-#if (MODULE_WATCHDOG_ENABLE && (MCU_CORE_TYPE != MCU_CORE_TC321X))
-		wd_clear(); //clear watch dog
-#endif
 		main_loop();
 	}
 }

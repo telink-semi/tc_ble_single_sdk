@@ -412,6 +412,11 @@ _attribute_ram_code_ int app_battery_power_check(u16 alram_vol_mv)
 			batt_vol_mv  = ((adc_result*adc_pre_scale*adc_gpio_calib_vref)>>13) + adc_gpio_calib_vref_offset;
 	#elif (MCU_CORE_TYPE == MCU_CORE_TC321X)
 		else{
+            #ifdef  GPIO_VBAT_DETECT
+		        gpio_write((GPIO_VBAT_DETECT&0x0fff), 1);
+            #else
+                sd_adc_vbat_mode_en();
+            #endif
 			sd_adc_power_on(SD_ADC_SAMPLE_MODE);
 			sleep_us(160);
 			sd_adc_sample_start();
@@ -419,6 +424,11 @@ _attribute_ram_code_ int app_battery_power_check(u16 alram_vol_mv)
 		while(!sd_adc_get_irq_status());
 		sd_adc_sample_stop();
 		batt_vol_mv=sd_adc_get_result(SD_ADC_VOLTAGE_MV);
+        #ifdef  GPIO_VBAT_DETECT
+		    gpio_write((GPIO_VBAT_DETECT&0x0fff), 0);
+        #else
+            sd_adc_vbat_mode_dis();
+        #endif
 		sd_adc_power_off(SD_ADC_SAMPLE_MODE);
 
 	#endif
@@ -430,6 +440,68 @@ _attribute_ram_code_ int app_battery_power_check(u16 alram_vol_mv)
 	return 1;
 
 }
+
+_attribute_data_retention_	u32	lowBattDet_tick   = 0;
+/**
+ * @brief       this function is used to process battery power.
+ *              The low voltage protection threshold 2.0V is an example and reference value. Customers should
+ *              evaluate and modify these thresholds according to the actual situation. If users have unreasonable designs
+ *              in the hardware circuit, which leads to a decrease in the stability of the power supply network, the
+ *              safety thresholds must be increased as appropriate.
+ * @param[in]   none
+ * @return      none
+ */
+_attribute_ram_code_ void user_battery_power_check(u16 alarm_vol_mv)
+{
+	/*For battery-powered products, as the battery power will gradually drop, when the voltage is low to a certain
+	  value, it will cause many problems.
+		a) When the voltage is lower than operating voltage range of chip, chip can no longer guarantee stable operation.
+		b) When the battery voltage is low, due to the unstable power supply, the write and erase operations
+			of Flash may have the risk of error, causing the program firmware and user data to be modified abnormally,
+			and eventually causing the product to fail. */
+	u8 battery_check_returnValue=0;
+	if(!(analog_read(USED_DEEP_ANA_REG) & LOW_BATT_FLG)){
+		battery_check_returnValue=app_battery_power_check(alarm_vol_mv+200);
+	}
+	else{
+		battery_check_returnValue=app_battery_power_check(alarm_vol_mv);
+	}
+	if(battery_check_returnValue)
+	{
+		analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG) | LOW_BATT_FLG);  //mark
+	}
+	else
+	{
+		#if (UI_LED_ENABLE)  //led indicate
+			for(int k=0;k<3;k++){
+				gpio_write(GPIO_LED_BLUE, LED_ON_LEVEL);
+				sleep_us(200000);
+				gpio_write(GPIO_LED_BLUE, !LED_ON_LEVEL);
+				sleep_us(200000);
+			}
+		#endif
+
+		if(!(analog_read(USED_DEEP_ANA_REG) & LOW_BATT_FLG)){
+			tlkapi_printf(APP_BATT_CHECK_LOG_EN, "[APP][BAT] The battery voltage is lower than %dmV, shut down!!!\n", (alarm_vol_mv + 200));
+		} else {
+			tlkapi_printf(APP_BATT_CHECK_LOG_EN, "[APP][BAT] The battery voltage is lower than %dmV, shut down!!!\n", alarm_vol_mv);
+		}
+
+
+		analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG) & (~LOW_BATT_FLG));  //clr
+
+		#if (UI_KEYBOARD_ENABLE)
+		u32 pin[] = KB_DRIVE_PINS;
+		for (int i=0; i<(sizeof (pin)/sizeof(*pin)); i++)
+		{
+			cpu_set_gpio_wakeup (pin[i], Level_High, 1);  //drive pin pad high wakeup deepsleep
+		}
+
+		cpu_sleep_wakeup(DEEPSLEEP_MODE, PM_WAKEUP_PAD, 0);  //deepsleep
+		#endif
+	}
+}
+
 
 
 #endif

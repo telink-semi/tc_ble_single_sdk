@@ -568,7 +568,7 @@ void user_init(void)
 	blc_att_setRxMtuSize(MTU_SIZE_SETTING); //set MTU size, default MTU is 23 if not call this API
 
 	#if (MTU_SIZE_SETTING > ATT_MTU_MAX_SDK_DFT_BUF)
-		blc_l2cap_initMtuBuffer(app_l2cap_rx_fifo, ACL_L2CAP_BUFF_SIZE, app_l2cap_rx_fifo, ACL_L2CAP_BUFF_SIZE);
+		blc_l2cap_initMtuBuffer(app_l2cap_rx_fifo, ACL_L2CAP_BUFF_SIZE, app_l2cap_tx_fifo, ACL_L2CAP_BUFF_SIZE);
 	#endif
 
 	#if (BLE_HOST_SMP_ENABLE)

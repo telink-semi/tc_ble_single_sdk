@@ -105,6 +105,7 @@ __start:					@ MUST,  referenced by boot.link
 @                                   LOW-LEVEL INITIALIZATION
 @********************************************************************************************************
 	.extern  main
+	.extern rf_sw_config
 	.extern copy_ramcode
 	.extern copy_bincode
 
@@ -260,20 +261,6 @@ FLL_STK_END:
 	tmcsr	r0	
 	tloadr	r0, DAT0 + 12
 	tmov	r13, r0  
-@********************************************************************************************************
-@                                    .BSS INITIALIZATION FOR 0
-@********************************************************************************************************
-	tmov	r0, #0				@r0 = 0
-	tloadr	r1, DAT0 + 16		@r1 = _start_bss_
-	tloadr	r2, DAT0 + 20		@r2 = _end_bss_
-
-ZERO_BSS_BEGIN:
-	tcmp	r1, r2
-	tjge	ZERO_BSS_END		@r1>=r2 jump to ZERO_BSS_END
-	tstorer	r0, [r1, #0]		@*(unsigned int*)(_start_bss_)=r0=0
-	tadd    r1, #4				@r1 = r1 + 4
-	tj		ZERO_BSS_BEGIN		@jump to ZERO_BSS_BEGIN
-ZERO_BSS_END:
 
 @********************************************************************************************************
 @                                    IC TAG INITIALIZATION
@@ -330,9 +317,25 @@ SET_BOOT:
 SET_BOOT_END:
 
 COPY_RAMCODE_START:
+	tjl			rf_sw_config
     tjl 		copy_ramcode
 COPY_RAMCODE_END:
 
+
+@********************************************************************************************************
+@                                    .BSS INITIALIZATION FOR 0
+@********************************************************************************************************
+	tmov	r0, #0				@r0 = 0
+	tloadr	r1, DAT0 + 16		@r1 = _start_bss_
+	tloadr	r2, DAT0 + 20		@r2 = _end_bss_
+
+ZERO_BSS_BEGIN:
+	tcmp	r1, r2
+	tjge	ZERO_BSS_END		@r1>=r2 jump to ZERO_BSS_END
+	tstorer	r0, [r1, #0]		@*(unsigned int*)(_start_bss_)=r0=0
+	tadd    r1, #4				@r1 = r1 + 4
+	tj		ZERO_BSS_BEGIN		@jump to ZERO_BSS_BEGIN
+ZERO_BSS_END:
 
 @********************************************************************************************************
 @                                    DATA INITIALIZATION

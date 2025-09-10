@@ -67,52 +67,52 @@ _attribute_ram_code_  void irq_2p4g_sdk_handler(void)
 
     if (src_rf & FLD_RF_IRQ_RX_DR)
     {
-      rf_irq_clr_src(FLD_RF_IRQ_RX_DR);
-      irq_cnt_rx_dr++;
-      rx_dr_flag = 1;
+        rf_irq_clr_src(FLD_RF_IRQ_RX_DR);
+        irq_cnt_rx_dr++;
+        rx_dr_flag = 1;
     }
 
     if (src_rf & FLD_RF_IRQ_RX)
     {
-      rf_irq_clr_src(FLD_RF_IRQ_RX);
-      irq_cnt_rx++;
-      rx_flag = 1;
+        rf_irq_clr_src(FLD_RF_IRQ_RX);
+        irq_cnt_rx++;
+        rx_flag = 1;
     }
 
     if (src_rf & FLD_RF_IRQ_INVALID_PID)
     {
-      rf_irq_clr_src(FLD_RF_IRQ_INVALID_PID);
-      irq_cnt_invalid_pid++;
-      invalid_pid_flag = 1;
+        rf_irq_clr_src(FLD_RF_IRQ_INVALID_PID);
+        irq_cnt_invalid_pid++;
+        invalid_pid_flag = 1;
     }
 
     if (src_rf & FLD_RF_IRQ_TX)
     {
-      rf_irq_clr_src(FLD_RF_IRQ_TX);
-      irq_cnt_tx++;
-      tx_flag = 1;
+        rf_irq_clr_src(FLD_RF_IRQ_TX);
+        irq_cnt_tx++;
+        tx_flag = 1;
     }
 
     if (src_rf & FLD_RF_IRQ_TX_DS)
     {
-      rf_irq_clr_src(FLD_RF_IRQ_TX_DS);
-      irq_cnt_tx_ds++;
-      ds_flag = 1;
+        rf_irq_clr_src(FLD_RF_IRQ_TX_DS);
+        irq_cnt_tx_ds++;
+        ds_flag = 1;
     }
     #if(MCU_CORE_TYPE == MCU_CORE_TC321X)
     if (src_rf & FLD_RF_IRQ_HIT_SYNC) //if rf rx irq occurs
     {
-    rf_irq_clr_src(FLD_RF_IRQ_HIT_SYNC);
-      irq_cnt_rx_sync++;
+        rf_irq_clr_src(FLD_RF_IRQ_HIT_SYNC);
+        irq_cnt_rx_sync++;
     }
     if (src_rf & FLD_RF_IRQ_HEADER_DONE) //if rf rx irq occurs
     {
-    rf_irq_clr_src(FLD_RF_IRQ_HEADER_DONE);
-      irq_cnt_rx_head_done++;
+        rf_irq_clr_src(FLD_RF_IRQ_HEADER_DONE);
+        irq_cnt_rx_head_done++;
     }
     #endif
+
     irq_clr_src();
-    rf_irq_clr_src(FLD_RF_IRQ_ALL);
 }
 
 /**

@@ -78,6 +78,15 @@
 #define CLOCK_SYS_CLOCK_HZ  								16000000
 
 
+/////////////////// DEEP SAVE FLG //////////////////////////////////
+#if (__PROJECT_TC321X_2P4G_FEATURE__)
+    #define USED_DEEP_ANA_REG               PM_ANA_REG_WD_CLR_BUF1
+#else
+    #define USED_DEEP_ANA_REG               DEEP_ANA_REG0 //u8,can save 8 bit info when deep
+#endif
+#define LOW_BATT_FLG                        BIT(0) //if 1: low battery
+#define CONN_DEEP_FLG                       BIT(4) //if 1: conn deep, 0: ADV deep
+
 
 /////////////////////////////////////// PRINT DEBUG INFO ///////////////////////////////////////
 #if (UART_PRINT_DEBUG_ENABLE)
