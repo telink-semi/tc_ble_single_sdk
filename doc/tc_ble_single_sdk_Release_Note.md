@@ -16,7 +16,8 @@
   - TC32 ELF GCC4.3 ( IDE: [Telink IoT Studio](https://www.telink-semi.com/development-tools) )
 
 ### Note
-* (B85/B87/TC321X) Since the analog registers of TC321X are cleared after a software reboot or watchdog reboot, the judgment logic for low battery check has been modified. The flag bit "LOW_BATT_FLG" is set when the voltage is normal and cleared when it is abnormal. As a result, during the first power-up, the voltage must be above 2.2V for the program to run; otherwise, it will enter deep sleep mode.
+* **Application**
+  - (B85/B87/TC321X) Since the analog registers of TC321X are cleared after a software reboot or watchdog reboot, the judgment logic for low battery check has been modified. The flag bit "LOW_BATT_FLG" is set when the voltage is normal and cleared when it is abnormal. As a result, during the first power-up, the voltage must be above 2.2V for the program to run; otherwise, it will enter deep sleep mode.
 
 
 ### Features
@@ -38,6 +39,7 @@
 * **Application**
   - (B85/B87/TC321X) When the flash_mid acquisition fails or no matching MID value is found, set "blc_flashProt.init_err = 1" to indicate a flash protection initialization failure.
   - (B85/B87/TC321X) Optimize the enabling method of the timer watchdog. After enabling MODULE_WATCHDOG_ENABLE, enable the timer watchdog by calling wd_set_interval_ms() and wd_start().
+  - (B85/B87/TC321X) Move the low battery check function user_battery_power_check to the common file battery_check.c. 
 
 * **Link & Startup**
   - (B85/B87/TC321X) Add a new sector "platform_func" to store the platform data.
@@ -109,7 +111,8 @@
   - TC32 ELF GCC4.3 ( IDE: [Telink IoT Studio](https://www.telink-semi.com/development-tools) )
 
 ### Note
-* (B85/B87/TC321X) 由于TC321X的模拟寄存器在软件reboot后会清掉，因此修改了低压检测的判断逻辑，电压正常时写入标志位“LOW_BATT_FLG”，异常时清除标志位“LOW_BATT_FLG”。所造成的影响是，第一次上电电压需要高于2.2V才能使程序运行，否则会直接进入deep sleep状态。
+* **Application**
+  - (B85/B87/TC321X) 由于TC321X的模拟寄存器在软件reboot后会清掉，因此修改了低压检测的判断逻辑，电压正常时写入标志位“LOW_BATT_FLG”，异常时清除标志位“LOW_BATT_FLG”。所造成的影响是，第一次上电电压需要高于2.2V才能使程序运行，否则会直接进入deep sleep状态。
 
 ### Features
 * **Chip**
@@ -130,6 +133,7 @@
 * **Application**
   - (B85/B87/TC321X) 当 flash_mid 获取失败或未找到匹配的 MID 值时，设置 “blc_flashProt.init_err = 1”， 表示 flash 保护初始化失败。
   - (B85/B87/TC321X) 优化timer watchdog的使能方法。在使能 MODULE_WATCHDOG_ENABLE 后，通过调用 wd_set_interval_ms() 和 wd_start() 来开启timer watchdog。
+  - (B85/B87/TC321X) 将低压检测函数 “user_battery_power_check” 移动到公共文件 battery_check.c 中。
 
 * **Link & Startup**
   - (B85/B87/TC321X) 添加一个名为“platform_func”的sector，用于存储平台数据。

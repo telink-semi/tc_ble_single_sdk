@@ -111,6 +111,17 @@ _attribute_ram_code_ void adc_vbat_detect_init(void);
  */
 int 		   app_battery_power_check(u16 alram_vol_mv);
 
+/**
+ * @brief       this function is used to process battery power.
+ *              The low voltage protection threshold 2.0V is an example and reference value. Customers should
+ *              evaluate and modify these thresholds according to the actual situation. If users have unreasonable designs
+ *              in the hardware circuit, which leads to a decrease in the stability of the power supply network, the
+ *              safety thresholds must be increased as appropriate.
+ * @param[in]   none
+ * @return      none
+ */
+_attribute_ram_code_ void user_battery_power_check(u16 alarm_vol_mv);
+
 #endif
 
 
