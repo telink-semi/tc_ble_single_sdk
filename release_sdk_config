@@ -36,4 +36,4 @@ LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sampl
 LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sample/stack/ble
 LIB_OBJ             ./ble_lt_multimode/project/tlsr_tc32/tc321x/tc321x_ble_sample/algorithm
 REPLACED_LIB_PATH   ./tc_ble_single_sdk/proj_lib/liblt_tc321x.a
-[release_sdk_P10_TC321X_end]
+[release_sdk_P11_TC321X_end]
