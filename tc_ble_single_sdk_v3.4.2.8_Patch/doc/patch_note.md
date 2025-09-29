@@ -1,0 +1,85 @@
+## V3.4.2.8_Patch_0001
+
+### Version
+
+- SDK version: tc_ble_single_sdk V3.4.2.8_Patch_0001
+- Chip Version
+  - B85: TLSR825X
+  - B87: TLSR827X
+  - TC321X (A0/A1)
+- Hardware Version
+  - B85: C1T139A30_V1_2, C1T139A3_V2_0
+  - B87: C1T197A30_V1_1, C1T201A3_V1_0
+  - TC321X: C1T357A20_V1_1, C1T362A5_V1_0
+- Platform Version
+  - tc_platform_sdk V3.3.1
+- Toolchain Version
+  - TC32 ELF GCC4.3 ( IDE: [Telink IoT Studio](https://www.telink-semi.com/development-tools) )
+
+### Features
+* N/A
+
+### Bug Fixes
+
+* **PM**
+  * Fixed (TC321X): When BLE_APP_PM_ENABLE is enabled, frequent system wake-ups triggered by software timers in the application may cause clock recovery issues during wake-up, leading to BLE disconnections. This issue may also occur with low probability under conditions where software timers are not used.
+
+* **Application**
+  * Fixed (B85): Resolved the issue of garbled data when using software-simulated serial communication with the B85 chip under a 48 MHz system clock condition.
+
+
+### BREAKING CHANGES
+* N/A.
+
+### Refractor
+
+- **link**
+  - (B85/B87): Move the functions in div_mod.S from the ram_code sector to cstartup_ram_funcs.
+
+### Known Issues
+
+- **Application**
+  - In the `ble_remote` reference design, after switching the key mode to IR mode, if the chip enters deep sleep and then wakes up, the key mode state will be lost. It is necessary to reconfigure it to IR mode.
+
+### Version
+
+- SDK 版本: tc_ble_single_sdk V3.4.2.8_Patch_0001
+- Chip 版本
+  - B85: TLSR825X
+  - B87: TLSR827X
+  - TC321X (A0/A1)
+- Hardware 版本
+  - B85: C1T139A30_V1_2, C1T139A5_V1_4, C1T139A3_V2_0
+  - B87: C1T197A30_V1_1, C1T197A5_V1_1, C1T201A3_V1_0
+  - TC321X: C1T357A20_V1_1, C1T362A5_V1_0
+- Platform 版本
+  - tc_platform_sdk V3.3.1
+- Toolchain 版本
+  - TC32 ELF GCC4.3 ( IDE: [Telink IoT Studio](https://www.telink-semi.com/development-tools) )
+
+### Features
+* N/A
+
+### Bug Fixes
+
+* **PM**
+  * 修复 (TC321X)：启用 BLE_APP_PM_ENABLE后，若应用层通过软定时器频繁唤醒系统，可能在唤醒时出现时钟恢复异常的问题，导致BLE连接断开。在不使用软件定时器条件下，低概率会出现此问题。
+
+* **Application**
+  * 修复 (B85)：修复B85系统时钟在48M条件下，使用软件模拟串口会出现乱码的问题。
+
+
+
+### BREAKING CHANGES
+* N/A.
+
+### Refractor
+
+- link
+  - (B85/B87): 将新的段 cstartup_ram_funcs 合并到 ram_code 段。
+
+### Known Issues
+
+- **Application**
+  - 在`ble_remote`中按键模式切换为IR模式后，如果芯片进入deep sleep，唤醒回来后会丢失按键模式状态，需要重新设置为IR模式。
+
