@@ -17,4 +17,4 @@
 	replace file "tc_ble_single_sdk/project/tlsr_tc32/B87/boot.link" with "patch_0001_20250929/project/tlsr_tc32/B87/boot.link"
 	replace file "tc_ble_single_sdk/project/tlsr_tc32/B85/boot.link" with "patch_0001_20250929/project/tlsr_tc32/B85/boot.link"
 	replace file "tc_ble_single_sdk/vendor/common/battery_check.c" with "patch_0001_20250929/vendor/common/battery_check.c"
-
+	replace file "tc_ble_single_sdk/common/sdk_version.h" with "patch_0001_20250929/common/sdk_version.h"
