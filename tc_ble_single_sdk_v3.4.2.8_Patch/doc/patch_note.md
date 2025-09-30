@@ -42,12 +42,12 @@
 ### Refractor
 
 - **link**
-  - (B85/B87): Move the functions in div_mod.S from the ram_code sector to cstartup_ram_funcs.
+  - (B85/B87): Add a new sector "cstartup_ram_funcs".
 
 ### Known Issues
 
 - **Application**
-  - In the `ble_remote` reference design, after switching the key mode to IR mode, if the chip enters deep sleep and then wakes up, the key mode state will be lost. It is necessary to reconfigure it to IR mode.
+  - (TC321X): In the `ble_remote` reference design, after switching the key mode to IR mode, if the chip enters deep sleep and then wakes up, the key mode state will be lost. It is necessary to reconfigure it to IR mode.
 
 ### Version
 
@@ -92,9 +92,9 @@
 ### Refractor
 
 - link
-  - (B85/B87): 将新的段 cstartup_ram_funcs 合并到 ram_code 段。
+  - (B85/B87): 添加"cstartup_ram_funcs" 段。
 
 ### Known Issues
 
 - **Application**
-  - 在`ble_remote`中按键模式切换为IR模式后，如果芯片进入deep sleep，唤醒回来后会丢失按键模式状态，需要重新设置为IR模式。
+  - (TC321X): 在`ble_remote`中按键模式切换为IR模式后，如果芯片进入deep sleep，唤醒回来后会丢失按键模式状态，需要重新设置为IR模式。
