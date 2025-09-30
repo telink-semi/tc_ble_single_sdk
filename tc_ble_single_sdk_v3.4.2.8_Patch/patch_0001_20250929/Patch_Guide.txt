@@ -5,7 +5,7 @@
                                                                         
 **************************************************************************
 
-1. 0001_20250815
+1. 0001_20250929
 	replace file "tc_ble_single_sdk/drivers/B85/clock.c" with "patch_0001_20250929/drivers/B85/clock.c"
 	replace file "tc_ble_single_sdk/drivers/TC321X/gpio.c" with "patch_0001_20250929/drivers/TC321X/gpio.c"
 	replace file "tc_ble_single_sdk/drivers/TC321X/gpio.h" with "patch_0001_20250929/drivers/TC321X/gpio.h"
