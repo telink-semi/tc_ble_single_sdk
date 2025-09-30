@@ -27,13 +27,12 @@
       * Detailed Description: When the BLE_APP_PM_ENABLE is enabled, if the application frequently wakes up the system via software timers, clock recovery abnormalities may occur during wake-up. This issue may also occur with low probability under conditions where software timers are not used.
       * After Fix: The clock recovery is functioning normally, and instances of disconnection will no longer occur.
       * Update Recommendation: Recommended update.
-  
 * **Application**
   * For B85
     *  Fixed the issue of garbled data when using software-simulated serial communication.
-      * Detailed Description: For the B85 chip, under the condition of a 48 MHz system clock frequency, garbled output occurs when using software-simulated serial communication.
-      * After Fix: With the fix implemented, it is now possible to use software-simulated serial communication normally under a 48 MHz system clock frequency.
-      * Update Recommendation: Evaluate if needed.
+      *  Detailed Description: For the B85 chip, under the condition of a 48 MHz system clock frequency, garbled output occurs when using software-simulated serial communication.	
+      *  After Fix: With the fix implemented, it is now possible to use software-simulated serial communication normally under a 48 MHz system clock frequency.
+      *  Update Recommendation: Evaluate if needed.
 
 
 
