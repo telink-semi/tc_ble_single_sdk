@@ -1,0 +1,20 @@
+**************************************************************************
+                                                                        
+                       Telink SDK Patch Guide                              
+                                                                            
+                                                                        
+**************************************************************************
+
+1. 0001_20250815
+	replace file "tc_ble_single_sdk/drivers/B85/clock.c" with "patch_0001_20250929/drivers/B85/clock.c"
+	replace file "tc_ble_single_sdk/drivers/TC321X/gpio.c" with "patch_0001_20250929/drivers/TC321X/gpio.c"
+	replace file "tc_ble_single_sdk/drivers/TC321X/gpio.h" with "patch_0001_20250929/drivers/TC321X/gpio.h"
+	replace file "tc_ble_single_sdk/drivers/TC321X/gpio_default.h" with "patch_0001_20250929/drivers/TC321X/gpio_default.h"
+	replace file "tc_ble_single_sdk/drivers/TC321X/watchdog.c" with "patch_0001_20250929/drivers/TC321X/watchdog.c"
+	replace file "tc_ble_single_sdk/drivers/TC321X/lib/include/rf_drv.h" with "patch_0001_20250929/drivers/TC321X/lib/include/rf_drv.h"
+	replace file "tc_ble_single_sdk/drivers/TC321X/lib/include/pm/pm.h" with "patch_0001_20250929/drivers/TC321X/lib/include/pm/pm.h"
+	replace file "tc_ble_single_sdk/proj_lib/liblt_tc321x.a" with "patch_0001_20250929/proj_lib/liblt_tc321x.a"
+	replace file "tc_ble_single_sdk/project/tlsr_tc32/B87/boot.link" with "patch_0001_20250929/project/tlsr_tc32/B87/boot.link"
+	replace file "tc_ble_single_sdk/project/tlsr_tc32/B85/boot.link" with "patch_0001_20250929/project/tlsr_tc32/B85/boot.link"
+	replace file "tc_ble_single_sdk/vendor/common/battery_check.c" with "patch_0001_20250929/vendor/common/battery_check.c"
+
