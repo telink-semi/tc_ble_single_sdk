@@ -40,11 +40,14 @@
   - (B85/B87/TC321X) When the flash_mid acquisition fails or no matching MID value is found, set "blc_flashProt.init_err = 1" to indicate a flash protection initialization failure.
   - (B85/B87/TC321X) Optimize the enabling method of the timer watchdog. After enabling MODULE_WATCHDOG_ENABLE, enable the timer watchdog by calling wd_set_interval_ms() and wd_start().
   - (B85/B87/TC321X) Move the low battery check function user_battery_power_check to the common file battery_check.c. 
+  - (B85/B87/TC321X) Remove MODULE_WATCHDOG_ENABLE in ble_feature_test and 2p4g_feature.
+  - (B85/B87/TC321X) Add compatibility for GPIO_LED_WHITE, GPIO_LED_RED, GPIO_LED_GREEN and GPIO_LED_BLUE in C1T139A5.h, C1T197A5.h and C1T362A5.h.
 
 * **Link & Startup**
-  - (B85/B87/TC321X) Add a new sector "platform_func" to store the platform data.
+  - (TC321X) Add a new sector "platform_func" to store the platform data.
   - (B85/B87/TC321X) Move the functions in div_mod.S from the ram_code sector to cstartup_ram_funcs.
   - (TC321X) Add RF software configuration invocation interface "rf_sw_config" in the cstartup_TC321X.S.
+  - (TC321X) Adjust the position of the initialization of the .bss segment in cstartup_TC321X.S, making it initialize after calling "rf_sw_config".
 
 ### Optimization
 * N/A
@@ -134,11 +137,14 @@
   - (B85/B87/TC321X) 当 flash_mid 获取失败或未找到匹配的 MID 值时，设置 “blc_flashProt.init_err = 1”， 表示 flash 保护初始化失败。
   - (B85/B87/TC321X) 优化timer watchdog的使能方法。在使能 MODULE_WATCHDOG_ENABLE 后，通过调用 wd_set_interval_ms() 和 wd_start() 来开启timer watchdog。
   - (B85/B87/TC321X) 将低压检测函数 “user_battery_power_check” 移动到公共文件 battery_check.c 中。
+  - (B85/B87/TC321X) 移除 ble_feature_test 和 2p4g_feature 中的 MODULE_WATCHDOG_ENABLE。
+  - (B85/B87/TC321X) 在 C1T139A5.h、C1T197A5.h 和 C1T362A5.h 中添加 GPIO_LED_WHITE、GPIO_LED_RED、GPIO_LED_GREEN 和 GPIO_LED_BLUE 的兼容。
 
 * **Link & Startup**
-  - (B85/B87/TC321X) 添加一个名为“platform_func”的sector，用于存储平台数据。
+  - (TC321X) 添加一个名为“platform_func”的sector，用于存储平台数据。
   - (B85/B87/TC321X) 将 div_mod.S 中的函数从 ram_code sector 移动到 cstartup_ram_funcs。
   - (TC321X) 在cstartup_TC321X.S中添加 RF 软件配置调用接口“rf_sw_config”。
+  - (TC321X) 调整cstartup_TC321X.S中.bss段初始化的位置，使其在调用“rf_sw_config”结束后初始化。
 
 ### Optimization
 * N/A
@@ -226,16 +232,25 @@
   - TC321X ble_remote reference design supports IR Learning.
   - Add ADC calibration in TC321X.
 
+* **Controller**
+  - Add an API blc_ll_init_concurrent_module() to initialize concurrent mode.
+  - Add an API blc_ll_disableConcurrentMode() to disable concurrent mode.
+  - Add an API blc_ll_enableConcurrentMode() to enable concurrent mode.
+  - Add an API rf_ble_state_reset() to reset BLE rf setting after exiting 2.4G mode in ble_slave_2_4g demo.
+
 ### Bug Fixes
 
 * **Application**
   - Fixed: When the local Central device supports SMP while the peer Peripheral device does not support SMP, the local Central device cannot send the Connection Update Indication packet.
   - Fixed: GPIO setting error in C1T362A5 boards.
   - Fixed: TC321X audio setting error.
+
 * **Controller**
   - Fixed: Connection failure caused by some extreme parameters of connection indication packet (transmitWindowOffset = 0 and TX packet is sent at the beginning of Transmit Window).
+
 * **CoC**(Connection-oriented channels) 
   - Fixed: Incorrect parameter validation logic when establishing new CoC channels.
+
 * **Driver**
   - Fixed (TC321X A0) : MCU reboot failure after OTA when calling start_reboot.
 
@@ -243,6 +258,7 @@
 
 * **Application**
   - Support using soft timer in IDLE state.
+    - Add an API blt_soft_timer_get_first_tick() to retrieve the system time of the nearest upcoming soft timer from the current moment.
   - Modify the audio setting code structure.
   - Delete Audio DMIC setting.
   - Rename some reference designs.
@@ -256,17 +272,30 @@
     - Rename b85m_module to ble_module.
     - Rename b85m_ble_remote to ble_remote.
     - Rename b85m_ble_sample to ble_sample.
+  - Modify the low battery check GPIO pin in both ​C1T357A20.h​ and ​C1T362A5.h​ to ​GPIO_PB5, and add support for low battery check in ​VBAT mode​ in ​C1T357A20.h.
+  - Modify the 512K Flash address allocation. The address allocation for the MAC address and calibration information in the previous version were incorrect, resulting in incompatibility with the production fixture. The specific modifications are as follows:
+    - The storage address for the MAC address, ​CFG_ADR_MAC_512K_FLASH, has been changed from ​0x76000​ to ​0x7F000.
+	- The storage address for calibration information, ​CFG_ADR_CALIBRATION_512K_FLASH, has been changed from ​0x77000​ to ​0x7E000.
+	- The storage addresses for SMP information, ​FLASH_ADR_SMP_PAIRING_512K_FLASH, have been changed from ​0x74000​ and ​0x75000​ to ​0x7C000​ and ​0x7D000, respectively.
+  - Add a check in ble_remote for TC321X​ to ensure that ​Audio and low battery check cannot be used simultaneously.
 
 ### Optimization
+
+* **Application**
+  - (TC321X) Remove the unnecessary settings in the low battery check.
+  - (TC321X) Improve the accuracy of the low battery check output results.
 
 - **Controller**
   - (TC321X) Optimize power consumption in connection state.
 
 ### BREAKING CHANGES
 
+* **Application**
+  - Add ​sync_word_check.c​ and ​sync_word_check.h​ to the ​vendor/common​ folder. These files are used in the 2.4G reference design to check the availability of the access code, helping to avoid communication quality issues caused by an unsuitable access code.
+
 * **Driver**
-  - Add rf_private_pa.c and rf_private_pa.h to B85/B87 driver_ext folder.
-  - Add ext_rf_private.h to B85/B87/TC321X driver_ext folder.
+  - Add rf_private_pa.c and rf_private_pa.h to B85/B87 driver_ext folder. These files are used in the 2.4G reference design to amplify the TX/RX power.
+  - Add ext_rf_private.h to B85/B87/TC321X driver_ext folder. This file contains proprietary 2.4G RF driver code, intended for use in the 2.4G reference design.
 
 ### CodeSize
 
@@ -412,16 +441,25 @@
   - TC321X  ble_remote 参考设计支持红外学习功能。
   - TC321X 新增 ADC 校准功能。
 
+* **Controller**
+  - 添加API blc_ll_init_concurrent_module() 用于初始化2.4G & BLE 双模模式。
+  - 添加API blc_ll_disableConcurrentMode() 用于禁用2.4G & BLE 双模模式。
+  - 添加API blc_ll_enableConcurrentMode() 用于使能2.4G & BLE 双模模式。
+  - 添加API rf_ble_state_reset() 用于在2.4G & BLE 双模模式中，退出2.4G模式后重置BLE的RF设置。
+
 ### Bug Fixes
 
 * **Application**
   - 修复：当本地Central设备支持SMP而配对的Peripheral设备不支持SMP时，本地Central设备无法发送连接更新指示包。
   - 修复：C1T362A5开发板的GPIO设置错误。
   - 修复：TC321X 的Audio设置错误。
+
 * **Controller**
   - 修复：部分极端的连接请求参数导致的连接失败问题（transmitWindowOffset = 0 ，且在 Transmit Window 开始的位置发送 TX packet）。
+
 * **CoC**(Connection-oriented channels)
   - 修复：建立新CoC通道时的参数校验逻辑错误。
+
 * **Driver**
   - 修复 (TC321X A0)：OTA结束后调用start_reboot函数无法正常重启MCU的问题。
 
@@ -429,6 +467,7 @@
 
 * **Application**
   - 支持在IDLE态下使用软件定时器。
+    - 添加API blt_soft_timer_get_first_tick() 用于获取距离当前时刻最近的soft timer的系统时间。
   - 修改 Audio 设置代码结构。
   - 删除 Audio DMIC 设置。
   - 重命名部分参考设计
@@ -442,17 +481,29 @@
     - 将 b85m_module 重命名为 ble_module。
     - 将 b85m_ble_remote 重命名为 ble_remote。
     - 将 b85m_ble_sample 重命名为 ble_sample。
+  - 将C1T357A20.h 和 C1T362A5.h 中的低压检测的GPIO检测口修改为GPIO_PB5，并在C1T357A20.h 中支持VBAT模式的低压检测。
+  - 修改 TC321X 芯片中 512K Flash的地址分配，上个版本中的MAC地址及校准信息存储地址分配有误，会导致与生产治具不兼容。具体修改为：
+    - MAC地址存储 CFG_ADR_MAC_512K_FLASH 由 0x76000 修改为 0x7F000，
+	- 校准信息存储 CFG_ADR_CALIBRATION_512K_FLASH 由 0x77000 修改为 0x7E000，
+	- SMP信息存储 FLASH_ADR_SMP_PAIRING_512K_FLASH 由 0x74000 和 0x75000 修改为 0x7C000 和 0x7D000。
+  - 在 TC321X 的 ble_remote 中添加检查，确保 Audio 功能和低压检测功能不能同时使用。
 
 ### Optimization
 
-- **Controller**
+* **Application**
+  - (TC321X)删除低压检测中无用的设置。
+  - (TC321X)提高低压检测输出结果的精度。
+
+* **Controller**
   - (TC321X)优化连接状态下的功耗。
 
 ### BREAKING CHANGES
+* **Application**
+  - 添加 sync_word_check.c 和 sync_word_check.h 到 vendor/common 文件夹。此文件用于2.4G的参考设计中检查access code可用性，避免因access code导致通信质量不好的问题。
 
 * **Driver**
-  - 添加 rf_private_pa.c 和 rf_private_pa.h 到 B85/B87 的 driver_ext 文件夹。
-  - 添加 ext_rf_private.h 到 B85/B87/TC321X 的 driver_ext 文件夹。
+  - 添加 rf_private_pa.c 和 rf_private_pa.h 到 B85/B87 的 driver_ext 文件夹。此文件用于2.4G的参考设计中放大TX/RX 的 power。
+  - 添加 ext_rf_private.h 到 B85/B87/TC321X 的 driver_ext 文件夹。此文件为私有2.4G RF驱动代码，用于2.4G的参考设计。
 
 ### CodeSize
 
