@@ -54,8 +54,8 @@
 	/* can only choose BOARD_827X_EVK_C1T197A30,*/
 	#define BOARD_SELECT							BOARD_827X_EVK_C1T197A30
 #elif (__PROJECT_TC321X_HCI__)
-	/* can only choose BOARD_TC321X_EVK_C1T357A20,*/
-	#define BOARD_SELECT							BOARD_TC321X_EVK_C1T357A20
+    //support BOARD_TC321X_EVK_C1T357A20 & BOARD_TC321X_EVK_C1T357A20_V2_1
+    #define BOARD_SELECT                            BOARD_TC321X_EVK_C1T357A20_V2_1
 #endif
 
 
@@ -141,14 +141,6 @@ typedef struct{
 #endif
 
 #define   UART__BAUDRATE        			(1000000)
-
-/////////////////////////////////////// PRINT DEBUG INFO ///////////////////////////////////////
-#if (UART_PRINT_DEBUG_ENABLE)
-	#define DEBUG_INFO_TX_PIN           	GPIO_PB5
-	#define PULL_WAKEUP_SRC_PB5         	PM_PIN_PULLUP_10K
-	#define PB5_OUTPUT_ENABLE         		1
-	#define PB5_DATA_OUT                    1
-#endif
 
 /////////////////// set default   ////////////////
 

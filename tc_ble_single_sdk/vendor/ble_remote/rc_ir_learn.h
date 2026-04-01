@@ -71,7 +71,7 @@
 		#define			IR_LEARN_OVERTIME_THRESHOLD			10000000						//10s
 		#define			IR_CARR_CHECK_CNT		 			10
 		#define			CARR_AND_NO_CARR_MIN_NUMBER			15
-		#define			MAX_SECTION_NUMBER					100
+		#define			MAX_SECTION_NUMBER					500
 
 	#else
 

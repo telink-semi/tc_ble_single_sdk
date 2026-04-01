@@ -63,6 +63,9 @@ void MAC_Init(const unsigned short Channel,
     mac_Info.RxFirstTimeoutCb = RxFirstTimeoutCb;
 
     unsigned char sync_word[4] = {0xF5, 0x28, 0xD7, 0x69};
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    set_rf_chn_for_init(Channel); // set channel before gen_fsk_datarate_set for RX performance optimization.
+#endif
     //generic FSK Link Layer configuratioin
     gen_fsk_datarate_set(GEN_FSK_DATARATE_2MBPS); //Note that this API must be invoked first before all other APIs
     gen_fsk_preamble_len_set(4);

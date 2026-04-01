@@ -1,7 +1,7 @@
 /********************************************************************************************************
  * @file    2p4g_common.c
  *
- * @brief   This is the source file for B80
+ * @brief   This is the source file for 2.4G SDK
  *
  * @author  2.4G Group
  * @date    12,2021

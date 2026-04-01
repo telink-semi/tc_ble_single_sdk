@@ -363,6 +363,7 @@ SETSPISPEED:
 	tstorerb	r0, [r1, #1]
 #endif
 
+	tjl sys_reboot_back_restore_ana
 	tjl	main
 END:	tj	END
 
@@ -383,6 +384,9 @@ DAT0:
     .word   (_rstored_)                 @48
     .word	(_retention_use_size_div_16_)     @52
     .word	(_retention_size_)     		@56
+    .word   (_cstartup_ram_funcs_size_align_16_)
+    .word   (_reboot_data_size_)
+    .word   (_reboot_data_size_div_16_)
 
 DATA_I:
 	.word	_dstored_					@0

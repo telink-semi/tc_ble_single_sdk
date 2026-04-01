@@ -1,7 +1,7 @@
 /********************************************************************************************************
  * @file    2p4g_common.h
  *
- * @brief   This is the header file for BLE SDK
+ * @brief   This is the header file for 2.4G SDK
  *
  * @author  BLE GROUP
  * @date    12,2021

@@ -1,7 +1,7 @@
 /********************************************************************************************************
  * @file    app_tpll_ptx.c
  *
- * @brief   This is the source file for B80
+ * @brief   This is the source file for 2.4G SDK
  *
  * @author  2.4G Group
  * @date    12,2021
@@ -136,6 +136,9 @@ void tpll_config_init(signed short chnn)
 	rf_2_4g_state_reset();
     irq_bleModeFlag = 0;
     //rf configuration
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    set_rf_chn_for_init(chnn);
+#endif
     TPLL_Init(TPLL_BITRATE_2MBPS);
 #if(MCU_CORE_TYPE == MCU_CORE_TC321X)
     TPLL_SetOutputPower(RF_POWER_P0p00dBm);

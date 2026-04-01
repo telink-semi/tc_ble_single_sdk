@@ -84,42 +84,42 @@
 		<link>
 			<name>algorithm</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/algorithm</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/algorithm</locationURI>
 		</link>
 		<link>
 			<name>application</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/application</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/application</locationURI>
 		</link>
 		<link>
 			<name>boot</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/boot</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/boot</locationURI>
 		</link>
 		<link>
 			<name>common</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/common</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/common</locationURI>
 		</link>
 		<link>
 			<name>config.h</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/config.h</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/config.h</locationURI>
 		</link>
 		<link>
 			<name>drivers</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/drivers</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/drivers</locationURI>
 		</link>
 		<link>
 			<name>drivers.h</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/drivers.h</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/drivers.h</locationURI>
 		</link>
 		<link>
 			<name>proj_lib</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/proj_lib</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/proj_lib</locationURI>
 		</link>
 		<link>
 			<name>stack</name>
@@ -129,7 +129,7 @@
 		<link>
 			<name>tl_common.h</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/tl_common.h</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/tl_common.h</locationURI>
 		</link>
 		<link>
 			<name>vendor</name>
@@ -139,77 +139,77 @@
 		<link>
 			<name>stack/2p4g</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/stack/2p4g</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/stack/2p4g</locationURI>
 		</link>
 		<link>
 			<name>stack/ble</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/stack/ble</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/stack/ble</locationURI>
 		</link>
 		<link>
 			<name>vendor/2p4g_feature</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/2p4g_feature</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/2p4g_feature</locationURI>
 		</link>
 		<link>
 			<name>vendor/2p4g_feature_test</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/2p4g_feature_test</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/2p4g_feature_test</locationURI>
 		</link>
 		<link>
 			<name>vendor/2p4g_genfsk_ll</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/2p4g_genfsk_ll</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/2p4g_genfsk_ll</locationURI>
 		</link>
 		<link>
 			<name>vendor/2p4g_tpll</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/2p4g_tpll</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/2p4g_tpll</locationURI>
 		</link>
 		<link>
 			<name>vendor/2p4g_tpsll</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/2p4g_tpsll</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/2p4g_tpsll</locationURI>
 		</link>
 		<link>
 			<name>vendor/ble_remote</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/ble_remote</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/ble_remote</locationURI>
 		</link>
 		<link>
 			<name>vendor/ble_sample</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/ble_sample</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/ble_sample</locationURI>
 		</link>
 		<link>
 			<name>vendor/ble_feature_test</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/ble_feature_test</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/ble_feature_test</locationURI>
 		</link>
 		<link>
 			<name>vendor/ble_hci</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/ble_hci</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/ble_hci</locationURI>
 		</link>
 		<link>
 			<name>vendor/ble_module</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/ble_module</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/ble_module</locationURI>
 		</link>
 		<link>
 			<name>vendor/ble_slave_2_4g</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/ble_slave_2_4g</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/ble_slave_2_4g</locationURI>
 		</link>
 		<link>
 			<name>vendor/ble_slave_2_4g_switch</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/ble_slave_2_4g_switch</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/ble_slave_2_4g_switch</locationURI>
 		</link>
 		<link>
 			<name>vendor/common</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor/common</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor/common</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

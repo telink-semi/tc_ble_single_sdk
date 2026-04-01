@@ -1,7 +1,7 @@
 /********************************************************************************************************
  * @file    app_gen_fsk_stx2rx.c
  *
- * @brief   This is the source file for B80
+ * @brief   This is the source file for 2.4G SDK
  *
  * @author  2.4G Group
  * @date    12,2021
@@ -110,6 +110,9 @@ void gen_fsk_config_init(void)
 	rf_2_4g_state_reset();
     irq_bleModeFlag = 0;
     unsigned char sync_word[4] = {0x53, 0x78, 0x56, 0x52};
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    set_rf_chn_for_init(7); // set channel before gen_fsk_datarate_set for RX performance optimization.
+#endif
     // it needs to notice that this api is different from B87 / B85
     gen_fsk_datarate_set(GEN_FSK_DATARATE_1MBPS); //Note that this API must be invoked first before all other APIs
 

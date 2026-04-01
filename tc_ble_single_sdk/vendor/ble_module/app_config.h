@@ -72,7 +72,7 @@
 
 /////////////////// DEEP SAVE FLG //////////////////////////////////
 #if (__PROJECT_TC321X_MODULE__)
-	#define USED_DEEP_ANA_REG				PM_ANA_REG_WD_CLR_BUF1
+	#define USED_DEEP_ANA_REG				PM_ANA_REG_POWER_ON_CLR_BUF1
 #else
 	#define USED_DEEP_ANA_REG               DEEP_ANA_REG0 //u8,can save 8 bit info when deep
 #endif
@@ -86,8 +86,8 @@
 	/* can only choose BOARD_827X_EVK_C1T197A30*/
 	#define BOARD_SELECT							BOARD_827X_EVK_C1T197A30
 #elif (__PROJECT_TC321X_MODULE__)
-	/* can only choose BOARD_TC321X_EVK_C1T357A20*/
-	#define BOARD_SELECT							BOARD_TC321X_EVK_C1T357A20
+    //support BOARD_TC321X_EVK_C1T357A20 & BOARD_TC321X_EVK_C1T357A20_V2_1
+    #define BOARD_SELECT                            BOARD_TC321X_EVK_C1T357A20_V2_1
 #endif
 
 
@@ -172,14 +172,6 @@ typedef struct{
 #endif
 
 #define UART_BAUD_RATE  					115200
-
-/////////////////////////////////////// PRINT DEBUG INFO ///////////////////////////////////////
-#if (UART_PRINT_DEBUG_ENABLE)
-	#define DEBUG_INFO_TX_PIN           	GPIO_PB6
-	#define PULL_WAKEUP_SRC_PB6         	PM_PIN_PULLUP_10K
-	#define PB6_OUTPUT_ENABLE         		1
-	#define PB6_DATA_OUT                    1
-#endif
 
 /////////////////// set default   ////////////////
 

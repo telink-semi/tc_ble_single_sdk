@@ -45,6 +45,9 @@
 #ifndef BOARD_TC321X_EVK_C1T357A20
 #define BOARD_TC321X_EVK_C1T357A20						0x7A20     //
 #endif
+#ifndef BOARD_TC321X_EVK_C1T357A20_V2_1
+#define BOARD_TC321X_EVK_C1T357A20_V2_1                 0x7A2021   //
+#endif
 #ifndef BOARD_TC321X_RCU_C1T362A5
 #define BOARD_TC321X_RCU_C1T362A5						0x62A5     //
 #endif

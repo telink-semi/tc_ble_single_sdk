@@ -192,6 +192,8 @@
 	#include "boards/C1T197A5.h"
 #elif ( BOARD_SELECT == BOARD_TC321X_EVK_C1T357A20)
 	#include "boards/C1T357A20.h"
+#elif ( BOARD_SELECT == BOARD_TC321X_EVK_C1T357A20_V2_1)
+    #include "boards/C1T357A20_V2_1.h"
 #elif ( BOARD_SELECT == BOARD_TC321X_RCU_C1T362A5)
 	#include "boards/C1T362A5.h"
 #endif
@@ -207,9 +209,9 @@
 	 * default use EVK, user can change */
 		#define BOARD_SELECT								BOARD_827X_EVK_C1T197A30
 	#elif (MCU_CORE_TYPE == MCU_CORE_TC321X)
-	/* can only choose BOARD_TC321X_EVK_C1T357A20 or BOARD_TC321X_RCU_C1T362A5,
+	/* can only choose BOARD_TC321X_EVK_C1T357A20 or BOARD_TC321X_RCU_C1T362A5 or BOARD_TC321X_EVK_C1T357A20_V2_1,
 	 * default use EVK, user can change */
-		#define BOARD_SELECT								BOARD_TC321X_EVK_C1T357A20
+		#define BOARD_SELECT								BOARD_TC321X_EVK_C1T357A20_V2_1
 	#else
 		#error "SDK do not support this MCU!"
 	#endif

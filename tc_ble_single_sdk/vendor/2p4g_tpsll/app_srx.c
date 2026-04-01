@@ -142,6 +142,9 @@ _attribute_no_inline_ void user_init_normal(void)
 //////////////////////////// 2P4G stack Initialization  Begin //////////////////////////////////
     unsigned char sync_word[4] = {0xDF, 0x56, 0xD9, 0x35};
     //init Link Layer configuratioin
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    set_rf_chn_for_init(chn);
+#endif
     tpsll_init(TPSLL_DATARATE_2MBPS);
     tpsll_channel_set(chn);
     tpsll_preamble_len_set(2);

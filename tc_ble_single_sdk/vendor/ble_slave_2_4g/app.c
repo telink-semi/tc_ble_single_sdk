@@ -745,7 +745,7 @@ _attribute_no_inline_ void main_loop(void)
     if (blc_ll_getCurrentState() == BLS_LINK_STATE_IDLE)//blc_ll_isControllerEventPending
     {
         //The wake-up tick is set by the user according to the needs
-        app_mainloop_2p4g(clock_time() + 4 * CLOCK_SYS_CLOCK_1S);
+        app_mainloop_2p4g(clock_time() + 4 * SYSTEM_TIMER_TICK_1S);
     }
 #endif
 

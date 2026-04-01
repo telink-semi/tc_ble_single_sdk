@@ -91,8 +91,8 @@
 	//Only support BOARD_827X_EVK_C1T197A30 & BOARD_827X_DONGLE_C1T201A3
 	#define BOARD_SELECT							BOARD_827X_EVK_C1T197A30
 #elif (__PROJECT_TC321X_BLE_SLAVE_2P4G_SWITCH__)
-	//Only support BOARD_TC321X_EVK_C1T357A20
-	#define BOARD_SELECT							BOARD_TC321X_EVK_C1T357A20
+    //support BOARD_TC321X_EVK_C1T357A20 & BOARD_TC321X_EVK_C1T357A20_V2_1
+    #define BOARD_SELECT                            BOARD_TC321X_EVK_C1T357A20_V2_1
 #endif
 
 
@@ -147,7 +147,7 @@
 
 /////////////////// DEEP SAVE FLG //////////////////////////////////
 #if (__PROJECT_TC321X_BLE_SLAVE_2P4G_SWITCH__)
-	#define USED_DEEP_ANA_REG				PM_ANA_REG_WD_CLR_BUF1
+	#define USED_DEEP_ANA_REG				PM_ANA_REG_POWER_ON_CLR_BUF1
 #else
 	#define USED_DEEP_ANA_REG               DEEP_ANA_REG0 //u8,can save 8 bit info when deep
 #endif
@@ -163,15 +163,6 @@
 /////////////////// watchdog  //////////////////////////////
 #define MODULE_WATCHDOG_ENABLE		0
 #define WATCHDOG_INIT_TIMEOUT		500  //ms
-
-
-/////////////////////////////////////// PRINT DEBUG INFO ///////////////////////////////////////
-#if (UART_PRINT_DEBUG_ENABLE)
-	#define DEBUG_INFO_TX_PIN           	GPIO_PB1
-	#define PULL_WAKEUP_SRC_PB1         	PM_PIN_PULLUP_10K
-	#define PB1_OUTPUT_ENABLE         		1
-	#define PB1_DATA_OUT                    1
-#endif
 
 #if TEST_CONN_CURRENT_ENABLE
 	#if DEBUG_GPIO_ENABLE || UART_PRINT_DEBUG_ENABLE || UI_KEYBOARD_ENABLE || UI_LED_ENABLE || UI_BUTTON_ENABLE

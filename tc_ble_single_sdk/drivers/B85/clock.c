@@ -67,7 +67,7 @@ _attribute_ram_code_ void clock_init(SYS_CLK_TypeDef SYS_CLK)
 		sys_clock_print = 24;
 	#elif(CLOCK_SYS_CLOCK_HZ == 32000000)  //32M
 		sys_clock_print = 32;
-	#elif(CLOCK_SYS_CLOCK_HZ == 24000000)  //48M
+	#elif(CLOCK_SYS_CLOCK_HZ == 48000000)  //48M
 		sys_clock_print = 48;
 	#endif
 	/*

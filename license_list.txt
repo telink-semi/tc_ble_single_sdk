@@ -90,8 +90,6 @@
 ./tc_ble_single_sdk/drivers/B85/driver_ext/mcu_config.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/B85/driver_ext/rf_pa.c			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/B85/driver_ext/rf_pa.h			TELINK_APACHE 
-./tc_ble_single_sdk/drivers/B85/driver_ext/rf_private_pa.c			TELINK_APACHE 
-./tc_ble_single_sdk/drivers/B85/driver_ext/rf_private_pa.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/B85/driver_ext/software_uart.c			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/B85/driver_ext/software_uart.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/B85/flash/flash_common.c			TELINK_APACHE 
@@ -174,8 +172,6 @@
 ./tc_ble_single_sdk/drivers/B87/driver_ext/mcu_config.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/B87/driver_ext/rf_pa.c			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/B87/driver_ext/rf_pa.h			TELINK_APACHE 
-./tc_ble_single_sdk/drivers/B87/driver_ext/rf_private_pa.c			TELINK_APACHE 
-./tc_ble_single_sdk/drivers/B87/driver_ext/rf_private_pa.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/B87/driver_ext/software_uart.c			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/B87/driver_ext/software_uart.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/B87/flash/flash_common.c			TELINK_APACHE 
@@ -261,14 +257,14 @@
 ./tc_ble_single_sdk/drivers/TC321X/driver_ext/mcu_config.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/driver_ext/rf_pa.c			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/driver_ext/rf_pa.h			TELINK_APACHE 
-./tc_ble_single_sdk/drivers/TC321X/driver_ext/rf_private_pa.c			TELINK_APACHE 
-./tc_ble_single_sdk/drivers/TC321X/driver_ext/rf_private_pa.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/flash/flash_common.c			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/flash/flash_common.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/flash/flash_mid136085.c			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/flash/flash_mid136085.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/flash/flash_mid146085.c			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/flash/flash_mid146085.h			TELINK_APACHE 
+./tc_ble_single_sdk/drivers/TC321X/flash/flash_mid1471cd.c			TELINK_APACHE 
+./tc_ble_single_sdk/drivers/TC321X/flash/flash_mid1471cd.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/flash/flash_mid156085.c			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/flash/flash_mid156085.h			TELINK_APACHE 
 ./tc_ble_single_sdk/drivers/TC321X/flash/flash_type.h			TELINK_APACHE 
@@ -663,6 +659,7 @@
 ./tc_ble_single_sdk/vendor/common/boards/C1T197A5.h			TELINK_APACHE 
 ./tc_ble_single_sdk/vendor/common/boards/C1T201A3.h			TELINK_APACHE 
 ./tc_ble_single_sdk/vendor/common/boards/C1T357A20.h			TELINK_APACHE 
+./tc_ble_single_sdk/vendor/common/boards/C1T357A20_V2_1.h			TELINK_APACHE 
 ./tc_ble_single_sdk/vendor/common/boards/C1T362A5.h			TELINK_APACHE 
 ./tc_ble_single_sdk/vendor/common/custom_pair.c			TELINK_APACHE 
 ./tc_ble_single_sdk/vendor/common/custom_pair.h			TELINK_APACHE 

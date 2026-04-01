@@ -89,14 +89,13 @@
 
 /////////////////// DEEP SAVE FLG //////////////////////////////////
 #if (__PROJECT_TC321X_BLE_REMOTE__)
-	#define USED_DEEP_ANA_REG				PM_ANA_REG_WD_CLR_BUF1
+	#define USED_DEEP_ANA_REG				PM_ANA_REG_POWER_ON_CLR_BUF1
 #else
 	#define USED_DEEP_ANA_REG               DEEP_ANA_REG0 //u8,can save 8 bit info when deep
 #endif
 #define	LOW_BATT_FLG					    BIT(0) //if 1: low battery
 #define CONN_DEEP_FLG	                    BIT(4) //if 1: conn deep, 0: ADV deep
 #define IR_MODE_DEEP_FLG	 				BIT(5) //if 1: IR mode, 0: BLE mode
-#define LOW_BATT_SUSPEND_FLG				BIT(3) //if 1 : low battery, < 1.8v
 
 /**
  *  @brief  LED Configuration
@@ -276,15 +275,6 @@
 #define WATCHDOG_INIT_TIMEOUT		500  //ms
 
 #define BLE_PHYTEST_MODE						PHYTEST_MODE_DISABLE
-
-
-/////////////////////////////////////// PRINT DEBUG INFO ///////////////////////////////////////
-#if (UART_PRINT_DEBUG_ENABLE)
-	#define DEBUG_INFO_TX_PIN           					GPIO_PB1
-	#define PULL_WAKEUP_SRC_PB1         					PM_PIN_PULLUP_10K
-	#define PB1_OUTPUT_ENABLE         						1
-	#define PB1_DATA_OUT                                    1 //must
-#endif
 
 
 #include "vendor/common/default_config.h"

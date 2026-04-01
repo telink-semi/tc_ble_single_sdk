@@ -36,6 +36,8 @@ SECTIONS
     {
     *(.ram_code)
     *(.ram_code.*)
+    *(.cstartup_ram_funcs)
+    *(.cstartup_ram_funcs.*)
     }
     
     . = (((. + 3) / 4)*4);

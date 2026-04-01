@@ -94,12 +94,30 @@ void flash_protection_init(void)
 				break;
 		#endif
 
+		#if (FLASH_ZB25WD40C_SUPPORT_EN)
+			case MID0113325E:
+				flash_lock_mid = (flash_lock_t)flash_lock_mid0113325e;
+				flash_unlock_mid = (flash_unlock_t)flash_unlock_mid0113325e;
+				flash_get_lock_status_mid = (flash_get_lock_status_t)flash_get_lock_block_mid0113325e;
+				flash_unlock_status = FLASH_LOCK_NONE_MID0113325E;
+				break;
+		#endif
+
 		#if (FLASH_ZB25WD80B_SUPPORT_EN)
 			case MID14325E:
 				flash_lock_mid = (flash_lock_t)flash_lock_mid14325e;
 				flash_unlock_mid = (flash_unlock_t)flash_unlock_mid14325e;
 				flash_get_lock_status_mid = (flash_get_lock_status_t)flash_get_lock_block_mid14325e;
 				flash_unlock_status = FLASH_LOCK_NONE_MID14325E;
+				break;
+		#endif
+
+		#if (FLASH_ZB25WD80C_SUPPORT_EN)
+			case MID0114325E:
+				flash_lock_mid = (flash_lock_t)flash_lock_mid0114325e;
+				flash_unlock_mid = (flash_unlock_t)flash_unlock_mid0114325e;
+				flash_get_lock_status_mid = (flash_get_lock_status_t)flash_get_lock_block_mid0114325e;
+				flash_unlock_status = FLASH_LOCK_NONE_MID0114325E;
 				break;
 		#endif
 
@@ -136,6 +154,15 @@ void flash_protection_init(void)
 				flash_unlock_mid = (flash_unlock_t)flash_unlock_mid1460c8;
 				flash_get_lock_status_mid = (flash_get_lock_status_t)flash_get_lock_block_mid1460c8;
 				flash_unlock_status = FLASH_LOCK_NONE_MID1460C8;
+				break;
+		#endif
+
+		#if (FLASH_TH25Q80U_SUPPORT_EN)	//1M capacity
+			case MID1471CD:
+				flash_lock_mid = (flash_lock_t)flash_lock_mid1471cd;
+				flash_unlock_mid = (flash_unlock_t)flash_unlock_mid1471cd;
+				flash_get_lock_status_mid = (flash_get_lock_status_t)flash_get_lock_block_mid1471cd;
+				flash_unlock_status = FLASH_LOCK_NONE_MID1471cd;
 				break;
 		#endif
 
@@ -181,6 +208,28 @@ u16 flash_change_app_lock_block_to_flash_lock_block(flash_app_lock_e app_lock_bl
 					 *            now firmware size under protection is 448K - 256K = 192K
 					 * if this demo can not meet your requirement, you should change !!!*/
 					flash_lock_block_size = FLASH_LOCK_LOW_448K_MID13325E;
+					tlkapi_printf(APP_FLASH_PROT_LOG_EN, "[FLASH][PROT] flash lock low 448K block!\n");
+				}
+				else{
+					blc_flashProt.init_err = 1; //can not use LOCK LOW 1M for 512K capacity flash
+				}
+				break;
+		#endif
+
+		#if (FLASH_ZB25WD40C_SUPPORT_EN) //512K capacity
+			case MID0113325E:
+				if(app_lock_block == FLASH_LOCK_FW_LOW_256K){
+					flash_lock_block_size = FLASH_LOCK_LOW_256K_MID0113325E;
+					tlkapi_printf(APP_FLASH_PROT_LOG_EN, "[FLASH][PROT] flash lock low 256K block!\n");
+				}
+				else if(app_lock_block == FLASH_LOCK_FW_LOW_512K){
+					/* attention 1: use can change this value according to application
+					 * attention 2: can not lock stack SMP data storage area
+					 * attention 3: firmware size under protection is not 512K, user should calculate
+					 * demo code: choose 448K, leave at 64K for system data(SMP storage data & calibration data & MAC address) and user data,
+					 *            now firmware size under protection is 448K - 256K = 192K
+					 * if this demo can not meet your requirement, you should change !!!*/
+					flash_lock_block_size = FLASH_LOCK_LOW_448K_CMP1_MID0113325E;
 					tlkapi_printf(APP_FLASH_PROT_LOG_EN, "[FLASH][PROT] flash lock low 448K block!\n");
 				}
 				else{
@@ -238,6 +287,31 @@ u16 flash_change_app_lock_block_to_flash_lock_block(flash_app_lock_e app_lock_bl
 				break;
 		#endif
 
+		#if (FLASH_ZB25WD80C_SUPPORT_EN) //1M capacity
+			case MID0114325E:
+				if(app_lock_block == FLASH_LOCK_FW_LOW_256K){
+					flash_lock_block_size = FLASH_LOCK_LOW_256K_MID0114325E;
+					tlkapi_printf(APP_FLASH_PROT_LOG_EN, "[FLASH][PROT] flash lock low 256K block!\n");
+				}
+				else if(app_lock_block == FLASH_LOCK_FW_LOW_512K){
+					flash_lock_block_size = FLASH_LOCK_LOW_512K_MID0114325E;
+					tlkapi_printf(APP_FLASH_PROT_LOG_EN, "[FLASH][PROT] flash lock low 512K block!\n");
+				}
+				else if(app_lock_block == FLASH_LOCK_FW_LOW_1M){
+					/* attention 1: use can change this value according to application
+					 * attention 2: can not lock stack SMP data storage area
+					 * attention 3: firmware size under protection is not 1M, user should calculate
+					 * demo code: choose 960K, leave 64K for system data(SMP storage data & calibration data & MAC address) and user data,
+					 * 			  now firmware size under protection is 960K - 512K = 448K
+					 * if this demo can not meet your requirement, you should change !!! */
+					flash_lock_block_size = FLASH_LOCK_LOW_960K_CMP1_MID0114325E;
+					tlkapi_printf(APP_FLASH_PROT_LOG_EN, "[FLASH][PROT] flash lock low 960K block!\n");
+				}
+				else{
+					blc_flashProt.init_err = 1;
+				}
+				break;
+		#endif
 
 		#if (FLASH_GD25LD40C_SUPPORT_EN || FLASH_GD25LD40E_SUPPORT_EN) //512K capacity
 			case MID1360C8:
@@ -306,6 +380,32 @@ u16 flash_change_app_lock_block_to_flash_lock_block(flash_app_lock_e app_lock_bl
 					 * 			  now firmware size under protection is 960K - 512K = 448K
 					 * if this demo can not meet your requirement, you should change !!! */
 					flash_lock_block_size = FLASH_LOCK_LOW_960K_MID1460C8;
+					tlkapi_printf(APP_FLASH_PROT_LOG_EN, "[FLASH][PROT] flash lock low 960K block!\n");
+				}
+				else{
+					blc_flashProt.init_err = 1;
+				}
+				break;
+		#endif
+
+		#if (FLASH_TH25Q80U_SUPPORT_EN) //1M capacity
+			case MID1471CD:
+				if(app_lock_block == FLASH_LOCK_FW_LOW_256K){
+					flash_lock_block_size = FLASH_LOCK_LOW_256K_MID1471cd;
+					tlkapi_printf(APP_FLASH_PROT_LOG_EN, "[FLASH][PROT] flash lock low 256K block!\n");
+				}
+				else if(app_lock_block == FLASH_LOCK_FW_LOW_512K){
+					flash_lock_block_size = FLASH_LOCK_LOW_512K_MID1471cd;
+					tlkapi_printf(APP_FLASH_PROT_LOG_EN, "[FLASH][PROT] flash lock low 512K block!\n");
+				}
+				else if(app_lock_block == FLASH_LOCK_FW_LOW_1M){
+					/* attention 1: use can change this value according to application
+					 * attention 2: can not lock stack SMP data storage area
+					 * attention 3: firmware size under protection is not 1M, user should calculate
+					 * demo code: choose 960K, leave 64K for system data(SMP storage data & calibration data & MAC address) and user data,
+					 * 			  now firmware size under protection is 960K - 512K = 448K
+					 * if this demo can not meet your requirement, you should change !!! */
+					flash_lock_block_size = FLASH_LOCK_LOW_960K_MID1471cd;
 					tlkapi_printf(APP_FLASH_PROT_LOG_EN, "[FLASH][PROT] flash lock low 960K block!\n");
 				}
 				else{

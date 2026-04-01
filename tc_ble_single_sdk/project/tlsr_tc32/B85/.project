@@ -84,57 +84,57 @@
 		<link>
 			<name>algorithm</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/algorithm</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/algorithm</locationURI>
 		</link>
 		<link>
 			<name>application</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/application</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/application</locationURI>
 		</link>
 		<link>
 			<name>boot</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/boot</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/boot</locationURI>
 		</link>
 		<link>
 			<name>common</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/common</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/common</locationURI>
 		</link>
 		<link>
 			<name>config.h</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/config.h</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/config.h</locationURI>
 		</link>
 		<link>
 			<name>drivers</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/drivers</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/drivers</locationURI>
 		</link>
 		<link>
 			<name>drivers.h</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/drivers.h</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/drivers.h</locationURI>
 		</link>
 		<link>
 			<name>proj_lib</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/proj_lib</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/proj_lib</locationURI>
 		</link>
 		<link>
 			<name>stack</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/stack</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/stack</locationURI>
 		</link>
 		<link>
 			<name>tl_common.h</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/tl_common.h</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/tl_common.h</locationURI>
 		</link>
 		<link>
 			<name>vendor</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/tc_ble_single_sdk/vendor</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/vendor</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

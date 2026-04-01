@@ -40,7 +40,22 @@ SECTIONS
     }
     
     PROVIDE(_cstartup_ram_funcs_size_div_16_ = (. + 15 ) / 16);
+    PROVIDE(_cstartup_ram_funcs_size_align_16_ = _cstartup_ram_funcs_size_div_16_ * 16);
+    
+    . = _cstartup_ram_funcs_size_align_16_ + 0x840000;
+    .reboot_data :
+    AT (_cstartup_ram_funcs_size_align_16_)
+    {
+    . = (((. + 3) / 4)*4);
+    *(.reboot_data)
+    *(.reboot_data.*)
+    }
+    PROVIDE(_reboot_data_size_ = ((. - 0x840000 + 15) / 16 )* 16);
+	PROVIDE(_reboot_data_size_div_16_ = (.  - 0x840000 + 15 ) / 16);
+    
+    . = _reboot_data_size_;
     .ram_code :
+    AT (_reboot_data_size_)
     {
     *(.ram_code)
     *(.ram_code.*)
@@ -99,10 +114,10 @@ SECTIONS
 	PROVIDE(_sstored_ = _dstored_ + _end_data_ - _start_data_);
 
 	. = (((. + 3) / 4)*4);
-    .my_code(NOLOAD) :
-    {
-	*(.rf_sw_config)
-    }
+	    .platform_func(NOLOAD) :
+	    {
+		*(.rf_sw_config)
+	    }
 
 	/* irk_stk is 4 word align */
 	. = (((. + 3) / 4)*4);

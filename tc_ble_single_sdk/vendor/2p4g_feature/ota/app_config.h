@@ -65,10 +65,11 @@
 #define RF_DEBUG_IO_ENABLE                  0
 /////////////////////// Feature Test Board Select Configuration ///////////////////////////////
 #if (__PROJECT_TC321X_2P4G_FEATURE__)
-	#define BOARD_SELECT								BOARD_TC321X_EVK_C1T357A20
+    //support BOARD_TC321X_EVK_C1T357A20 & BOARD_TC321X_EVK_C1T357A20_V2_1
+    #define BOARD_SELECT                            BOARD_TC321X_EVK_C1T357A20_V2_1
 #elif (__PROJECT_8258_2P4G_FEATURE__)
     //Only support BOARD_825X_EVK_C1T139A30 & BOARD_825X_DONGLE_C1T139A3
-    #define BOARD_SELECT                                BOARD_825X_EVK_C1T139A30
+    #define BOARD_SELECT                            BOARD_825X_EVK_C1T139A30
 #elif (__PROJECT_8278_2P4G_FEATURE__)
     /* can only choose BOARD_827X_EVK_C1T197A30*/
     #define BOARD_SELECT                            BOARD_827X_EVK_C1T197A30
@@ -142,7 +143,7 @@
 
 /////////////////// DEEP SAVE FLG //////////////////////////////////
 #if (__PROJECT_TC321X_2P4G_FEATURE__)
-    #define USED_DEEP_ANA_REG               PM_ANA_REG_WD_CLR_BUF1
+    #define USED_DEEP_ANA_REG               PM_ANA_REG_POWER_ON_CLR_BUF1
 #else
     #define USED_DEEP_ANA_REG               DEEP_ANA_REG0 //u8,can save 8 bit info when deep
 #endif
@@ -152,15 +153,6 @@
 
 ///////////////////////// System Clock  Configuration /////////////////////////////////////////
 #define CLOCK_SYS_CLOCK_HZ                                  16000000
-
-
-/////////////////////////////////////// PRINT DEBUG INFO ///////////////////////////////////////
-#if (UART_PRINT_DEBUG_ENABLE)
-    #define DEBUG_INFO_TX_PIN               GPIO_PB1
-    #define PULL_WAKEUP_SRC_PB1             PM_PIN_PULLUP_10K
-    #define PB1_OUTPUT_ENABLE               1
-    #define PB1_DATA_OUT                    1
-#endif
 
 #if TEST_CONN_CURRENT_ENABLE
     #if DEBUG_GPIO_ENABLE || UART_PRINT_DEBUG_ENABLE || UI_KEYBOARD_ENABLE || UI_LED_ENABLE || UI_BUTTON_ENABLE || RF_DEBUG_IO_ENABLE

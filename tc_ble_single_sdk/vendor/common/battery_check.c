@@ -460,7 +460,9 @@ _attribute_ram_code_ void user_battery_power_check(u16 alarm_vol_mv)
 			of Flash may have the risk of error, causing the program firmware and user data to be modified abnormally,
 			and eventually causing the product to fail. */
 	u8 battery_check_returnValue=0;
-	if(!(analog_read(USED_DEEP_ANA_REG) & LOW_BATT_FLG)){
+
+	if(analog_read(USED_DEEP_ANA_REG) & LOW_BATT_FLG)
+	{
 		battery_check_returnValue=app_battery_power_check(alarm_vol_mv+200);
 	}
 	else{
@@ -468,7 +470,7 @@ _attribute_ram_code_ void user_battery_power_check(u16 alarm_vol_mv)
 	}
 	if(battery_check_returnValue)
 	{
-		analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG) | LOW_BATT_FLG);  //mark
+		analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG) & (~LOW_BATT_FLG));  //clr
 	}
 	else
 	{
@@ -481,14 +483,14 @@ _attribute_ram_code_ void user_battery_power_check(u16 alarm_vol_mv)
 			}
 		#endif
 
-		if(!(analog_read(USED_DEEP_ANA_REG) & LOW_BATT_FLG)){
+		if(analog_read(USED_DEEP_ANA_REG) & LOW_BATT_FLG)
+		{
 			tlkapi_printf(APP_BATT_CHECK_LOG_EN, "[APP][BAT] The battery voltage is lower than %dmV, shut down!!!\n", (alarm_vol_mv + 200));
 		} else {
 			tlkapi_printf(APP_BATT_CHECK_LOG_EN, "[APP][BAT] The battery voltage is lower than %dmV, shut down!!!\n", alarm_vol_mv);
 		}
 
-
-		analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG) & (~LOW_BATT_FLG));  //clr
+		analog_write(USED_DEEP_ANA_REG,  analog_read(USED_DEEP_ANA_REG) | LOW_BATT_FLG);  //mark
 
 		#if (UI_KEYBOARD_ENABLE)
 		u32 pin[] = KB_DRIVE_PINS;

@@ -103,6 +103,9 @@ _attribute_no_inline_ void user_init_normal(void)
 
 //////////////////////////// 2P4G stack Initialization  Begin //////////////////////////////////
     unsigned char sync_word[5] = {0x47, 0x63, 0xa8, 0xc3, 0x5b};
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    set_rf_chn_for_init(7); // set channel before gen_fsk_datarate_set for RX performance optimization.
+#endif
     //generic FSK Link Layer configuratioin
     gen_fsk_datarate_set(GEN_FSK_DATARATE_1MBPS); //Note that this API must be invoked first before all other APIs
     gen_fsk_preamble_len_set(4);

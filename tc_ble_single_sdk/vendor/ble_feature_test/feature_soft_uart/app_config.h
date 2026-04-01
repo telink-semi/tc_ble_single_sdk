@@ -64,7 +64,8 @@
 #elif (__PROJECT_8278_FEATURE_TEST__)
 	#define BOARD_SELECT								BOARD_827X_EVK_C1T197A30
 #elif (__PROJECT_TC321X_FEATURE_TEST__)
-	#define BOARD_SELECT								BOARD_TC321X_EVK_C1T357A20
+    //support BOARD_TC321X_EVK_C1T357A20 & BOARD_TC321X_EVK_C1T357A20_V2_1
+    #define BOARD_SELECT                                BOARD_TC321X_EVK_C1T357A20_V2_1
 #endif
 
 
@@ -77,16 +78,6 @@
 
 ///////////////////////// System Clock  Configuration /////////////////////////////////////////
 #define CLOCK_SYS_CLOCK_HZ  								48000000	//must select 48M clock
-
-
-
-/////////////////////////////////////// PRINT DEBUG INFO ///////////////////////////////////////
-#if (UART_PRINT_DEBUG_ENABLE)
-	#define DEBUG_INFO_TX_PIN           	GPIO_PB1
-	#define PULL_WAKEUP_SRC_PB1         	PM_PIN_PULLUP_10K
-	#define PB1_OUTPUT_ENABLE         		1
-	#define PB1_DATA_OUT                    1
-#endif
 
 #if (__PROJECT_TC321X_FEATURE_TEST__)
 	#error "TC321X don't support soft UART!"

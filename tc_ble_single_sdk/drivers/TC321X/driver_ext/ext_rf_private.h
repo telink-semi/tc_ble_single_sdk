@@ -98,4 +98,10 @@ void RF_Pri_TPLL_Init(TPLL_BitrateTypeDef bitrate);
 *	@return	 	RF Rx/Tx status.
 */
 PRI_StatusTypeDef rf_pri_trx_state_get(void);
+/**
+*	@brief	  	This function serves to Set the RF channel used for RX performance optimization in rf_set_rxpara(Only in TC321X).
+*	@param[in]	RF channel number, should be the same as the number of channels set subsequently.
+*	@return	 	None.
+*/
+void set_rf_chn_for_init(signed short chn);
 #endif /* RF_PRIVATE_H_ */

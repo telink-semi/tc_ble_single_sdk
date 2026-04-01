@@ -1,7 +1,7 @@
 /********************************************************************************************************
  * @file    app_tpsll_stx2rx.c
  *
- * @brief   This is the source file for B80
+ * @brief   This is the source file for 2.4G SDK
  *
  * @author  2.4G Group
  * @date    12,2021
@@ -98,6 +98,9 @@ void tpsll_config_init(void)
 {
     unsigned char sync_word[4] = {0xDF, 0x56, 0xD9, 0x35};
     //init Link Layer configuratioin
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    set_rf_chn_for_init(7);
+#endif
     tpsll_init(TPSLL_DATARATE_2MBPS);
     tpsll_channel_set(7);
     tpsll_preamble_len_set(2);

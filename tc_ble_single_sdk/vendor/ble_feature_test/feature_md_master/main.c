@@ -54,6 +54,10 @@ int main (void)
 		cpu_wakeup_init(LDO_MODE,INTERNAL_CAP_XTAL24M);
 	#endif
 
+	#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+		wd_32k_stop();
+	#endif
+
 	clock_init(SYS_CLK_TYPE);
 
 	gpio_init(1);

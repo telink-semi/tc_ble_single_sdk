@@ -1,3 +1,305 @@
+# V3.4.3.0 (PR)
+
+### Version
+* SDK version: tc_ble_single_sdk V3.4.3.0
+* Chip Version
+  - B85: TLSR825X
+  - B87: TLSR827X
+  - TC321X (A0/A1/B0)
+* Hardware Version
+  - B85: C1T139A30_V1_2, C1T139A5_V1_4, C1T139A3_V2_0
+  - B87: C1T197A30_V1_1, C1T197A5_V1_1, C1T201A3_V1_0
+  - TC321X: C1T357A20_V1_1, C1T362A5_V1_0, C1T357A20_V2_1
+* Platform Version
+  - tc_platform_sdk V3.4.0
+* Toolchain Version
+  - TC32 ELF GCC4.3 ( IDE: [Telink IoT Studio](https://www.telink-semi.com/development-tools) )
+
+### Note
+- (TC321X): The function to retain the values of analog registers 0x3b and 0x3c after a software reboot has been restored. As a result, the low battery check logic is now aligned with the B85 and B87 platforms, using bit 0 of register 0x3b as the low battery check flag: the "LOW_BATT_FLG" is cleared when voltage is normal, and set when voltage is abnormal. On first power-up, the system can operate normally if the voltage is above 2.0 V; if it enters deep sleep mode due to voltage dropping below 2.0 V, the minimum voltage required to resume operation is increased to 2.2 V. Note that enabling this feature requires adding a "reboot_data" section.
+
+### Features
+- **Chip**
+  - (TC321X) Supported chip TC321X B0.
+
+- **Application**
+    - (TC321X): Added set_rf_chn_for_init to the 2p4g-related reference designs. This function must be called before configuring RF parameters to optimize RF performance. The chn parameter passed to set_rf_chn_for_init must match the chn used in subsequent RF parameter configurations.
+    - (B85/B87/TC321X): Added new flash and implement protection mechanisms for it.
+	- (TC321X): Modified the low battery check logic to be consistent with the B85 and B87 platforms.
+	- (TC321X): Added voltage calibration functionality for the TC321X B0.
+
+### Bug Fixes
+- **PM**
+  - For TC321X
+    - Fixed the disconnection issue caused by frequent timer wake-ups.
+      - Detailed Description: When the BLE_APP_PM_ENABLE is enabled, if the application frequently wakes up the system via software timers, clock recovery abnormalities may occur during wake-up. This issue may also occur with low probability under conditions where software timers are not used.
+      - After Fix: The clock recovery is functioning normally, and instances of disconnection will no longer occur.
+      - Update Recommendation: Mandatory update.
+
+  - For B85/B87/TC321X
+    - Fixed the issue of data loss or transmission delay caused by incorrect checks on the TX FIFO before entering sleep.
+      - Detailed Description: When using soft timer and enabling BLE_APP_PM_ENABLE, there are some missed conditions in the judgment of whether there is data in the TX FIFO before entering sleep, which leads to data loss or transmission delays from the TX FIFO.
+      - After Fix: Data in the TX FIFO is now correctly judged, and no longer experiences loss or delayed transmission.
+      - Update Recommendation: Evaluate if needed.
+
+- **RF**
+  - For B85 / B87 / TC321X
+    - Fixed the issue where frequent Flash write operations could lead to packet loss when the RF operates in extremely harsh environments.
+      - Detailed Description: Under extreme RF conditions, frequent write operations on Puya Flash models may cause packet loss.
+	  - After Fix: Flash write operations no longer cause packet loss, even in harsh RF environments.
+      - Update Recommendation: Mandatory update.
+
+- **Analog Register**
+  - For TC321X
+    - Fixed the issue where analog registers 0x3b (PM_ANA_REG_POWER_ON_CLR_BUF1) and 0x3c (PM_ANA_REG_POWER_ON_CLR_BUF2) were reset to their default values after software reboot.
+      - Detailed Description:​ When the chip recovered from a reboot state, registers 0x3b and 0x3c were restored to their default values, resulting in loss of stored data.
+	  - After Fix:​ After the fix, when the chip recovers from a reboot state, registers 0x3b and 0x3c will retain their pre-reboot values.
+	  - Update Recommendation:​ Recommended to update.
+
+- **ADV**
+  - For B85/B87/TC321X
+    - Fixed the issue where channel 38 failed to send advertising packets in the connection state.
+      - Detailed Description: When the advertising type for "ADV in Conn" is set to ADV_TYPE_NONCONNECTABLE_UNDIRECTED, the system fails to transmit advertising packets on channel 38 while in a connection state.
+      - After Fix: Advertising packets can now be transmitted normally on channel 38 in the connection state.
+      - Update Recommendation: Evaluate if needed.
+
+- **Application**
+  - For B85
+    - Fixed the issue of garbled data when using software-simulated serial communication.
+      - Detailed Description: For the B85 chip, under the condition of a 48 MHz system clock frequency, garbled output occurs when using software-simulated serial communication.	
+      - After Fix: With the fix implemented, it is now possible to use software-simulated serial communication normally under a 48 MHz system clock frequency.
+      - Update Recommendation: Evaluate if needed.
+
+  - For B85/B87/TC321X
+    - Fixed the timing configuration error in the ble_slave_2_4g reference example.
+      - Detailed Description: In the ble_slave_2_4g reference example, the input parameter of the app_mainloop_2p4g was incorrect, causing inaccurate timing settings when the main clock frequency was not 16 MHz.	
+      - After Fix: Timing settings are accurate.
+      - Update Recommendation: Evaluate if needed.
+
+  - For TC321X
+    - Fixed an issue where the serial port in the module reference design failed to output data sent by the central device.
+      - Detailed Description: When BLE_APP_PM_ENABLE was enabled, the serial port could not output data sent by the central device after establishing a connection.
+      - After Fix: Under the condition that BLE_APP_PM_ENABLE is enabled, the module can now properly output data sent by the central device.
+      - Update Recommendation: Evaluate if needed.
+
+### Refactoring
+- **link**
+  - (B85/B87): Added a new sector "cstartup_ram_funcs".
+  - (TC321X): Added a new sector "reboot_data".
+
+- **Application**
+  - (TC321X): To make it more convenient for customers to configure the 32k watchdog, the handling of disabling the 32k watchdog is moved out of cpu_wakeup_init and placed after the execution of the cpu_wakeup_init function.
+  - (B85/B87/TC321X): Clean up compiler errors when UI_LED_ENABLE is disabled while REMOTE_IR_ENABLE or REMOTE_IR_LEARN_ENABLE is enabled in ble_remote reference design.
+  - (B85/B87/TC321X): Move the configuration of UART_PRINT_DEBUG_ENABLE from app_config.h to the individual configuration files of each board.
+  - (B85/B87/TC321X): Change the default board number selection for TC321X to BOARD_TC321X_EVK_C1T357A20_V2_1. 
+
+### BREAKING CHANGES
+- **driver**
+  - (B85/B87/TC321X) Delete rf_private_pa.c and rf_private_pa.h, and merge the PA functionality for BLE and 2.4G into rf_pa.c and rf_pa.h.
+
+### Known issues
+- **Application**
+  - (TC321X): In the OTA_demo of 2p4g_feature_test, there is a relatively high probability that consecutive packet loss will cause the current firmware upgrade to fail.
+
+### CodeSize
+* **B85**
+
+| reference design                    | Firmware size (kBytes)    | SRAM size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 54.1                      | 18.4                         | 14.6                                   |
+| ble_remote                          | 65.9                      | 21.4                         | 15.8                                   |
+| ble_module                          | 62.4                      | 20.4                         | 16.8                                   |
+| master_kma_dongle                   | 44.0                      | 20.4                         | 11.6                                   |
+| genfsk_ll(stx2rx)                   | 17.8                      | 10.2                         | 6.8                                    |
+| tpll(ptx)                           | 18.6                      | 12.5                         | 7.3                                    |
+| tpsll(stx2rx)                       | 15.8                      | 10.3                         | 6.6                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 54.2                      | 19.9                         | 15.4                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 58.7                      | 20.2                         | 15.6                                   |
+| hci                                 | 43.5                      | 16.4                         | 11.8                                   |
+
+* **B87**
+
+| reference design                    | Firmware size (kBytes)    | SRAM Size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 55.7                      | 19.9                         | 16.2                                   |
+| ble_remote                          | 66.7                      | 22.9                         | 17.5                                   |
+| ble_module                          | 64.4                      | 22.2                         | 18.4                                   |
+| master_kma_dongle                   | 45.6                      | 22.2                         | 13.4                                   |
+| genfsk_ll(stx2rx)                   | 20.0                      | 11.7                         | 8.3                                    |
+| tpll(ptx)                           | 21.2                      | 14.3                         | 9.1                                    |
+| tpsll(stx2rx)                       | 17.8                      | 11.6                         | 8.0                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 56.3                      | 21.4                         | 17.0                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 60.9                      | 21.7                         | 17.2                                   |
+| hci                                 | 44.9                      | 17.9                         | 13.5                                   |
+
+* **TC321X**
+
+| reference design                    | Firmware size (kBytes)    | SRAM Size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 63.6                      | 20.6                         | 16.8                                   |
+| ble_remote                          | 75.0                      | 23.5                         | 17.8                                   |
+| ble_module                          | 72.7                      | 22.5                         | 18.7                                   |
+| genfsk_ll(stx2rx)                   | 28.9                      | 12.4                         | 9.1                                    |
+| tpll(ptx)                           | 30.6                      | 14.7                         | 9.4                                    |
+| tpsll(stx2rx)                       | 27.0                      | 12.6                         | 8.9                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 65.5                      | 22.3                         | 17.8                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 69.3                      | 22.5                         | 18.0                                   |
+| hci                                 | 52.5                      | 18.6                         | 14.1                                   |
+
+
+### Version
+
+* SDK 版本: tc_ble_single_sdk V3.4.3.0
+* Chip 版本
+  - B85: TLSR825X
+  - B87: TLSR827X
+  - TC321X (A0/A1/B0)
+* Hardware 版本
+  - B85: C1T139A30_V1_2, C1T139A5_V1_4, C1T139A3_V2_0
+  - B87: C1T197A30_V1_1, C1T197A5_V1_1, C1T201A3_V1_0
+  - TC321X: C1T357A20_V1_1, C1T362A5_V1_0, C1T357A20_V2_1
+* Platform 版本
+  - tc_platform_sdk V3.4.0
+* Toolchain 版本
+  - TC32 ELF GCC4.3 ( IDE: [Telink IoT Studio](https://www.telink-semi.com/development-tools) )
+
+### Note
+  - (TC321X)：现已恢复TC321X模拟寄存器0x3b和0x3c在软件复位后的值保留功能，因此将其低压检测逻辑调整为与B85及B87平台保持一致，并以0x3b模拟寄存器的BIT(0)作为低压检测的标志位：电压正常时清除“LOW_BATT_FLG”标志位，异常时则置位该标志。系统首次上电时，电压高于2.0V即可正常运行；若因电压低于2.0V进入deep sleep状态，则再次恢复工作所需的电压阈值提升至2.2V。需要注意，支持此功能需要添加“reboot_data”段。
+
+### Features
+* **Chip**
+  - (TC321X) 支持 TC321X B0 芯片。
+
+* **Application**
+  - (TC321X)：2p4g中新增set_rf_chn_for_init接口，需要在配置RF参数之前调用，用于优化RF性能；set_rf_chn_for_init的传参chn需要和后续RF参数配置中的chn相同。
+  - (B85/B87/TC321X)：新增flash并为其添加保护处理。
+  - (TC321X)：修改低压检测逻辑，与B85及B87平台保持一致。
+  - (TC321X)：为TC321X B0芯片添加电压校准功能。
+
+### Bug Fixes
+- **PM**
+  - For TC321X
+    - 修复了因软件定时器频繁唤醒导致的断连问题。
+      - 详细描述：当启用 BLE_APP_PM_ENABLE时，如果应用层通过软件定时器频繁唤醒系统，可能会在唤醒过程中出现时钟恢复异常。即使在不使用软件定时器的条件下，该问题也有可能低概率发生。
+      - 修复效果：时钟恢复正常，不再出现断连的情况。
+      - 更新建议：必须更新。
+
+  - For B85/B87/TC321X
+    - 修复了因在进入睡眠前对 TX FIFO 检查不当而导致的数据丢失或发送延迟问题。
+      - 详细描述：在使用软定时器并启用 BLE_APP_PM_ENABLE 时，进入睡眠前对 TX FIFO 中是否有数据的判断存在部分条件遗漏，从而导致数据丢失或发送延迟。
+      - 修复效果：能够正确地判断 TX FIFO 中的数据情况，不再出现数据丢失或发送延迟的问题。
+      - 更新建议：自行评估。
+
+- **RF**
+  - For B85/B87/TC321X
+    - 修复在RF工作在极端恶劣环境下，频繁执行写Flash操作概率导致丢包问题。
+      - 详细描述：当RF工作在极端恶劣环境下，频繁写Flash并且Flash型号为Puya时，可能导致丢包。
+      - 修复效果：在恶劣环境下写Flash不会出现丢包。
+      - 更新建议：必须更新。
+
+- **Analog Register**
+  - For TC321X
+    - 修复芯片重启后，0x3b(PM_ANA_REG_POWER_ON_CLR_BUF1) 与 0x3c(PM_ANA_REG_POWER_ON_CLR_BUF2) 模拟寄存器被重置为默认值的问题。
+	  - 详细描述：当芯片从软件 reboot 状态恢复时，0x3b 与 0x3c 模拟寄存器会被恢复为默认值，导致存储的值丢失。
+	  - 修复效果：当芯片从软件 reboot 状态恢复时，0x3b 与 0x3c 模拟寄存器仍保留为软件 reboot 之前的值。
+	  - 更新建议：建议更新。
+
+- **ADV**
+  - For B85/B87/TC321X
+    - 修复连接态下38通道无法发送广播包的问题。
+      - 详细描述：当ADV in Conn的广播类型设置为 ADV_TYPE_NONCONNECTABLE_UNDIRECTED 时，连接态下无法发送38通道广播。
+      - 修复效果：连接态下，38通道可正常发送广播包。
+      - 更新建议：自行评估。
+
+- **Application**
+  - For B85
+    - 修复了软件模拟串口输出乱码。
+      - 详细描述：B85系统时钟在48M条件下，使用软件模拟串口会出现乱码。
+      - 修复效果：可以在48M主频下，正常使用软件模拟串口。
+      - 更新建议：自行评估。
+
+  - For B85/B87/TC321X
+    - 修复了 ble_slave_2_4g 参考例程中的时间配置错误问题。
+      - 详细描述：在 ble_slave_2_4g 参考例程中，app_mainloop_2p4g 的输入参数设置不正确，导致在主频不是 16 MHz 的情况下，时间设置不准确。
+      - 修复效果：时间已正确设置。
+      - 更新建议：自行评估。
+
+  - For TC321X
+    - 修复了module参考设计串口无法输出主机端发送的数据。
+      - 详细描述：当启用 BLE_APP_PM_ENABLE时，主机和module连接后串口无法输出主机端发送的数据。
+      - 修复效果：在启用 BLE_APP_PM_ENABLE条件下，module可以正常输出主机端发送的数据。
+      - 更新建议：自行评估。
+
+### Refactoring
+- **link**
+  - (B85/B87): 添加"cstartup_ram_funcs" 段。
+  - (TC321X): 添加"reboot_data" 段。
+
+- **Application**
+  - (TC321X): 为了更方便客户对32k watchdog的配置，将关闭32k watchdog的处理从cpu_wakeup_init中移出，并放置在cpu_wakeup_init函数执行结束之后。
+  - (B85/B87/TC321X)：清理在ble_remote参考设计中禁用 UI_LED_ENABLE 并启用 REMOTE_IR_ENABLE 和 REMOTE_IR_LEARN_ENABLE时的编译错误。
+  - (B85/B87/TC321X)：将 UART_PRINT_DEBUG_ENABLE 的配置从 app_config.h 移至各 board 独立配置文件中。
+  - (B85/B87/TC321X)：将 TC321X 的默认板号选择修改为BOARD_TC321X_EVK_C1T357A20_V2_1。
+
+
+### BREAKING CHANGES
+- **driver**
+  - (B85/B87/TC321X)：删除 rf_private_pa.c 和 rf_private_pa.h 文件，并将 BLE 与 2.4G 的 PA 功能合并到 rf_pa.c 和 rf_pa.h 中。
+
+### Known issues
+- **Application**
+  - (TC321X): 在2p4g_feature_test的OTA_demo中，较高概率出现连续丢包后会导致当前升级失败的问题
+
+### CodeSize
+* **B85**
+
+| reference design                    | Firmware size (kBytes)    | SRAM size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 54.1                      | 18.4                         | 14.6                                   |
+| ble_remote                          | 65.9                      | 21.4                         | 15.8                                   |
+| ble_module                          | 62.4                      | 20.4                         | 16.8                                   |
+| master_kma_dongle                   | 44.0                      | 20.4                         | 11.6                                   |
+| genfsk_ll(stx2rx)                   | 17.8                      | 10.2                         | 6.8                                    |
+| tpll(ptx)                           | 18.6                      | 12.5                         | 7.3                                    |
+| tpsll(stx2rx)                       | 15.8                      | 10.3                         | 6.6                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 54.2                      | 19.9                         | 15.4                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 58.7                      | 20.2                         | 15.6                                   |
+| hci                                 | 43.5                      | 16.4                         | 11.8                                   |
+
+* **B87**
+
+| reference design                    | Firmware size (kBytes)    | SRAM Size (kBytes)           | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 55.7                      | 19.9                         | 16.2                                   |
+| ble_remote                          | 66.7                      | 22.9                         | 17.5                                   |
+| ble_module                          | 64.4                      | 22.2                         | 18.4                                   |
+| master_kma_dongle                   | 45.6                      | 22.2                         | 13.4                                   |
+| genfsk_ll(stx2rx)                   | 20.0                      | 11.7                         | 8.3                                    |
+| tpll(ptx)                           | 21.2                      | 14.3                         | 9.1                                    |
+| tpsll(stx2rx)                       | 17.8                      | 11.6                         | 8.0                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 56.3                      | 21.4                         | 17.0                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 60.9                      | 21.7                         | 17.2                                   |
+| hci                                 | 44.9                      | 17.9                         | 13.5                                   |
+
+* **TC321X**
+
+| reference design                    | Firmware size (kBytes)    | SRAM Size (kBytes)      	 | deepsleep retention SRAM size (kBytes) |
+| :-------------                      | :-----------------------: | :--------------------------: | :-----------------------------------:  |
+| ble_sample                          | 63.6                      | 20.6                         | 16.8                                   |
+| ble_remote                          | 75.0                      | 23.5                         | 17.8                                   |
+| ble_module                          | 72.7                      | 22.5                         | 18.7                                   |
+| genfsk_ll(stx2rx)                   | 28.9                      | 12.4                         | 9.1                                    |
+| tpll(ptx)                           | 30.6                      | 14.7                         | 9.4                                    |
+| tpsll(stx2rx)                       | 27.0                      | 12.6                         | 8.9                                    |
+| ble_slave_2_4g(tpsll_stx2rx)        | 65.5                      | 22.3                         | 17.8                                   |
+| ble_slave_2_4g_switch(tpsll_stx2rx) | 69.3                      | 22.5                         | 18.0                                   |
+| hci                                 | 52.5                      | 18.6                         | 14.1                                   |
+
+
+
+
+
+
 # V3.4.2.8 (PR)
 
 ### Version
@@ -40,11 +342,14 @@
   - (B85/B87/TC321X) When the flash_mid acquisition fails or no matching MID value is found, set "blc_flashProt.init_err = 1" to indicate a flash protection initialization failure.
   - (B85/B87/TC321X) Optimize the enabling method of the timer watchdog. After enabling MODULE_WATCHDOG_ENABLE, enable the timer watchdog by calling wd_set_interval_ms() and wd_start().
   - (B85/B87/TC321X) Move the low battery check function user_battery_power_check to the common file battery_check.c. 
+  - (B85/B87/TC321X) Remove MODULE_WATCHDOG_ENABLE in ble_feature_test and 2p4g_feature.
+  - (B85/B87/TC321X) Add compatibility for GPIO_LED_WHITE, GPIO_LED_RED, GPIO_LED_GREEN and GPIO_LED_BLUE in C1T139A5.h, C1T197A5.h and C1T362A5.h.
 
 * **Link & Startup**
-  - (B85/B87/TC321X) Add a new sector "platform_func" to store the platform data.
+  - (TC321X) Add a new sector "platform_func" to store the platform data.
   - (B85/B87/TC321X) Move the functions in div_mod.S from the ram_code sector to cstartup_ram_funcs.
   - (TC321X) Add RF software configuration invocation interface "rf_sw_config" in the cstartup_TC321X.S.
+  - (TC321X) Adjust the position of the initialization of the .bss segment in cstartup_TC321X.S, making it initialize after calling "rf_sw_config".
 
 ### Optimization
 * N/A
@@ -134,11 +439,14 @@
   - (B85/B87/TC321X) 当 flash_mid 获取失败或未找到匹配的 MID 值时，设置 “blc_flashProt.init_err = 1”， 表示 flash 保护初始化失败。
   - (B85/B87/TC321X) 优化timer watchdog的使能方法。在使能 MODULE_WATCHDOG_ENABLE 后，通过调用 wd_set_interval_ms() 和 wd_start() 来开启timer watchdog。
   - (B85/B87/TC321X) 将低压检测函数 “user_battery_power_check” 移动到公共文件 battery_check.c 中。
+  - (B85/B87/TC321X) 移除 ble_feature_test 和 2p4g_feature 中的 MODULE_WATCHDOG_ENABLE。
+  - (B85/B87/TC321X) 在 C1T139A5.h、C1T197A5.h 和 C1T362A5.h 中添加 GPIO_LED_WHITE、GPIO_LED_RED、GPIO_LED_GREEN 和 GPIO_LED_BLUE 的兼容。
 
 * **Link & Startup**
-  - (B85/B87/TC321X) 添加一个名为“platform_func”的sector，用于存储平台数据。
+  - (TC321X) 添加一个名为“platform_func”的sector，用于存储平台数据。
   - (B85/B87/TC321X) 将 div_mod.S 中的函数从 ram_code sector 移动到 cstartup_ram_funcs。
   - (TC321X) 在cstartup_TC321X.S中添加 RF 软件配置调用接口“rf_sw_config”。
+  - (TC321X) 调整cstartup_TC321X.S中.bss段初始化的位置，使其在调用“rf_sw_config”结束后初始化。
 
 ### Optimization
 * N/A
@@ -226,16 +534,25 @@
   - TC321X ble_remote reference design supports IR Learning.
   - Add ADC calibration in TC321X.
 
+* **Controller**
+  - Add an API blc_ll_init_concurrent_module() to initialize concurrent mode.
+  - Add an API blc_ll_disableConcurrentMode() to disable concurrent mode.
+  - Add an API blc_ll_enableConcurrentMode() to enable concurrent mode.
+  - Add an API rf_ble_state_reset() to reset BLE rf setting after exiting 2.4G mode in ble_slave_2_4g demo.
+
 ### Bug Fixes
 
 * **Application**
   - Fixed: When the local Central device supports SMP while the peer Peripheral device does not support SMP, the local Central device cannot send the Connection Update Indication packet.
   - Fixed: GPIO setting error in C1T362A5 boards.
   - Fixed: TC321X audio setting error.
+
 * **Controller**
   - Fixed: Connection failure caused by some extreme parameters of connection indication packet (transmitWindowOffset = 0 and TX packet is sent at the beginning of Transmit Window).
+
 * **CoC**(Connection-oriented channels) 
   - Fixed: Incorrect parameter validation logic when establishing new CoC channels.
+
 * **Driver**
   - Fixed (TC321X A0) : MCU reboot failure after OTA when calling start_reboot.
 
@@ -243,6 +560,7 @@
 
 * **Application**
   - Support using soft timer in IDLE state.
+    - Add an API blt_soft_timer_get_first_tick() to retrieve the system time of the nearest upcoming soft timer from the current moment.
   - Modify the audio setting code structure.
   - Delete Audio DMIC setting.
   - Rename some reference designs.
@@ -256,17 +574,30 @@
     - Rename b85m_module to ble_module.
     - Rename b85m_ble_remote to ble_remote.
     - Rename b85m_ble_sample to ble_sample.
+  - Modify the low battery check GPIO pin in both ​C1T357A20.h​ and ​C1T362A5.h​ to ​GPIO_PB5, and add support for low battery check in ​VBAT mode​ in ​C1T357A20.h.
+  - Modify the 512K Flash address allocation. The address allocation for the MAC address and calibration information in the previous version were incorrect, resulting in incompatibility with the production fixture. The specific modifications are as follows:
+    - The storage address for the MAC address, ​CFG_ADR_MAC_512K_FLASH, has been changed from ​0x76000​ to ​0x7F000.
+	- The storage address for calibration information, ​CFG_ADR_CALIBRATION_512K_FLASH, has been changed from ​0x77000​ to ​0x7E000.
+	- The storage addresses for SMP information, ​FLASH_ADR_SMP_PAIRING_512K_FLASH, have been changed from ​0x74000​ and ​0x75000​ to ​0x7C000​ and ​0x7D000, respectively.
+  - Add a check in ble_remote for TC321X​ to ensure that ​Audio and low battery check cannot be used simultaneously.
 
 ### Optimization
+
+* **Application**
+  - (TC321X) Remove the unnecessary settings in the low battery check.
+  - (TC321X) Improve the accuracy of the low battery check output results.
 
 - **Controller**
   - (TC321X) Optimize power consumption in connection state.
 
 ### BREAKING CHANGES
 
+* **Application**
+  - Add ​sync_word_check.c​ and ​sync_word_check.h​ to the ​vendor/common​ folder. These files are used in the 2.4G reference design to check the availability of the access code, helping to avoid communication quality issues caused by an unsuitable access code.
+
 * **Driver**
-  - Add rf_private_pa.c and rf_private_pa.h to B85/B87 driver_ext folder.
-  - Add ext_rf_private.h to B85/B87/TC321X driver_ext folder.
+  - Add rf_private_pa.c and rf_private_pa.h to B85/B87 driver_ext folder. These files are used in the 2.4G reference design to amplify the TX/RX power.
+  - Add ext_rf_private.h to B85/B87/TC321X driver_ext folder. This file contains proprietary 2.4G RF driver code, intended for use in the 2.4G reference design.
 
 ### CodeSize
 
@@ -412,16 +743,25 @@
   - TC321X  ble_remote 参考设计支持红外学习功能。
   - TC321X 新增 ADC 校准功能。
 
+* **Controller**
+  - 添加API blc_ll_init_concurrent_module() 用于初始化2.4G & BLE 双模模式。
+  - 添加API blc_ll_disableConcurrentMode() 用于禁用2.4G & BLE 双模模式。
+  - 添加API blc_ll_enableConcurrentMode() 用于使能2.4G & BLE 双模模式。
+  - 添加API rf_ble_state_reset() 用于在2.4G & BLE 双模模式中，退出2.4G模式后重置BLE的RF设置。
+
 ### Bug Fixes
 
 * **Application**
   - 修复：当本地Central设备支持SMP而配对的Peripheral设备不支持SMP时，本地Central设备无法发送连接更新指示包。
   - 修复：C1T362A5开发板的GPIO设置错误。
   - 修复：TC321X 的Audio设置错误。
+
 * **Controller**
   - 修复：部分极端的连接请求参数导致的连接失败问题（transmitWindowOffset = 0 ，且在 Transmit Window 开始的位置发送 TX packet）。
+
 * **CoC**(Connection-oriented channels)
   - 修复：建立新CoC通道时的参数校验逻辑错误。
+
 * **Driver**
   - 修复 (TC321X A0)：OTA结束后调用start_reboot函数无法正常重启MCU的问题。
 
@@ -429,6 +769,7 @@
 
 * **Application**
   - 支持在IDLE态下使用软件定时器。
+    - 添加API blt_soft_timer_get_first_tick() 用于获取距离当前时刻最近的soft timer的系统时间。
   - 修改 Audio 设置代码结构。
   - 删除 Audio DMIC 设置。
   - 重命名部分参考设计
@@ -442,17 +783,29 @@
     - 将 b85m_module 重命名为 ble_module。
     - 将 b85m_ble_remote 重命名为 ble_remote。
     - 将 b85m_ble_sample 重命名为 ble_sample。
+  - 将C1T357A20.h 和 C1T362A5.h 中的低压检测的GPIO检测口修改为GPIO_PB5，并在C1T357A20.h 中支持VBAT模式的低压检测。
+  - 修改 TC321X 芯片中 512K Flash的地址分配，上个版本中的MAC地址及校准信息存储地址分配有误，会导致与生产治具不兼容。具体修改为：
+    - MAC地址存储 CFG_ADR_MAC_512K_FLASH 由 0x76000 修改为 0x7F000，
+	- 校准信息存储 CFG_ADR_CALIBRATION_512K_FLASH 由 0x77000 修改为 0x7E000，
+	- SMP信息存储 FLASH_ADR_SMP_PAIRING_512K_FLASH 由 0x74000 和 0x75000 修改为 0x7C000 和 0x7D000。
+  - 在 TC321X 的 ble_remote 中添加检查，确保 Audio 功能和低压检测功能不能同时使用。
 
 ### Optimization
 
-- **Controller**
+* **Application**
+  - (TC321X)删除低压检测中无用的设置。
+  - (TC321X)提高低压检测输出结果的精度。
+
+* **Controller**
   - (TC321X)优化连接状态下的功耗。
 
 ### BREAKING CHANGES
+* **Application**
+  - 添加 sync_word_check.c 和 sync_word_check.h 到 vendor/common 文件夹。此文件用于2.4G的参考设计中检查access code可用性，避免因access code导致通信质量不好的问题。
 
 * **Driver**
-  - 添加 rf_private_pa.c 和 rf_private_pa.h 到 B85/B87 的 driver_ext 文件夹。
-  - 添加 ext_rf_private.h 到 B85/B87/TC321X 的 driver_ext 文件夹。
+  - 添加 rf_private_pa.c 和 rf_private_pa.h 到 B85/B87 的 driver_ext 文件夹。此文件用于2.4G的参考设计中放大TX/RX 的 power。
+  - 添加 ext_rf_private.h 到 B85/B87/TC321X 的 driver_ext 文件夹。此文件为私有2.4G RF驱动代码，用于2.4G的参考设计。
 
 ### CodeSize
 

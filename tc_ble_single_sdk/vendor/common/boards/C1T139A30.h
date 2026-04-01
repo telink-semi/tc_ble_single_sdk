@@ -144,6 +144,13 @@
 	#define PB0_OUTPUT_ENABLE					1
 #endif  //end of DEBUG_GPIO_ENABLE
 
+#if (UART_PRINT_DEBUG_ENABLE)
+    #define DEBUG_INFO_TX_PIN               GPIO_PB2
+    #define PULL_WAKEUP_SRC_PB2             PM_PIN_PULLUP_10K
+    #define PB2_OUTPUT_ENABLE               1
+    #define PB2_DATA_OUT                    1
+#endif
+
 /**
  *  @brief  Battery_check Configuration
  */

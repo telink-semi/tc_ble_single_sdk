@@ -94,6 +94,10 @@ int swire_putc(int c) {
 
 #if (UART_PRINT_DEBUG_ENABLE)
 
+#ifndef DEBUG_INFO_TX_PIN
+#error  "Please define DEBUG_INFO_TX_PIN in your board header file and configure the pin as GPIO output mode"
+#endif
+
 #if (MCU_CORE_TYPE == CHIP_TYPE_TC321X)
 #define UART_DEBUG_TX_PIN_REG	reg_gpio_out_set_clear(DEBUG_INFO_TX_PIN)
 #else

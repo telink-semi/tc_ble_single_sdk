@@ -365,12 +365,16 @@ void key_change_proc(void)
 				ir_learn_send_init();
 				ir_learn_copy_result(&ir_learn_result);
 				ir_learn_send(&ir_learn_result);
+                #if (UI_LED_ENABLE)
 				device_led_setup(led_cfg[LED_SHINE_FAST]);
+                #endif
 			}
 			else
 			{
 				ir_learn_start();
+                #if (UI_LED_ENABLE)
 				device_led_setup(led_cfg[LED_AUDIO_ON]);
+                #endif
 			}
 		}
 		#endif
@@ -479,12 +483,16 @@ void proc_keyboard(u8 e, u8 *p, int n)
 		if(led_open)
 		{
 			led_open = 0;
+            #if (UI_LED_ENABLE)
 			device_led_setup(led_cfg[LED_SHINE_IR_LEARN_OK]);
+            #endif
 		}
 	}
 	else if(get_ir_learn_state() > IR_LEARN_SUCCESS)
 	{
+        #if (UI_LED_ENABLE)
 		device_led_setup(led_cfg[LED_AUDIO_OFF]);
+        #endif
 	}
 #endif
 

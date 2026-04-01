@@ -66,6 +66,11 @@ _attribute_ram_code_ int main (void)    //must run in ramcode
 	#else
 		cpu_wakeup_init(LDO_MODE,INTERNAL_CAP_XTAL24M);
 	#endif
+
+	#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+		wd_32k_stop();
+	#endif
+
     #if(TEST_2P4G_MODE)
     rf_working_mode=(analog_read(USED_DEEP_ANA_REG) & RF_WORKING_MODE);
     #endif

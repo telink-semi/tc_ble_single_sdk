@@ -161,6 +161,9 @@ _attribute_no_inline_ void user_init_normal(void)
 
 //////////////////////////// 2P4G stack Initialization  Begin //////////////////////////////////
     unsigned char sync_word[4] = {0x53, 0x78, 0x56, 0x52};
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    set_rf_chn_for_init(7); // set channel before gen_fsk_datarate_set for RX performance optimization.
+#endif
     // it needs to notice that this api is different from vulture / kite
     gen_fsk_datarate_set(GEN_FSK_DATARATE_1MBPS); //Note that this API must be invoked first before all other APIs
     gen_fsk_preamble_len_set(4);

@@ -1,7 +1,7 @@
 /********************************************************************************************************
  * @file    app_tl_tpll_ptx.c
  *
- * @brief   This is the source file for B80
+ * @brief   This is the source file for 2.4G SDK
  *
  * @author  2.4G Group
  * @date    12,2021
@@ -154,6 +154,9 @@ unsigned char tpll_config_init(void)
     trf_tpll_config.preamble_len     = 2;
     trf_tpll_config.payload_len      = 32;
 
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    set_rf_chn_for_init(5);
+#endif
     err_code = trf_tpll_init(&trf_tpll_config);
     // init irq
     irq_clr_src();

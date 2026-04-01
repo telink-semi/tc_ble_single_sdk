@@ -185,6 +185,9 @@ _attribute_no_inline_ void user_init_normal(void)
 
 //////////////////////////// 2P4G stack Initialization  Begin //////////////////////////////////
     //rf configuration
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    set_rf_chn_for_init(7);
+#endif
     TPLL_Init(TPLL_BITRATE_2MBPS);
 #if(MCU_CORE_TYPE == MCU_CORE_TC321X)
     TPLL_SetOutputPower(RF_POWER_P0p00dBm);

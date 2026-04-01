@@ -179,6 +179,9 @@ _attribute_no_inline_ void user_init_normal(void)
 
 
 //////////////////////////// 2P4G stack Initialization  Begin //////////////////////////////////
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+		set_rf_chn_for_init(chn);
+#endif
 		tpsll_init(TPSLL_DATARATE_1MBPS);
 		tpsll_channel_set(chn);
 		rf_param_init();
@@ -282,8 +285,11 @@ _attribute_ram_code_ void sdk_2p4g_main_loop(void)
 		dma_reset();
 		baseband_reset();
     	if(rf_run_step == 1){ //2404-2M
+    		chn = 4*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
 			tpsll_init(TPSLL_DATARATE_2MBPS);
-			chn = 4*2;
 			tpsll_channel_set(chn);
     		rf_param_init();
     		tx_cnt = 0;
@@ -291,8 +297,11 @@ _attribute_ram_code_ void sdk_2p4g_main_loop(void)
     		tlkapi_printf(APP_LOG_EN, "tpsll 2404/2M start TX!\r\n");
     	}
     	else if(rf_run_step == 2){//2434-1M
-			tpsll_init(TPSLL_DATARATE_1MBPS);
 			chn = 34*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
+			tpsll_init(TPSLL_DATARATE_1MBPS);
 			tpsll_channel_set(chn);
     		rf_param_init();
     		tx_cnt = 0;
@@ -300,8 +309,11 @@ _attribute_ram_code_ void sdk_2p4g_main_loop(void)
     		tlkapi_printf(APP_LOG_EN, "tpsll 2434/1M start TX!\r\n");
     	}
     	else if(rf_run_step == 3){//2434-2M
-			tpsll_init(TPSLL_DATARATE_2MBPS);
 			chn = 34*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
+			tpsll_init(TPSLL_DATARATE_2MBPS);
 			tpsll_channel_set(chn);
     		rf_param_init();
     		tx_cnt = 0;
@@ -309,8 +321,11 @@ _attribute_ram_code_ void sdk_2p4g_main_loop(void)
     		tlkapi_printf(APP_LOG_EN, "tpsll 2434/2M start TX!\r\n");
     	}
     	else if(rf_run_step == 4){//2474-1M
-			tpsll_init(TPSLL_DATARATE_1MBPS);
 			chn = 74*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
+			tpsll_init(TPSLL_DATARATE_1MBPS);
 			tpsll_channel_set(chn);
     		rf_param_init();
     		tx_cnt = 0;
@@ -318,8 +333,11 @@ _attribute_ram_code_ void sdk_2p4g_main_loop(void)
     		tlkapi_printf(APP_LOG_EN, "tpsll 2474/1M start TX!\r\n");
     	}
     	else if(rf_run_step == 5){//2474-2M
-			tpsll_init(TPSLL_DATARATE_2MBPS);
 			chn = 74*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
+			tpsll_init(TPSLL_DATARATE_2MBPS);
 			tpsll_channel_set(chn);
     		rf_param_init();
     		tx_cnt = 0;
@@ -357,14 +375,20 @@ _attribute_ram_code_ void sdk_2p4g_main_loop(void)
 		dma_reset();
 		baseband_reset();
     	if(rf_run_step == 1){ //2404-2M
-			tpsll_init(TPSLL_DATARATE_2MBPS);
 			chn = 4*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
+			tpsll_init(TPSLL_DATARATE_2MBPS);
 			tpsll_channel_set(chn);
     		rf_param_init();
     		tlkapi_printf(APP_LOG_EN, "tpsll 2404/2M start RX!\r\n");
     		tpsll_srx_start(clock_time()+50*16, 0);
     	}
     	else if(rf_run_step == 2){ //2434-1M
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
 			tpsll_init(TPSLL_DATARATE_1MBPS);
 			chn = 34*2;
 			tpsll_channel_set(chn);
@@ -373,24 +397,33 @@ _attribute_ram_code_ void sdk_2p4g_main_loop(void)
     		tpsll_srx_start(clock_time()+50*16, 0);
     	}
     	else if(rf_run_step == 3){ //2434-2M
-			tpsll_init(TPSLL_DATARATE_2MBPS);
 			chn = 34*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
+			tpsll_init(TPSLL_DATARATE_2MBPS);
 			tpsll_channel_set(chn);
     		rf_param_init();
     		tlkapi_printf(APP_LOG_EN, "tpsll 2434/2M start RX!\r\n");
     		tpsll_srx_start(clock_time()+50*16, 0);
     	}
     	else if(rf_run_step == 4){ //2474-1M
-			tpsll_init(TPSLL_DATARATE_1MBPS);
 			chn = 74*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
+			tpsll_init(TPSLL_DATARATE_1MBPS);
 			tpsll_channel_set(chn);
     		rf_param_init();
     		tlkapi_printf(APP_LOG_EN, "tpsll 2474/1M start RX!\r\n");
     		tpsll_srx_start(clock_time()+50*16, 0);
     	}
     	else if(rf_run_step == 5){ //2474-2M
-			tpsll_init(TPSLL_DATARATE_2MBPS);
 			chn = 74*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
+			tpsll_init(TPSLL_DATARATE_2MBPS);
 			tpsll_channel_set(chn);
     		rf_param_init();
     		tlkapi_printf(APP_LOG_EN, "tpsll 2474/2M start RX!\r\n");

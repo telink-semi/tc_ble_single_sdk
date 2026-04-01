@@ -157,6 +157,16 @@
 #endif
 
 /**
+ *  @brief  PRINT DEBUG INFO
+ */
+#if (UART_PRINT_DEBUG_ENABLE)
+    #define DEBUG_INFO_TX_PIN               GPIO_PB4
+    #define PULL_WAKEUP_SRC_PB4             PM_PIN_PULLUP_10K
+    #define PB4_OUTPUT_ENABLE               1
+    #define PB4_DATA_OUT                    1
+#endif
+
+/**
  *  @brief  Battery_check Configuration
  */
 #if (APP_BATT_CHECK_ENABLE)

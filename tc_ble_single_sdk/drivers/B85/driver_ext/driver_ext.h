@@ -31,7 +31,6 @@
 #include "software_uart.h"
 #include "mcu_config.h"
 #include "rf_pa.h"
-#include "rf_private_pa.h"
 #include "ext_calibration.h"
 #include "ext_rf_private.h"
 

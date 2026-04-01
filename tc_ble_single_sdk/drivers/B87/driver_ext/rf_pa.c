@@ -24,13 +24,17 @@
 #include "rf_pa.h"
 #include "gpio.h"
 #include "compiler.h"
+#if (PA_MODE == PRIVATE_PA_ENABLE)
+#include "../../stack/2p4g/genfsk_ll/genfsk_ll.h"
+#endif
 
 _attribute_data_retention_	rf_pa_callback_t  blc_rf_pa_cb = 0;
 
 #if(PA_ENABLE)
-_attribute_ram_code_ void app_rf_pa_handler(int type)
+_attribute_ram_code_
+void app_rf_pa_handler(int type)
 {
-
+#if (PA_MODE == BLE_PA_ENABLE)
 	if(type == PA_TYPE_TX_ON){
 	    gpio_write(PA_RXEN_PIN, 0);
 	    gpio_write(PA_TXEN_PIN, 1);
@@ -43,6 +47,26 @@ _attribute_ram_code_ void app_rf_pa_handler(int type)
 	    gpio_write(PA_RXEN_PIN, 0);
 	    gpio_write(PA_TXEN_PIN, 0);
 	}
+#elif (PA_MODE == PRIVATE_PA_ENABLE)
+	if(type == PA_TYPE_TX_ON){
+	    gpio_set_output_en(PRIVATE_PA_RXEN_PIN, 0);
+	    gpio_write(PRIVATE_PA_RXEN_PIN, 0);
+	    gpio_set_output_en(PRIVATE_PA_TXEN_PIN, 1);
+	    gpio_write(PRIVATE_PA_TXEN_PIN, 1);
+	}
+	else if(type == PA_TYPE_RX_ON){
+	    gpio_set_output_en(PRIVATE_PA_RXEN_PIN, 1);
+	    gpio_write(PRIVATE_PA_RXEN_PIN, 1);
+	    gpio_set_output_en(PRIVATE_PA_TXEN_PIN, 0);
+	    gpio_write(PRIVATE_PA_TXEN_PIN, 0);
+	}
+	else{
+	    gpio_set_output_en(PRIVATE_PA_RXEN_PIN, 0);
+	    gpio_write(PRIVATE_PA_RXEN_PIN, 0);
+	    gpio_set_output_en(PRIVATE_PA_TXEN_PIN, 0);
+	    gpio_write(PRIVATE_PA_TXEN_PIN, 0);
+	}
+#endif
 }
 
 /**
@@ -52,6 +76,7 @@ _attribute_ram_code_ void app_rf_pa_handler(int type)
  */
 void rf_pa_init(void)
 {
+#if (PA_MODE == BLE_PA_ENABLE)
     //rf_set_power_level_index (RF_POWER_0dBm);
     gpio_set_func(PA_TXEN_PIN, AS_GPIO);
     gpio_set_output_en(PA_TXEN_PIN, 1);
@@ -60,7 +85,65 @@ void rf_pa_init(void)
     gpio_set_func(PA_RXEN_PIN, AS_GPIO);
     gpio_set_output_en(PA_RXEN_PIN, 1);
     gpio_write(PA_RXEN_PIN, 0);
+#elif (PA_MODE == PRIVATE_PA_ENABLE)
+    //rf_set_power_level_index (RF_POWER_0dBm);
+    gpio_set_func(PRIVATE_PA_TXEN_PIN, AS_GPIO);
+    gpio_set_output_en(PRIVATE_PA_TXEN_PIN, 0);
+    gpio_write(PRIVATE_PA_TXEN_PIN, 0);
+
+    gpio_set_func(PRIVATE_PA_RXEN_PIN, AS_GPIO);
+    gpio_set_output_en(PRIVATE_PA_RXEN_PIN, 0);
+    gpio_write(PRIVATE_PA_RXEN_PIN, 0);
+#endif
 
     blc_rf_pa_cb = app_rf_pa_handler;
 }
+
+#if (PA_MODE == PRIVATE_PA_ENABLE)
+_attribute_ram_code_sec_ void rf_pa_handler(short int flag)
+{
+
+	if (!blc_rf_pa_cb)
+		return;
+
+	switch(flag){
+	case FLD_RF_IRQ_TX:
+				if (gen_fsk_current_mode == GEN_FSK_MD_STX || gen_fsk_current_mode == GEN_FSK_MD_SRX2TX)
+				{
+					blc_rf_pa_cb(PA_TYPE_OFF);
+				}
+				else if (gen_fsk_current_mode == GEN_FSK_MD_STX2RX)
+				{
+					blc_rf_pa_cb(PA_TYPE_RX_ON);
+				}
+                break;
+	case FLD_RF_IRQ_RX:
+				if(gen_fsk_current_mode == GEN_FSK_MD_SRX || gen_fsk_current_mode == GEN_FSK_MD_STX2RX)
+				{
+					blc_rf_pa_cb(PA_TYPE_OFF);
+				}
+				if (gen_fsk_current_mode == GEN_FSK_MD_SRX2TX )
+				{
+					blc_rf_pa_cb(PA_TYPE_TX_ON);
+				}
+                break;
+	case FLD_RF_IRQ_FIRST_TIMEOUT:
+				if (gen_fsk_current_mode == GEN_FSK_MD_SRX)
+				{
+					blc_rf_pa_cb(PA_TYPE_OFF);
+				}
+                break;
+	case FLD_RF_IRQ_RX_TIMEOUT:
+				if (gen_fsk_current_mode == GEN_FSK_MD_STX2RX)
+				{
+					blc_rf_pa_cb(PA_TYPE_OFF);
+				}
+                break;
+	default:
+		break;
+	}
+}
+#endif
+
+
 #endif

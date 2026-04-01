@@ -50,6 +50,10 @@ _attribute_ram_code_ int main(void)
     cpu_wakeup_init(LDO_MODE,INTERNAL_CAP_XTAL24M);
 #endif
 
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+	wd_32k_stop();
+#endif
+
 	int deepRetWakeUp = pm_is_MCU_deepRetentionWakeup();  //MCU deep retention wakeUp
 
 	gpio_init(!deepRetWakeUp);  //analog resistance will keep available in deepSleep mode, so no need initialize again

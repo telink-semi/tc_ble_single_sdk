@@ -190,7 +190,9 @@ _attribute_no_inline_ void user_init_normal(void)
 //////////////////////////// basic hardware Initialization  End //////////////////////////////////
 
 //////////////////////////// 2P4G stack Initialization  Begin //////////////////////////////////
-
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+		set_rf_chn_for_init(chn); // set channel before gen_fsk_datarate_set for for RX performance optimization in rf_set_rxpara().
+#endif
 		gen_fsk_datarate_set(GEN_FSK_DATARATE_1MBPS);
 		rf_param_init();
 		gen_fsk_channel_set(chn);
@@ -301,45 +303,60 @@ _attribute_ram_code_ void sdk_2p4g_main_loop(void)
 		dma_reset();
 		baseband_reset();
     	if(rf_run_step == 1){ //2404-2M
+    		chn = 4*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
     		gen_fsk_datarate_set(GEN_FSK_DATARATE_2MBPS);
     		rf_param_init();
-    		chn = 4*2;
     		gen_fsk_channel_set(chn);
     		tx_cnt = 0;
     		WaitMs(5000);
     		tlkapi_printf(APP_LOG_EN, "genfsk 2404/2M start TX!\r\n");
     	}
     	else if(rf_run_step == 2){//2434-1M
+    		chn = 34*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
     		gen_fsk_datarate_set(GEN_FSK_DATARATE_1MBPS);
     		rf_param_init();
-    		chn = 34*2;
     		gen_fsk_channel_set(chn);
     		tx_cnt = 0;
     		WaitMs(5000);
     		tlkapi_printf(APP_LOG_EN, "genfsk 2434/1M start TX!\r\n");
     	}
     	else if(rf_run_step == 3){//2434-2M
+    		chn = 34*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
     		gen_fsk_datarate_set(GEN_FSK_DATARATE_2MBPS);
     		rf_param_init();
-    		chn = 34*2;
     		gen_fsk_channel_set(chn);
     		tx_cnt = 0;
     		WaitMs(5000);
     		tlkapi_printf(APP_LOG_EN, "genfsk 2434/2M start TX!\r\n");
     	}
     	else if(rf_run_step == 4){//2474-1M
+    		chn = 74*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
     		gen_fsk_datarate_set(GEN_FSK_DATARATE_1MBPS);
     		rf_param_init();
-    		chn = 74*2;
     		gen_fsk_channel_set(chn);
     		tx_cnt = 0;
     		WaitMs(5000);
     		tlkapi_printf(APP_LOG_EN, "genfsk 2474/1M start TX!\r\n");
     	}
     	else if(rf_run_step == 5){//2474-2M
+    		chn = 74*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
     		gen_fsk_datarate_set(GEN_FSK_DATARATE_2MBPS);
     		rf_param_init();
-    		chn = 74*2;
     		gen_fsk_channel_set(chn);
     		tx_cnt = 0;
     		WaitMs(5000);
@@ -379,51 +396,66 @@ _attribute_ram_code_ void sdk_2p4g_main_loop(void)
 		dma_reset();
 		baseband_reset();
     	if(rf_run_step == 1){ //2404-2M
+    		chn = 4*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
     		gen_fsk_datarate_set(GEN_FSK_DATARATE_2MBPS);
     		rf_param_init();
     		rx_ptr = 0;
     		gen_fsk_rx_buffer_set((unsigned char *)(rx_buf + rx_ptr * RX_BUF_LEN), RX_BUF_LEN);
-    		chn = 4*2;
     		gen_fsk_channel_set(chn);
     		tlkapi_printf(APP_LOG_EN, "genfsk 2404/2M start RX!\r\n");
     		gen_fsk_srx_start(clock_time() + 50 * 16, 0);
     	}
     	else if(rf_run_step == 2){ //2434-1M
+    		chn = 34*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
     		gen_fsk_datarate_set(GEN_FSK_DATARATE_1MBPS);
     		rf_param_init();
     		rx_ptr = 0;
     		gen_fsk_rx_buffer_set((unsigned char *)(rx_buf + rx_ptr * RX_BUF_LEN), RX_BUF_LEN);
-    		chn = 34*2;
     		gen_fsk_channel_set(chn);
     		tlkapi_printf(APP_LOG_EN, "genfsk 2434/1M start RX!\r\n");
     		gen_fsk_srx_start(clock_time() + 50 * 16, 0);
     	}
     	else if(rf_run_step == 3){ //2434-2M
+    		chn = 34*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
     		gen_fsk_datarate_set(GEN_FSK_DATARATE_2MBPS);
     		rf_param_init();
     		rx_ptr = 0;
     		gen_fsk_rx_buffer_set((unsigned char *)(rx_buf + rx_ptr * RX_BUF_LEN), RX_BUF_LEN);
-    		chn = 34*2;
     		gen_fsk_channel_set(chn);
     		tlkapi_printf(APP_LOG_EN, "genfsk 2434/2M start RX!\r\n");
     		gen_fsk_srx_start(clock_time() + 50 * 16, 0);
     	}
     	else if(rf_run_step == 4){ //2474-1M
+    		chn = 74*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
     		gen_fsk_datarate_set(GEN_FSK_DATARATE_1MBPS);
     		rf_param_init();
     		rx_ptr = 0;
     		gen_fsk_rx_buffer_set((unsigned char *)(rx_buf + rx_ptr * RX_BUF_LEN), RX_BUF_LEN);
-    		chn = 74*2;
     		gen_fsk_channel_set(chn);
     		tlkapi_printf(APP_LOG_EN, "genfsk 2474/1M start RX!\r\n");
     		gen_fsk_srx_start(clock_time() + 50 * 16, 0);
     	}
     	else if(rf_run_step == 5){ //2474-2M
+    		chn = 74*2;
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+    		set_rf_chn_for_init(chn);
+#endif
     		gen_fsk_datarate_set(GEN_FSK_DATARATE_2MBPS);
     		rf_param_init();
     		rx_ptr = 0;
     		gen_fsk_rx_buffer_set((unsigned char *)(rx_buf + rx_ptr * RX_BUF_LEN), RX_BUF_LEN);
-    		chn = 74*2;
     		gen_fsk_channel_set(chn);
     		tlkapi_printf(APP_LOG_EN, "genfsk 2474/2M start RX!\r\n");
     		gen_fsk_srx_start(clock_time() + 50 * 16, 0);

@@ -127,6 +127,9 @@ _attribute_ram_code_  void irq_2p4g_sdk_handler(void)
 _attribute_ram_code_ void rf_init()
 {
 	//rf configuration
+#if(MCU_CORE_TYPE == MCU_CORE_TC321X)
+	set_rf_chn_for_init(7);
+#endif
 	TPLL_Init(TPLL_BITRATE_1MBPS);
 #if(MCU_CORE_TYPE == MCU_CORE_TC321X)
     TPLL_SetOutputPower(RF_POWER_P0p00dBm);
