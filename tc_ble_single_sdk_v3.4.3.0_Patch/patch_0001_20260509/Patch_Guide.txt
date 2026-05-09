@@ -1,0 +1,18 @@
+**************************************************************************
+                                                                        
+                       Telink SDK Patch Guide                              
+                                                                            
+                                                                        
+**************************************************************************
+
+1. 0001_20260509
+	replace file "tc_ble_single_sdk/application/audio/gl_audio.c" with "patch_0001_20260509/application/audio/gl_audio.c"
+	replace file "tc_ble_single_sdk/drivers/B85/driver_ext/mcu_config.h" with "patch_0001_20260509/drivers/B85/driver_ext/mcu_config.h"
+	replace file "tc_ble_single_sdk/drivers/B87/driver_ext/mcu_config.h" with "patch_0001_20260509/drivers/B87/driver_ext/mcu_config.h"
+	replace file "tc_ble_single_sdk/vendor/2p4g_feature/ota/mac.c" with "patch_0001_20260509/vendor/2p4g_feature/ota/mac.c"
+	replace file "tc_ble_single_sdk/vendor/2p4g_feature/ota/main.c" with "patch_0001_20260509/vendor/2p4g_feature/ota/main.c"
+	replace file "tc_ble_single_sdk/vendor/2p4g_feature/ota/ota.c" with "patch_0001_20260509/vendor/2p4g_feature/ota/ota.c"
+	replace file "tc_ble_single_sdk/vendor/2p4g_feature/ota/otac.h" with "patch_0001_20260509/vendor/2p4g_feature/ota/ota.h"
+	replace file "tc_ble_single_sdk/vendor/common/ble_flash.c" with "patch_0001_20260509/vendor/common/ble_flash.c"
+	replace file "tc_ble_single_sdk/vendor/common/flash_prot.c" with "patch_0001_20260509/vendor/common/flash_prot.c"
+	replace file "tc_ble_single_sdk/vendor/common/flash_prot.h" with "patch_0001_20260509/vendor/common/flash_prot.h"
