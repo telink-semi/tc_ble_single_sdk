@@ -1,3 +1,56 @@
+# V3.4.3.0_Patch_0002
+
+### Features
+  - N/A
+
+### Bug Fixes
+- **SMP**
+  - For B85/B87/TC321X
+    - Fixed an issue where the Central could not reconnect with a Peripheral device that uses an RPA. TL_AUDIO_RCU_ADPCM_GATT_GOOGLE mode.
+      - Detailed Description: After the Central establishes an encrypted connection with a Peripheral using an RPA, a logical judgment failure occurs during the address matching phase. This prevents the Central from correctly identifying the paired device, thereby failing to trigger the normal reconnection and encryption procedure.
+      - After Fix: The Central device can now successfully identify and trigger the normal reconnection and encryption procedure with the Peripheral device using an RPA.
+      - Update Recommendation: Evaluate if needed.
+- **COC**
+  - For B85/B87/TC321X
+    - Fixed an issue where the Central could not establish an L2CAP CoC connection with a Peripheral device.
+      - Detailed Description:The Central device cannot establish a CoC channel with the Peripheral, preventing the upper-layer application from transmitting data over the CoC channel.
+      - After Fix: The Central device can now normally establish an L2CAP CoC connection with the Peripheral, restoring full data transceiver functionality over the CoC channel.
+      - Update Recommendation: Evaluate if needed.
+### Refactoring
+- N/A
+
+### BREAKING CHANGES
+- N/A
+
+
+
+### Features
+- N/A
+
+### Bug Fixes
+- **SMP**
+  - For B85/B87/TC321X
+    - 修复了Central无法和使用RPA地址的Peripheral设备进行回连的问题。
+      - 详细描述：当Central与使用RPA地址的Peripheral完成加密连接后，在匹配阶段出现逻辑判定失效，导致无法正确识别以配对设备，从而无法触发正常的回连加密流程。
+      - 修复效果：Central设备可以和使用RPA地址的Peripheral设备触发正常的回连加密流程。
+      - 更新建议：自行评估。
+- **COC**
+  - For B85/B87/TC321X
+    - 修复了Central无法与Peripheral设备建立L2CAP CoC连接的问题。。
+      - 详细描述：Central设备无法与Peripheral建立CoC通道，导致上层应用无法通过CoC通道进行数据传输。
+      - 修复效果：Central可以正常与Peripheral设备建立L2CAP CoC连接，CoC通道的数据收发功能恢复正常。
+      - 更新建议：自行评估。
+
+
+### Refactoring
+- N/A
+
+### BREAKING CHANGES
+- N/A
+
+
+
+
 # V3.4.3.0_Patch_0001
 
 ### Features
