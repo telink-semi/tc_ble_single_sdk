@@ -7,7 +7,7 @@
 - **SMP**
   - For B85/B87/TC321X
     - Fixed an issue where the Central could not reconnect with a Peripheral device that uses an RPA.
-      - Detailed Description: After the Central establishes an encrypted connection with a Peripheral using an RPA, a logical vulnerability in the subsequent identity resolution and matching phase prevents it from correctly identifying known devices, thereby failing to successfully restore the encrypted connection.
+      - Detailed Description: After the Central completes the encrypted bonding procedure with a Peripheral using an RPA, it fails to recognize the paired device during disconnection and reconnection, resulting in a failure to reconnect.
       - After Fix: The Central device can now successfully identify and trigger the normal reconnection and encryption procedure with the Peripheral device using an RPA.
       - Update Recommendation: Evaluate if needed.
 - **COC**
@@ -31,8 +31,8 @@
 - **SMP**
   - For B85/B87/TC321X
     - 修复了Central无法和使用RPA地址的Peripheral设备进行回连的问题。
-      - 详细描述：当 Central 与使用 RPA 地址的 Peripheral 建立加密连接后，在后续回连的身份解析与匹配阶段存在逻辑漏洞，导致无法正确识别已知设备，从而无法成功恢复加密连接。
-      - 修复效果：Central设备可以和使用RPA地址的Peripheral设备触发正常的回连加密流程。
+      - 详细描述：当Central与使用RPA地址Peripheral设备完成加密绑定后，断连重连时Central无法识别已配对设备，导致无法回连。
+      - 修复效果：Central设备可以和使用RPA地址的Peripheral设备进行正常的回连加密流程。
       - 更新建议：自行评估。
 - **COC**
   - For B85/B87/TC321X
